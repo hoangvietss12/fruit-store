@@ -13,7 +13,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>Fruit-ya</title>
+  <title>Cửa hàng - Fruit-ya</title>
 
 
   <!-- bootstrap core css -->
@@ -71,7 +71,10 @@
             <div class="col-sm-6 col-lg-4 product-item">
                 <div class="box">
                 <div class="img-box">
-                    <img src="{{$product->images[0]}}" alt="{{$product->name}}">
+                    <a href=""><img src="{{$product->images[0]}}" alt="{{$product->name}}"></a>
+                    <div class="product-overlay">
+                        <button class="add-to-cart-button">+ Thêm</button>
+                    </div>
                 </div>
                 <div class="detail-box">
                     <span class="rating">

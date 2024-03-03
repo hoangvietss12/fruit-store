@@ -1,9 +1,9 @@
 <div class="pagination">
     <ul>
         @if ($paginator->onFirstPage())
-            <li class="disabled"><span>&laquo;</span></li>
+            <li class="disabled"><span><<</span></li>
         @else
-            <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev">&laquo;</a></li>
+            <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev"><<</a></li>
         @endif
 
         @foreach ($elements as $element)
@@ -23,9 +23,9 @@
         @endforeach
 
         @if ($paginator->hasMorePages())
-            <li><a href="{{ $paginator->nextPageUrl() }}" rel="next">&raquo;</a></li>
+            <li><a href="{{ $paginator->nextPageUrl() }}" rel="next">>></a></li>
         @else
-            <li class="disabled"><span>&raquo;</span></li>
+            <li class="disabled"><span>>></span></li>
         @endif
     </ul>
 </div>

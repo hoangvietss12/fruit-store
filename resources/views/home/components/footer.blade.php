@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="info_logo">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="{{ route('home.index') }}">
             <span>
               Fruit-ya
             </span>
@@ -63,6 +63,10 @@
           <a href="">
             <i class="fa fa-youtube" aria-hidden="true"></i>
           </a>
+        </div>
+        <div class="info_more">
+                <a href="{{ route('policy.show') }}">Chính sách bảo mật</a>
+                <a href="{{ route('terms.show') }}">Điều khoản sử dụng</a>
         </div>
       </div>
     </div>

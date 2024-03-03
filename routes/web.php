@@ -42,7 +42,7 @@ Route::middleware([
 Route::get('/redirect', [HomeController::class, 'redirect']);
 
 // Admin Page
-Route::prefix('admin')->group(function() {
+Route::prefix('adminn')->group(function() {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 });
 

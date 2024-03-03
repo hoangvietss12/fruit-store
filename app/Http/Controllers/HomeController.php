@@ -16,7 +16,6 @@ class HomeController extends Controller
         $this->createUrlImages($data);
 
         return view('home.userhome', compact('data'));
-
     }
 
     public function store() {
@@ -54,7 +53,11 @@ class HomeController extends Controller
     public function redirect() {
         $usertype = Auth::user()->user_type;
 
-        return $usertype === '1' ? view('admin.home') : view('home.userhome');
+        $data = Product::take(6)->get();
+
+        $this->createUrlImages($data);
+
+        return $usertype === '1' ? view('admin.dashboard.index') : view('home.userhome', compact('data'));
     }
 
     public function createUrlImages($data) {

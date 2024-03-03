@@ -9,7 +9,7 @@
     {{-- style css --}}
     @include('admin.assets.css')
 
-    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.png') }}" />
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/x-icon" />
   </head>
   <body>
     <div class="container-scroller">
