@@ -13278,8 +13278,6 @@ button.bg-dark:focus {
     justify-content: flex-end !important; }
   .justify-content-sm-center {
     justify-content: center !important; }
-  .justify-content-sm-between {
-    justify-content: space-between !important; }
   .justify-content-sm-around {
     justify-content: space-around !important; }
   .align-items-sm-start {
@@ -17896,13 +17894,22 @@ div.tagsinput {
     vertical-align: middle;
     font-size: 0.875rem;
     line-height: 1;
-    white-space: nowrap; }
+    white-space: nowrap;
+}
     .table th img, .jsgrid .jsgrid-table th img,
     .table td img,
     .jsgrid .jsgrid-table td img {
-      width: 30px;
-      height: 30px;
-      border-radius: 100%; }
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
+    .table .table-images {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
     .table th .badge, .jsgrid .jsgrid-table th .badge,
     .table td .badge,
     .jsgrid .jsgrid-table td .badge {
@@ -20649,13 +20656,13 @@ div.tagsinput {
       line-height: 48px;
       margin-right: 0;
       padding: 0rem 0rem 0rem 1.3rem;
+      height: 100%;
       width: 100%; }
       .sidebar .sidebar-brand-wrapper .sidebar-brand:active, .sidebar .sidebar-brand-wrapper .sidebar-brand:focus, .sidebar .sidebar-brand-wrapper .sidebar-brand:hover {
         color: #252b3e; }
       .sidebar .sidebar-brand-wrapper .sidebar-brand img {
-        width: calc(244px - 120px);
         max-width: 100%;
-        height: 28px;
+        height: 100%;
         margin: auto;
         vertical-align: middle; }
       .sidebar .sidebar-brand-wrapper .sidebar-brand.brand-logo-mini {
@@ -21133,10 +21140,10 @@ div.tagsinput {
   flex-grow: 1; }
 
 /*# sourceMappingURL=maps/style.css.map */
-input {
+input, select:focus, select, textarea {
     color: #333 !important;
 }
 
-input:focus {
+input:focus, textarea {
     background: #fff !important;
 }

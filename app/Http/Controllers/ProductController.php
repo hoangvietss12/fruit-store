@@ -11,7 +11,7 @@ use Kreait\Firebase\ServiceAccount;
 class ProductController extends Controller
 {
     public function index() {
-        $data = Product::paginate(10);
+        $data = Product::paginate(8);
 
         $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
         foreach ($data as $product) {
@@ -44,9 +44,10 @@ class ProductController extends Controller
         $data->name = $request->product_name;
         $data->description = $request->product_description;
         $data->unit = $request->product_unit;
+        $data->quantity = $request->product_quantity;
         $data->price = intval($request->product_price);
         $data->discount = floatval($request->product_discount);
-        $data->category = $request->input('product_category');
+        $data->category_id = intval($request->input('product_category'));
 
         $imageUrls = $this->uploadImagesToFirebase($request);
 
@@ -54,7 +55,11 @@ class ProductController extends Controller
 
         $data->save();
 
-        return redirect('product')->with('message', 'Thêm thành công!');
+        return redirect('adminn/product')->with('message', 'Thêm thành công!');
+    }
+
+    public function view(Request $request) {
+        return 'abv';
     }
 
     public function edit($id) {
@@ -83,6 +88,7 @@ class ProductController extends Controller
                             'category' => $category,
                             'images' => $images,
                             'description' => $request->description,
+                            'quantity' => $request->quantity,
                             'unit' => $request->unit,
                             'price' => $price,
                             'discount' => $discount ]);
@@ -90,12 +96,13 @@ class ProductController extends Controller
             $data->update([ 'name' => $request->name,
                             'category' => $category,
                             'description' => $request->description,
+                            'quantity' => $request->quantity,
                             'unit' => $request->unit,
                             'price' => $price,
                             'discount' => $discount ]);
         }
 
-        return redirect('product')->with('message', 'Cập nhật thành công!');
+        return redirect('adminn/product')->with('message', 'Cập nhật thành công!');
     }
 
     public function delete($id) {

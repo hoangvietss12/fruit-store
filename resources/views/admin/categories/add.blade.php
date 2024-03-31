@@ -36,8 +36,9 @@
                                 <label>Thêm danh mục sản phẩm:</label>
                                 <input type="text" class="form-control" name="category_name" placeholder="Thêm danh mục sản phẩm...">
                               </div>
-                            <button type="submit" class="btn btn-primary mr-2">Thêm</button>
+                            <button type="submit" class="btn btn-success mr-2">Thêm</button>
                         </form>
+                        <a class="btn btn-primary mt-3" href="{{ route('category.index') }}">Quay lại</a>
                     </div>
                   </div>
                 </div>

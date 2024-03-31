@@ -16,6 +16,34 @@ function myMap() {
     };
     var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 }
+// show fee delivery
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector('.btn-type-order').addEventListener('click', function(event) {
+        event.preventDefault();
+        var selectedOption = document.querySelector('.js-example-basic-single').value;
+
+        if (selectedOption === "Ship tận nơi") {
+            var totalPriceSpan = document.querySelector('.cart__total li:first-child span');
+            var total_price = parseFloat(totalPriceSpan.textContent.trim().replace('đ', '').replace(',', ''));
+
+            var fee = 15000;
+            var total_payment = total_price + fee;
+
+            document.querySelector('.cart__fee').classList.add('show');
+            document.querySelector('.cart__total li:nth-child(3) span').textContent = total_payment.toLocaleString('en-US') + 'đ';
+        } else {
+            document.querySelector('.cart__fee').classList.remove('show');
+            document.querySelector('.cart__total li:nth-child(3) span').textContent = document.querySelector('.cart__total li:first-child span').textContent;
+        }
+    });
+});
+
+// click submit order
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("btn-submit-order").addEventListener("click", function() {
+        document.getElementById("order-form").submit();
+    });
+});
 
 // load more event
 document.addEventListener('DOMContentLoaded', function() {
@@ -39,20 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // load products by category
-document.getElementById('category').addEventListener('change', function() {
-    var categoryName = this.value;
 
-    var xhr = new XMLHttpRequest();
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-            var products = JSON.parse(xhr.responseText);
-            displayProducts(products);
-        }
-    }
-
-    xhr.open('GET', '/store/' + categoryName);
-    xhr.send();
-});
 
 // display products
 function displayProducts(products) {

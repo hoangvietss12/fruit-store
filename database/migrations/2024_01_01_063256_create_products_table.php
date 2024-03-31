@@ -16,12 +16,15 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->json('images')->nullable();
-            $table->string('category')->nullable();
+            $table->unsignedBigInteger('category_id');
             $table->string('unit')->nullable();
+            $table->float('quantity')->nullable();
             $table->integer('price')->nullable();
             $table->float('discount')->nullable();
             $table->string('status')->nullable()->default('Còn hàng');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

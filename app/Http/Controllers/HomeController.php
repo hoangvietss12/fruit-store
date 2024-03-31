@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 
@@ -47,17 +45,6 @@ class HomeController extends Controller
         $this->createUrlImages($data);
 
         return response()->json($data);
-    }
-
-    //check login
-    public function redirect() {
-        $usertype = Auth::user()->user_type;
-
-        $data = Product::take(6)->get();
-
-        $this->createUrlImages($data);
-
-        return $usertype === '1' ? view('admin.dashboard.index') : view('home.userhome', compact('data'));
     }
 
     public function createUrlImages($data) {

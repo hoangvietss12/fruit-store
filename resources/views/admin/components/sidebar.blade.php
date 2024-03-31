@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-      <a class="sidebar-brand brand-logo" href="{{route("admin.index")}}"><img src="images/logo.png" alt="logo" /></a>
-      <a class="sidebar-brand brand-logo-mini" href="{{route("admin.index")}}"><img src="images/logo.png" alt="logo" /></a>
+      <a class="sidebar-brand brand-logo" href="{{route("admin.index")}}"><img src="{{ route('home.index') }}/images/logo.png" alt="logo" /></a>
+      <a class="sidebar-brand brand-logo-mini" href="{{route("admin.index")}}"><img src="{{ route('home.index') }}/images/logo.png" alt="logo" /></a>
     </div>
     <ul class="nav">
       <li class="nav-item menu-items">
@@ -26,6 +26,14 @@
             <i class="mdi mdi-table-large"></i>
           </span>
           <span class="menu-title">Sản phẩm</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{{route('order.index')}}">
+          <span class="menu-icon">
+            <i class="mdi mdi-file-document-box"></i>
+          </span>
+          <span class="menu-title">Đơn hàng</span>
         </a>
       </li>
       <li class="nav-item menu-items">
@@ -61,14 +69,6 @@
             <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="documentation">
-          <span class="menu-icon">
-            <i class="mdi mdi-file-document-box"></i>
-          </span>
-          <span class="menu-title">Documentation</span>
-        </a>
       </li>
     </ul>
   </nav>

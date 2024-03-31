@@ -89,6 +89,15 @@
   .info_section .info_links {
     align-items: center;
   }
+
+  .continue__btn {
+    text-align: center;
+  }
+
+  .order__btn {
+    text-align: center;
+    margin-top: 20px;
+  }
 }
 
 @media (max-width: 576px) {

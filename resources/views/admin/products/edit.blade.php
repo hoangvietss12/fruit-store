@@ -41,13 +41,17 @@
                                 <select class="js-example-basic-single" name="category" style="width:100%">
                                     <option value="" selected disabled>Chọn danh mục sản phẩm</option>
                                   @foreach($categories as $category)
-                                    <option value="{{$category->category_name}}">{{$category->category_name}}</option>
+                                    <option value="{{$category->id}}">{{$category->category_name}}</option>
                                   @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="product_unit">Đơn vị tính:</label>
                                 <input type="text" class="form-control" id="product_unit" name="unit" placeholder="Đơn vị tính" value="{{$data->unit}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="product_quantity">Số lượng:</label>
+                                <input type="text" class="form-control" id="product_quantity" name="quantity" placeholder="Số lượng" value="{{$data->quantity}}">
                             </div>
                             <div class="form-group">
                                 <label for="product_price">Giá:</label>
@@ -68,8 +72,9 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mr-2">Sửa</button>
+                            <button type="submit" class="btn btn-warning mr-2">Sửa</button>
                         </form>
+                        <a class="btn btn-primary mt-3" href="{{ route('product.index') }}">Quay lại</a>
                     </div>
                   </div>
                 </div>

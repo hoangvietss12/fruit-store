@@ -21,19 +21,7 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
-              @if(session('message') == 'Thêm thành công!')
-                <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-
-                    {{session('message')}}
-                </div>
-              @elseif(session('message') == 'Xóa thành công!')
-                <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-
-                    {{session('message')}}
-                </div>
-              @elseif(session('message') == 'Cập nhật thành công!')
+              @if(session('message') == 'Cập nhật thành công!')
                 <div class="alert alert-warning">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
 
@@ -42,11 +30,7 @@
               @endif
 
               <div class="page-header">
-                <h3 class="page-title"> Danh sách sản phẩm </h3>
-              </div>
-
-              <div class="d-flex justify-end my-3">
-                <a class="btn btn-success" href="{{route('product.create')}}" role="button">Thêm</a>
+                <h3 class="page-title"> Danh sách đơn hàng</h3>
               </div>
 
               <div class="row">
@@ -58,8 +42,10 @@
                           <thead>
                             <tr>
                               <th> # </th>
-                              <th> Tên sản phẩm </th>
-                              <th> Ảnh </th>
+                              <th> Tên khách hàng </th>
+                              <th> Ngày đặt hàng </th>
+                              <th> Trạng thái </th>
+                              <th> Thành tiển </th>
                               <th> Hành động </th>
                             </tr>
                           </thead>
@@ -68,17 +54,15 @@
                             @foreach($data as $index => $item)
                                 <tr>
                                     <td>{{$index+1}}</td>
-                                    <td>{{$item->name}}</td>
-                                    <td class="table-images">
-                                        @foreach($item->images as $imageUrl)
-                                            <img src={{$imageUrl}} alt="">
-                                        @endforeach
-                                    </td>
+                                    <td>{{$item->user->name}}</td>
+                                    <td>{{date("H:i:s d/m/Y", strtotime($item->created_at))}}</td>
+                                    <td>{{$item->status}}</td>
+                                    <td>{{number_format($item->total)}}đ</td>
                                     <td>
                                         <div class="d-flex justify-center">
-                                            <a class="btn btn-primary ml-2" href="{{route('product.view', ['id' => $item->id])}}" role="button">Xem</a>
-                                            <a class="btn btn-warning ml-2" href="{{route('product.edit', ['id' => $item->id])}}" role="button">Sửa</a>
-                                            <a class="btn btn-danger ml-2" href="{{route('product.delete', ['id' => $item->id])}}" role="button">Xóa</a>
+                                            <a class="btn btn-primary ml-2" target="_blank" href="{{route('order.view', ['id' => $item->id])}}" role="button">Xem chi tiết</a>
+                                            <a class="btn btn-warning ml-2" href="{{route('order.edit', ['id' => $item->id])}}" role="button">Sửa trạng thái</a>
+                                            <a class="btn btn-success ml-2" target="_blank" href="{{route('order.print', ['id' => $item->id])}}" role="button">In hóa đơn</a>
                                         </div>
                                     </td>
                                 </tr>

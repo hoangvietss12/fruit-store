@@ -66,7 +66,11 @@
                 <div class="img-box">
                     <a href=""><img src="{{$product->images[0]}}" alt="{{$product->name}}"></a>
                     <div class="product-overlay">
-                        <button class="add-to-cart-button">+ Thêm</button>
+                        <form action="{{ route('cart.store', ['id' => $product->id]) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                            <button class="add-to-cart-button">+ Thêm</button>
+                        </form>
                     </div>
                 </div>
                 <div class="detail-box">

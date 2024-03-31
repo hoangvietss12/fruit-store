@@ -98,7 +98,11 @@
         @endforeach
 
       </div>
-      {{ $data->links('components.pagination') }}
+
+        @if( $data->total() > 8 )
+            {{ $data->links('components.pagination') }}
+        @endif
+
     </div>
   </section>
 

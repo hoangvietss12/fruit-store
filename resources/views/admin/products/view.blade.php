@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Fruit-ya Admin</title>
-
     {{-- style css --}}
     @include('admin.assets.css')
 
@@ -22,34 +21,16 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
-              <div class="page-header">
-                <h3 class="page-title"> Danh mục sản phẩm </h3>
-              </div>
-              <div class="row">
 
-                <div class="col-md-12 grid-margin stretch-card">
-                  <div class="card">
-                    <div class="card-body">
-                        <form action="{{route('category.update', ['id' => $data->id])}}" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <label>Sửa danh mục sản phẩm:</label>
-                                <input type="text" class="form-control" name="category_name" placeholder="Sửa danh mục sản phẩm..." value="{{$data->category_name}}">
-                              </div>
-                            <button type="submit" class="btn btn-warning mr-2">Sửa</button>
-                        </form>
-                        <a class="btn btn-primary mt-3" href="{{ route('category.index') }}">Quay lại</a>
-                    </div>
-                  </div>
-                </div>
+              
 
-              </div>
+              {{ $data->links() }}
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:../../partials/_footer.html -->
             @include('admin.components.footer')
             <!-- partial -->
-          </div>
+        </div>
         <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->
