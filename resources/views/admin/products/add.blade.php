@@ -41,7 +41,16 @@
                                 <select class="js-example-basic-single" name="product_category" style="width:100%">
                                     <option value="" selected disabled>Chọn danh mục sản phẩm</option>
                                   @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                  @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nhà cung cấp:</label>
+                                <select class="js-example-basic-single" name="product_vendor" style="width:100%">
+                                    <option value="" selected disabled>Chọn nhà cung cấp</option>
+                                  @foreach($vendors as $vendor)
+                                    <option value="{{$vendor->id}}">{{$vendor->name}}</option>
                                   @endforeach
                                 </select>
                             </div>

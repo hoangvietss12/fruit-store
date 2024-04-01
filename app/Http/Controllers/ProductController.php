@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
@@ -35,8 +36,9 @@ class ProductController extends Controller
 
     public function create() {
         $categories = Category::all();
+        $vendors = Vendor::all();
 
-        return view('admin.products.add', compact('categories'));
+        return view('admin.products.add', compact('categories', 'vendors'));
     }
 
     public function store(Request $request) {
@@ -44,10 +46,11 @@ class ProductController extends Controller
         $data->name = $request->product_name;
         $data->description = $request->product_description;
         $data->unit = $request->product_unit;
-        $data->quantity = $request->product_quantity;
+        $data->quantity = floatval($request->product_quantity);
         $data->price = intval($request->product_price);
         $data->discount = floatval($request->product_discount);
         $data->category_id = intval($request->input('product_category'));
+        $data->vendor_id = intval($request->input('product_vendor'));
 
         $imageUrls = $this->uploadImagesToFirebase($request);
 
@@ -58,24 +61,31 @@ class ProductController extends Controller
         return redirect('fruitya-admin/product')->with('message', 'Thêm thành công!');
     }
 
-    public function view(Request $request) {
-        return 'abv';
+    public function view($id) {
+        $product = Product::where('id', $id)->with('category')->with('vendor')->first();
+
+        $this->createUrlImages($product);
+
+        return view('admin.products.view', compact('product'));
     }
 
     public function edit($id) {
         $categories = Category::all();
+        $vendors = Vendor::all();
 
-        $data = Product::find($id);
+        $data = Product::findOrFail($id);
 
-        return view('admin.products.edit', compact('data', 'categories'));
+        return view('admin.products.edit', compact('data', 'categories', 'vendors'));
     }
 
     public function update(Request $request, $id) {
         $data = Product::find($id);
 
+        $quantity = floatval($request->quantity);
         $price = intval($request->price);
         $discount = floatval($request->discount);
         $category = $request->input('category');
+        $vendor = $request->input('vendor');
 
         if($request->hasFile('images')) {
             $this->deleteImageFromFirebase($data->images);
@@ -85,17 +95,20 @@ class ProductController extends Controller
             $images = json_encode($imageUrls);
 
             $data->update([ 'name' => $request->name,
-                            'category' => $category,
+                            'category_id' => $category,
+                            'vendor_id' => $vendor,
                             'images' => $images,
                             'description' => $request->description,
-                            'quantity' => $request->quantity,
+                            'quantity' => $quantity,
                             'unit' => $request->unit,
                             'price' => $price,
-                            'discount' => $discount
+                            'discount' => $discount,
+                            'status' => $request->status
                         ]);
         }else {
             $data->update([ 'name' => $request->name,
                             'category' => $category,
+                            'vendor_id' => $vendor,
                             'description' => $request->description,
                             'quantity' => $request->quantity,
                             'unit' => $request->unit,
@@ -117,6 +130,23 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'Xóa thành công!');
     }
 
+    public function createUrlImages($product) {
+        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+        $imageUrls = [];
+        $images = json_decode($product->images, true);
+
+        foreach($images as $image) {
+            $imageReference = $bucket->object($image);
+
+            if ($imageReference->exists()) {
+                $expiresAt = new \DateTime('tomorrow');
+                $imageUrls[] = $imageReference->signedUrl($expiresAt);
+            }
+        }
+
+        $product->images = $imageUrls;
+    }
+
     private function uploadImagesToFirebase($request) {
         $imageUrls = [];
 
@@ -125,10 +155,8 @@ class ProductController extends Controller
             $bucket = $firebaseStorage->getBucket('fruit-ya-store-6573c.appspot.com');
 
             foreach($request->file('images') as $image) {
-                // Tạo tên duy nhất cho mỗi tệp
                 $imageUrl = 'products/' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-                // Lưu ảnh vào Firebase Storage
                 $bucket->upload($image->getContent(), [
                     'name' => $imageUrl,
                 ]);
@@ -146,7 +174,6 @@ class ProductController extends Controller
 
         $imagePaths = json_decode($imagePaths, true);
         foreach ($imagePaths as $imageUrl) {
-            // Xóa ảnh từ Firebase
             $object = $bucket->object($imageUrl);
             $object->delete();
         }

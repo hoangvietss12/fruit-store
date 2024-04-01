@@ -21140,10 +21140,38 @@ div.tagsinput {
   flex-grow: 1; }
 
 /*# sourceMappingURL=maps/style.css.map */
-input, select:focus, select, textarea {
+input, select:focus, select, textarea, option {
     color: #333 !important;
 }
 
 input:focus, textarea {
     background: #fff !important;
+}
+
+/* content view */
+.page-header h2 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.page-content p {
+    font-size: 17px;
+    margin-bottom: 5px;
+    color: burlywood;
+}
+
+.page-content p>span {
+    color: #fff;
+}
+
+.page-content .page-images {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.page-content .page-images img {
+    width: 150px;
+    height: 150px;
+    margin-right: 15px;
 }

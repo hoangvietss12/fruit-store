@@ -39,27 +39,48 @@
                             <div class="form-group">
                                 <label>Danh mục sản phẩm:</label>
                                 <select class="js-example-basic-single" name="category" style="width:100%">
-                                    <option value="" selected disabled>Chọn danh mục sản phẩm</option>
+                                    <option value="" disabled>Chọn danh mục sản phẩm</option>
                                   @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                    @if($data->category_id == $category->id)
+                                        <option value="{{$category->id}}" selected>{{$category->name}}</option>
+                                    @else
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endif
+                                  @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nhà cung cấp:</label>
+                                <select class="js-example-basic-single" name="vendor" style="width:100%">
+                                    <option value="" disabled>Chọn nhà cung cấp</option>
+                                  @foreach($vendors as $vendor)
+                                    @if($data->vendor_id == $vendor->id)
+                                        <option value="{{$vendor->id}}" selected>{{$vendor->name}}</option>
+                                    @else
+                                        <option value="{{$vendor->id}}">{{$vendor->name}}</option>
+                                    @endif
                                   @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="product_unit">Đơn vị tính:</label>
-                                <input type="text" class="form-control" id="product_unit" name="unit" placeholder="Đơn vị tính" value="{{$data->unit}}">
+                                <input type="text" class="form-control" id="product_unit" name="unit" placeholder="Đơn vị tính..." value="{{$data->unit}}">
                             </div>
                             <div class="form-group">
                                 <label for="product_quantity">Số lượng:</label>
-                                <input type="text" class="form-control" id="product_quantity" name="quantity" placeholder="Số lượng" value="{{$data->quantity}}">
+                                <input type="text" class="form-control" id="product_quantity" name="quantity" placeholder="Số lượng..." value="{{$data->quantity}}">
                             </div>
                             <div class="form-group">
                                 <label for="product_price">Giá:</label>
-                                <input type="text" class="form-control" id="product_price" name="price" placeholder="Giá" value="{{$data->price}}">
+                                <input type="text" class="form-control" id="product_price" name="price" placeholder="Giá..." value="{{$data->price}}">
                             </div>
                             <div class="form-group">
                                 <label for="product_discount">Giảm giá:</label>
-                                <input type="text" class="form-control" id="product_discount" name="discount" placeholder="Giảm giá" value="{{$data->discount}}">
+                                <input type="text" class="form-control" id="product_discount" name="discount" placeholder="Giảm giá..." value="{{$data->discount}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="product_status">Trạng thái:</label>
+                                <input type="text" class="form-control" id="product_status" name="status" placeholder="Trạng thái..." value="{{$data->status}}">
                             </div>
                             <div class="form-group">
                                 <label for="product_description">Mô tả sản phẩm:</label>
