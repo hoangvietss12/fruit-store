@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,10 +102,21 @@ Route::prefix('fruitya-admin')->group(function() {
 
         Route::post('/{id}', [OrderController::class, 'update'])->name('order.update');
     });
+
+    Route::prefix('vendor')->group(function () {
+        Route::get('/', [VendorController::class, 'index'])->name('vendor.index');
+
+        Route::get('/create', [VendorController::class, 'create'])->name('vendor.create');
+
+        Route::post('/', [VendorController::class, 'store'])->name('vendor.store');
+
+        Route::get('/delete/{id}', [VendorController::class, 'delete'])->name('vendor.delete');
+
+        Route::get('/edit/{id}', [VendorController::class, 'edit'])->name('vendor.edit');
+
+        Route::post('/{id}', [VendorController::class, 'update'])->name('vendor.update');
+    });
 });
-
-
-
 
 
 Auth::routes();

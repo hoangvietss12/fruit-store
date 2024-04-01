@@ -13,6 +13,14 @@
         </a>
       </li>
       <li class="nav-item menu-items">
+        <a class="nav-link" href="{{route('vendor.index')}}">
+          <span class="menu-icon">
+            <i class="mdi mdi-contacts"></i>
+          </span>
+          <span class="menu-title">Nhà cung cấp</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
         <a class="nav-link" href="{{route('category.index')}}">
           <span class="menu-icon">
             <i class="mdi mdi-playlist-play"></i>
@@ -42,14 +50,6 @@
             <i class="mdi mdi-chart-bar"></i>
           </span>
           <span class="menu-title">Charts</span>
-        </a>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="pages/icons/mdi.html">
-          <span class="menu-icon">
-            <i class="mdi mdi-contacts"></i>
-          </span>
-          <span class="menu-title">Icons</span>
         </a>
       </li>
       <li class="nav-item menu-items">

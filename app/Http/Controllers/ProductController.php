@@ -55,7 +55,7 @@ class ProductController extends Controller
 
         $data->save();
 
-        return redirect('adminn/product')->with('message', 'Thêm thành công!');
+        return redirect('fruitya-admin/product')->with('message', 'Thêm thành công!');
     }
 
     public function view(Request $request) {
@@ -91,7 +91,8 @@ class ProductController extends Controller
                             'quantity' => $request->quantity,
                             'unit' => $request->unit,
                             'price' => $price,
-                            'discount' => $discount ]);
+                            'discount' => $discount
+                        ]);
         }else {
             $data->update([ 'name' => $request->name,
                             'category' => $category,
@@ -99,10 +100,11 @@ class ProductController extends Controller
                             'quantity' => $request->quantity,
                             'unit' => $request->unit,
                             'price' => $price,
-                            'discount' => $discount ]);
+                            'discount' => $discount
+                        ]);
         }
 
-        return redirect('adminn/product')->with('message', 'Cập nhật thành công!');
+        return redirect('fruitya-admin/product')->with('message', 'Cập nhật thành công!');
     }
 
     public function delete($id) {

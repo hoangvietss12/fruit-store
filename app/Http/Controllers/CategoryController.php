@@ -22,7 +22,7 @@ class CategoryController extends Controller
         $data->name = $request->category_name;
         $data->save();
 
-        return redirect('adminn/category')->with('message', 'Thêm thành công!');
+        return redirect('fruitya-admin/category')->with('message', 'Thêm thành công!');
     }
 
     public function delete($id) {
