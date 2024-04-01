@@ -19,7 +19,7 @@ class CategoryController extends Controller
 
     public function store(Request $request) {
         $data = new Category;
-        $data->category_name = $request->category_name;
+        $data->name = $request->category_name;
         $data->save();
 
         return redirect('adminn/category')->with('message', 'Thêm thành công!');

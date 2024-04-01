@@ -67,7 +67,7 @@
                             @foreach($data as $index => $item)
                                 <tr>
                                     <td>{{$index+1}}</td>
-                                    <td>{{$item->category_name}}</td>
+                                    <td>{{$item->name}}</td>
                                     <td>
                                         <div class="d-flex justify-center">
                                             <a class="btn btn-warning ml-2" href="{{route('category.edit', ['id' => $item->id])}}" role="button">Sửa</a>
