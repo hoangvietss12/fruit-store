@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vn">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -31,7 +31,9 @@
         <!-- partial:partials/_navbar.html -->
         @include('admin.components.navbar')
         <!-- partial -->
-        @include('admin.components.body')
+
+
+        
         <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->

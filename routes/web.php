@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
@@ -115,6 +116,16 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::get('/edit/{id}', [VendorController::class, 'edit'])->name('vendor.edit');
 
         Route::post('/{id}', [VendorController::class, 'update'])->name('vendor.update');
+    });
+
+    Route::prefix('account')->group(function () {
+        Route::get('/', [AccountController::class, 'index'])->name('account.index');
+
+        Route::get('/view/{id}', [AccountController::class, 'view'])->name('account.view');
+
+        Route::get('/edit/{id}', [AccountController::class, 'edit'])->name('account.edit');
+
+        Route::post('/{id}', [AccountController::class, 'update'])->name('account.update');
     });
 });
 

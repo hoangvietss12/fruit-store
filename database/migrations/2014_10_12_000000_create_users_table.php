@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('password');
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('status')->default('active');
             $table->timestamps();
         });
     }

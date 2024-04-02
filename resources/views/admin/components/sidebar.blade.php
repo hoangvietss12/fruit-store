@@ -13,6 +13,14 @@
         </a>
       </li>
       <li class="nav-item menu-items">
+        <a class="nav-link" href="{{route('account.index')}}">
+          <span class="menu-icon">
+            <i class="mdi mdi-security"></i>
+          </span>
+          <span class="menu-title">Tài khoản</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
         <a class="nav-link" href="{{route('vendor.index')}}">
           <span class="menu-icon">
             <i class="mdi mdi-contacts"></i>
@@ -45,17 +53,9 @@
         </a>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="pages/charts/chartjs.html">
-          <span class="menu-icon">
-            <i class="mdi mdi-chart-bar"></i>
-          </span>
-          <span class="menu-title">Charts</span>
-        </a>
-      </li>
-      <li class="nav-item menu-items">
         <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
           <span class="menu-icon">
-            <i class="mdi mdi-security"></i>
+            <i class="mdi mdi-chart-bar"></i>
           </span>
           <span class="menu-title">User Pages</span>
           <i class="menu-arrow"></i>
