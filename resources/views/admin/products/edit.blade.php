@@ -22,11 +22,11 @@
                             <select class="js-example-basic-single" name="category" style="width:100%">
                                 <option value="" disabled>Chọn danh mục sản phẩm</option>
                                 @foreach($categories as $category)
-                                @if($data->category_id == $category->id)
-                                <option value="{{$category->id}}" selected>{{$category->name}}</option>
-                                @else
-                                <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endif
+                                    @if($data->category_id == $category->id)
+                                        <option value="{{$category->id}}" selected>{{$category->name}}</option>
+                                    @else
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -35,11 +35,11 @@
                             <select class="js-example-basic-single" name="vendor" style="width:100%">
                                 <option value="" disabled>Chọn nhà cung cấp</option>
                                 @foreach($vendors as $vendor)
-                                @if($data->vendor_id == $vendor->id)
-                                <option value="{{$vendor->id}}" selected>{{$vendor->name}}</option>
-                                @else
-                                <option value="{{$vendor->id}}">{{$vendor->name}}</option>
-                                @endif
+                                    @if($data->vendor_id == $vendor->id)
+                                        <option value="{{$vendor->id}}" selected>{{$vendor->name}}</option>
+                                    @else
+                                        <option value="{{$vendor->id}}">{{$vendor->name}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>

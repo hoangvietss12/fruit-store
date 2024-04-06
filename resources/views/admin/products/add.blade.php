@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             <label for="product_quantity">Số lượng:</label>
-                            <input type="text" class="form-control" id="product_quantity" name="quantity"
+                            <input type="text" class="form-control" id="product_quantity" name="product_quantity"
                                 placeholder="Số lượng">
                         </div>
                         <div class="form-group">

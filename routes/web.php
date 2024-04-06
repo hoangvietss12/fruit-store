@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
@@ -126,6 +127,17 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::get('/edit/{id}', [AccountController::class, 'edit'])->name('account.edit');
 
         Route::post('/{id}', [AccountController::class, 'update'])->name('account.update');
+    });
+
+    Route::prefix('report')->group(function () {
+        Route::get('/products', [ReportController::class, 'indexProduct'])->name('report.product.index');
+
+        Route::post('/products/search', [ReportController::class, 'searchProduct'])->name('report.product.search');
+
+        Route::get('/products/export/{categoryId}/{vendorId}/{price}', [ReportController::class, 'exportProduct'])->name('report.product.export');
+
+        Route::get('/revenues', [ReportController::class, 'indexRevenue'])->name('report.revenue.index');
+
     });
 });
 

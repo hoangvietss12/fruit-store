@@ -53,7 +53,7 @@ class OrderController extends Controller
 
 
         $pdf = PDF::loadView('admin.orders.view', compact('order_info', 'order_detail_info'));
-        $today_date = Carbon::now()->format('d-m-Y');
+        $today_date = Carbon::now()->format('d/m/Y');
 
         return $pdf->stream('invoice'.$id.'_'.$today_date.'.pdf');
     }

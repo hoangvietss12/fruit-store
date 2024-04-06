@@ -16,5 +16,5 @@
     <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/custom.js') }}"></script>
     <!-- End custom js for this page -->

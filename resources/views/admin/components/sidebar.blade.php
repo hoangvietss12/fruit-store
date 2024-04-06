@@ -57,16 +57,13 @@
           <span class="menu-icon">
             <i class="mdi mdi-chart-bar"></i>
           </span>
-          <span class="menu-title">User Pages</span>
+          <span class="menu-title">Báo cáo và thống kê</span>
           <i class="menu-arrow"></i>
         </a>
         <div class="collapse" id="auth">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('report.product.index')}}"> Thống kê sản phẩm </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('report.revenue.index')}}"> Báo cáo doanh thu </a></li>
           </ul>
         </div>
       </li>

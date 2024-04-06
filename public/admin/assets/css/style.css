@@ -21175,3 +21175,42 @@ input:focus, textarea {
     height: 150px;
     margin-right: 15px;
 }
+
+/* form search */
+.text-notfound {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.form-search-category {
+    width: 33%
+}
+
+.form-search-vendor, .form-search-price {
+    width: 25%;
+}
+
+.form-search-discount {
+    width: 15%;
+}
+
+@media(max-width: 840px) {
+    .form-search-category .form-search-vendor {
+        width: 43%
+    }
+
+    .form-search-price {
+        width: 30%;
+    }
+
+    .form-search-discount {
+        width: 25%;
+    }
+}
+
+@media(max-width: 600px) {
+    .form-search-category .form-search-vendor .form-search-price .form-search-discount {
+        width: 100%;
+    }
+}

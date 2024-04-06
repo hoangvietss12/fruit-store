@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// click submit order
+// click submit
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("btn-submit-order").addEventListener("click", function() {
         document.getElementById("order-form").submit();

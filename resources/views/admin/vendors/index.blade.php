@@ -51,7 +51,7 @@
                                     <td>{{$item->name}}</td>
                                     <td>{{$item->email}}</td>
                                     <td>{{$item->phone}}</td>
-                                    <td>{{$item->address}}đ</td>
+                                    <td>{{$item->address}}</td>
                                     <td>
                                         <div class="d-flex justify-center">
                                             <a class="btn btn-warning ml-2"
