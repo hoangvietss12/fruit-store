@@ -45,6 +45,14 @@
         </a>
       </li>
       <li class="nav-item menu-items">
+        <a class="nav-link" href="{{route('import.index')}}">
+          <span class="menu-icon">
+            <span class="mdi mdi-import"></span>
+          </span>
+          <span class="menu-title">Nhập hàng</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
         <a class="nav-link" href="{{route('order.index')}}">
           <span class="menu-icon">
             <i class="mdi mdi-file-document-box"></i>

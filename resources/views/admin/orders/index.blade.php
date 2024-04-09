@@ -39,15 +39,18 @@
                                     <td>{{number_format($item->total)}}đ</td>
                                     <td>
                                         <div class="d-flex justify-center">
-                                            <a class="btn btn-primary ml-2" target="_blank"
-                                                href="{{route('order.view', ['id' => $item->id])}}" role="button">Xem chi
-                                                tiết</a>
-                                            <a class="btn btn-warning ml-2"
-                                                href="{{route('order.edit', ['id' => $item->id])}}" role="button">Sửa trạng
-                                                thái</a>
-                                            <a class="btn btn-success ml-2" target="_blank"
-                                                href="{{route('order.print', ['id' => $item->id])}}" role="button">In hóa
-                                                đơn</a>
+                                            <a class="btn btn-primary ml-2 d-flex" target="_blank" href="{{route('order.view', ['id' => $item->id])}}" role="button">
+                                                <span class="mdi mdi-eye-outline mr-1"></span>
+                                                Xem chi tiết
+                                            </a>
+                                            <a class="btn btn-warning ml-2 d-flex" href="{{route('order.edit', ['id' => $item->id])}}" role="button">
+                                                <span class="mdi mdi-pencil mr-1"></span>
+                                                Sửa trạng thái
+                                            </a>
+                                            <a class="btn btn-success ml-2 d-flex" target="_blank" href="{{route('order.print', ['id' => $item->id])}}" role="button">
+                                                <span class="mdi mdi-printer-pos mr-1"></span>
+                                                In hóa đơn
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>

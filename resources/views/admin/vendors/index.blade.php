@@ -26,7 +26,10 @@
     </div>
 
     <div class="d-flex justify-end my-3">
-        <a class="btn btn-success" href="{{route('vendor.create')}}" role="button">Thêm</a>
+        <a class="btn btn-success d-flex" href="{{route('vendor.create')}}" role="button">
+            <span class="mdi mdi-plus mr-1"></span>
+            Thêm
+        </a>
     </div>
 
     <div class="row">
@@ -54,10 +57,14 @@
                                     <td>{{$item->address}}</td>
                                     <td>
                                         <div class="d-flex justify-center">
-                                            <a class="btn btn-warning ml-2"
-                                                href="{{route('vendor.edit', ['id' => $item->id])}}" role="button">Sửa</a>
-                                            <a class="btn btn-danger ml-2"
-                                                href="{{route('vendor.delete', ['id' => $item->id])}}" role="button">Xóa</a>
+                                            <a class="btn btn-warning ml-2 d-flex" href="{{route('vendor.edit', ['id' => $item->id])}}" role="button">
+                                                <span class="mdi mdi-pencil mr-1"></span>
+                                                Sửa
+                                            </a>
+                                            <a class="btn btn-danger ml-2 d-flex" href="{{route('vendor.delete', ['id' => $item->id])}}" role="button">
+                                                <span class="mdi mdi-delete mr-1"></span>
+                                                Xóa
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>

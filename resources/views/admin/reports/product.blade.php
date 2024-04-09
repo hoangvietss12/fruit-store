@@ -69,20 +69,26 @@
                 </select>
             </div>
         </form>
-        <button class="btn btn-success mr-2 d-block" id="btn-report-search">Tạo thống kê</button>
+        <button class="btn btn-success mr-2 d-block text-center" id="btn-report-search">
+            <span class="mdi mdi-magnify-plus mr-1"></span>
+            Tạo thống kê
+        </button>
     </div>
 
     <div id="searchResults">
         @if(!empty($data) && !$data->isEmpty())
             <div class="d-flex justify-end my-3">
-                <a class="btn btn-success"
+                <a class="btn btn-success d-flex"
                     href="{{route('report.product.export',
                     [
                         'categoryId' => $params['category'],
                         'vendorId' => !$params['vendor'],
                         'price' => $params['price']
                     ])}}"
-                    role="button">Xuất file
+                    role="button"
+                >
+                    <span class="mdi mdi-export-variant mr-1"></span>
+                    Xuất file
                 </a>
             </div>
 
