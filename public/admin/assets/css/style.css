@@ -21214,3 +21214,9 @@ input:focus, textarea {
         width: 100%;
     }
 }
+
+.product-group {
+    border: 1px solid;
+    padding: 10px;
+    margin-bottom: 20px;
+}

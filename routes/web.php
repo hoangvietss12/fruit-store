@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
@@ -127,6 +128,16 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::get('/edit/{id}', [AccountController::class, 'edit'])->name('account.edit');
 
         Route::post('/{id}', [AccountController::class, 'update'])->name('account.update');
+    });
+
+    Route::prefix('import')->group(function () {
+        Route::get('/', [ImportController::class, 'index'])->name('import.index');
+
+        Route::get('/view/{id}', [ImportController::class, 'view'])->name('import.view');
+
+        Route::get('/create', [ImportController::class, 'addVendor'])->name('import.create');
+
+        Route::post('/', [ImportController::class, 'storeVendor'])->name('import.store');
     });
 
     Route::prefix('report')->group(function () {
