@@ -27,4 +27,9 @@ class Product extends Model
     public function vendor() {
         return $this->belongsTo(Vendor::class, 'vendor_id');
     }
+    public function updateQuantity($productId, $quantityChange) {
+        $product = Product::findOrFail($productId);
+        $product->quantity += $quantityChange;
+        $product->save();
+    }
 }

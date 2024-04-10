@@ -138,6 +138,8 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::get('/create', [ImportController::class, 'addVendor'])->name('import.create');
 
         Route::post('/', [ImportController::class, 'storeVendor'])->name('import.store');
+
+        Route::post('/{id}', [ImportController::class, 'storeProduct'])->name('import.store.product');
     });
 
     Route::prefix('report')->group(function () {
