@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('goods_received_note_details', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('goods_received_note_id');
             $table->unsignedBigInteger('product_id');
             $table->float('quantity');
             $table->integer('price');
-            $table->float('total_price');
+            $table->decimal('total_price', 10, 2);
             $table->string('note')->nullable();
             $table->timestamps();
 

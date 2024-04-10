@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('goods_received_note', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vendor_id');
-            $table->float('total')->default(0);
+            $table->decimal('total', 10 ,2)->default(0);
             $table->timestamps();
 
             $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');;
