@@ -13,7 +13,20 @@ class ImportController extends Controller
     public function index() {
         try {
             $data = GoodsReceivedNote::orderBy('created_at', 'desc')->with('vendor')->paginate(10);
+
             return view('admin.imports.index', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
+
+    public function view($id) {
+        try {
+            $note_info = GoodsReceivedNote::findOrFail($id)->with('vendor')->first();
+
+            $note_detail_info = GoodsReceivedNoteDetail::where('goods_received_note_id', $id)->with('product')->get();
+
+            return view('admin.imports.view', compact('note_info', 'note_detail_info'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
@@ -22,6 +35,7 @@ class ImportController extends Controller
     public function addVendor() {
         try {
             $vendors = Vendor::all();
+
             return view('admin.imports.add-vendor', compact('vendors'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());

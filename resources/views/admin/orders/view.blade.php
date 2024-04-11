@@ -154,6 +154,7 @@
                 <th>Tên sản phẩm</th>
                 <th>Đơn giá</th>
                 <th>Số lượng</th>
+                <th>Đơn vị tính</th>
                 <th>Thành tiền</th>
             </tr>
         </thead>
@@ -166,6 +167,7 @@
                 </td>
                 <td width="15%">{{ number_format($item->price) }}đ</td>
                 <td width="10%">{{ $item->quantity }}</td>
+                <td width="10%">{{ $item->product->unit }}</td>
                 <td width="15%" class="fw-bold">{{ number_format($item->total_price) }}đ</td>
             </tr>
             @endforeach
