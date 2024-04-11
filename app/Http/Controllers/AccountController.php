@@ -9,29 +9,45 @@ use App\Models\Vendor;
 class AccountController extends Controller
 {
     public function index() {
-        $data = User::where('user_type', 0)->paginate(10);
+        try {
+            $data = User::where('user_type', 0)->paginate(10);
 
-        return view('admin.accounts.index', compact('data'));
+            return view('admin.accounts.index', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function view($id) {
-        $data = User::where('id', $id)->first();
+        try {
+            $data = User::where('id', $id)->first();
 
-        return view('admin.accounts.view', compact('data'));
+            return view('admin.accounts.view', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function edit($id) {
-        $data = User::findOrFail($id);
+        try {
+            $data = User::findOrFail($id);
 
-        return view('admin.accounts.edit', compact('data'));
+            return view('admin.accounts.edit', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function update(Request $request, $id) {
-        $status = $request->input('account_status');
-        $account = User::findOrNew($id);
-        $account->status = $status;
-        $account->save();
+        try {
+            $status = $request->input('account_status');
+            $account = User::findOrNew($id);
+            $account->status = $status;
+            $account->save();
 
-        return redirect('fruitya-admin/account')->with('message', 'Cập nhật thành công!');
+            return redirect('fruitya-admin/account')->with('message', 'Cập nhật thành công!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 }

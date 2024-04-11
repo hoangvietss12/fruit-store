@@ -22,42 +22,53 @@ class ReportController extends Controller
     ];
 
     public function indexProduct() {
-        $categories = Category::all();
-        $vendors = Vendor::all();
-        $range_price = $this->range_price;
+        try {
+            $categories = Category::all();
+            $vendors = Vendor::all();
+            $range_price = $this->range_price;
 
-        return view('admin.reports.product', compact('categories', 'vendors', 'range_price'));
+            return view('admin.reports.product', compact('categories', 'vendors', 'range_price'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function searchProduct(Request $request) {
+        try {
+            $category = $request->input('product_category') ?? null;
+            $vendor = $request->input('product_vendor') ?? null;
+            $price = $request->input('product_price') ?? null;
+            $is_discount = $request->input('product_discount');
 
-        $category = $request->input('product_category') ?? null;
-        $vendor = $request->input('product_vendor') ?? null;
-        $price = $request->input('product_price') ?? null;
-        $is_discount = $request->input('product_discount');
+            $params = [
+                'category' => $category,
+                'vendor' => $vendor,
+                'price' => $price,
+                'discount' => $is_discount
+            ];
+            dd($params);
 
-        $params = [
-            'category' => $category,
-            'vendor' => $vendor,
-            'price' => $price,
-            'discount' => $is_discount
-        ];
-        dd($params);
+            $data = $this->queryProducts($category, $vendor, $price, $is_discount);
 
-        $data = $this->queryProducts($category, $vendor, $price, $is_discount);
+            $categories = Category::all();
+            $vendors = Vendor::all();
+            $range_price = $this->range_price;
 
-        $categories = Category::all();
-        $vendors = Vendor::all();
-        $range_price = $this->range_price;
-
-        return view('admin.reports.product', compact('data', 'categories', 'vendors', 'range_price', 'is_discount', 'params'));
+            return view('admin.reports.product', compact('data', 'categories', 'vendors', 'range_price', 'is_discount', 'params'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function exportProduct($categoryId = null, $vendorId = null, $price = null) {
-        $data = $this->queryProducts($categoryId, $vendorId, $price);
+        try {
+            $data = $this->queryProducts($categoryId, $vendorId, $price);
 
-        $today_date = Carbon::now()->format('d/m/Y');
-        return Excel::download(new ProductExport($data), 'data_'.$today_date.'.xlsx');
+            $today_date = Carbon::now()->format('d/m/Y');
+            return Excel::download(new ProductExport($data), 'data_'.$today_date.'.xlsx');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function queryProducts($categoryId, $vendorId, $price, $discount = null) {

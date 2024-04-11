@@ -12,33 +12,41 @@ use Kreait\Firebase\ServiceAccount;
 class ProductController extends Controller
 {
     public function index() {
-        $data = Product::paginate(8);
+        try {
+            $data = Product::paginate(8);
 
-        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
-        foreach ($data as $product) {
-            $imageUrls = [];
-            $images = json_decode($product->images, true);
+            $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+            foreach ($data as $product) {
+                $imageUrls = [];
+                $images = json_decode($product->images, true);
 
-            foreach($images as $image) {
-                $imageReference = $bucket->object($image);
+                foreach($images as $image) {
+                    $imageReference = $bucket->object($image);
 
-                if ($imageReference->exists()) {
-                    $expiresAt = new \DateTime('tomorrow');
-                    $imageUrls[] = $imageReference->signedUrl($expiresAt);
+                    if ($imageReference->exists()) {
+                        $expiresAt = new \DateTime('tomorrow');
+                        $imageUrls[] = $imageReference->signedUrl($expiresAt);
+                    }
                 }
+
+                $product->images = $imageUrls;
             }
 
-            $product->images = $imageUrls;
+            return view('admin.products.index', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
-
-        return view('admin.products.index', compact('data'));
     }
 
     public function create() {
-        $categories = Category::all();
-        $vendors = Vendor::all();
+        try {
+            $categories = Category::all();
+            $vendors = Vendor::all();
 
-        return view('admin.products.add', compact('categories', 'vendors'));
+            return view('admin.products.add', compact('categories', 'vendors'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function store(Request $request) {
@@ -62,72 +70,88 @@ class ProductController extends Controller
     }
 
     public function view($id) {
-        $product = Product::where('id', $id)->with('category')->with('vendor')->first();
+        try {
+            $product = Product::where('id', $id)->with('category')->with('vendor')->first();
 
-        $this->createUrlImages($product);
+            $this->createUrlImages($product);
 
-        return view('admin.products.view', compact('product'));
+            return view('admin.products.view', compact('product'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function edit($id) {
-        $categories = Category::all();
-        $vendors = Vendor::all();
+        try {
+            $categories = Category::all();
+            $vendors = Vendor::all();
 
-        $data = Product::findOrFail($id);
+            $data = Product::findOrFail($id);
 
-        return view('admin.products.edit', compact('data', 'categories', 'vendors'));
+            return view('admin.products.edit', compact('data', 'categories', 'vendors'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function update(Request $request, $id) {
-        $data = Product::find($id);
+        try {
+            $data = Product::find($id);
 
-        $quantity = floatval($request->quantity);
-        $price = intval($request->price);
-        $discount = floatval($request->discount);
-        $category = $request->input('category');
-        $vendor = $request->input('vendor');
+            $quantity = floatval($request->quantity);
+            $price = intval($request->price);
+            $discount = floatval($request->discount);
+            $category = $request->input('category');
+            $vendor = $request->input('vendor');
 
-        if($request->hasFile('images')) {
-            $this->deleteImageFromFirebase($data->images);
+            if($request->hasFile('images')) {
+                $this->deleteImageFromFirebase($data->images);
 
-            $imageUrls = $this->uploadImagesToFirebase($request);
+                $imageUrls = $this->uploadImagesToFirebase($request);
 
-            $images = json_encode($imageUrls);
+                $images = json_encode($imageUrls);
 
-            $data->update([ 'name' => $request->name,
-                            'category_id' => $category,
-                            'vendor_id' => $vendor,
-                            'images' => $images,
-                            'description' => $request->description,
-                            'quantity' => $quantity,
-                            'unit' => $request->unit,
-                            'price' => $price,
-                            'discount' => $discount,
-                            'status' => $request->status
-                        ]);
-        }else {
-            $data->update([ 'name' => $request->name,
-                            'category' => $category,
-                            'vendor_id' => $vendor,
-                            'description' => $request->description,
-                            'quantity' => $request->quantity,
-                            'unit' => $request->unit,
-                            'price' => $price,
-                            'discount' => $discount
-                        ]);
+                $data->update([ 'name' => $request->name,
+                                'category_id' => $category,
+                                'vendor_id' => $vendor,
+                                'images' => $images,
+                                'description' => $request->description,
+                                'quantity' => $quantity,
+                                'unit' => $request->unit,
+                                'price' => $price,
+                                'discount' => $discount,
+                                'status' => $request->status
+                            ]);
+            }else {
+                $data->update([ 'name' => $request->name,
+                                'category' => $category,
+                                'vendor_id' => $vendor,
+                                'description' => $request->description,
+                                'quantity' => $request->quantity,
+                                'unit' => $request->unit,
+                                'price' => $price,
+                                'discount' => $discount
+                            ]);
+            }
+
+            return redirect('fruitya-admin/product')->with('message', 'Cập nhật thành công!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
-
-        return redirect('fruitya-admin/product')->with('message', 'Cập nhật thành công!');
     }
 
     public function delete($id) {
-        $data = Product::find($id);
+        try {
+            $data = Product::find($id);
 
-        $this->deleteImageFromFirebase($data->images);
+            $this->deleteImageFromFirebase($data->images);
 
-        $data->delete();
+            $data->delete();
 
-        return redirect()->back()->with('message', 'Xóa thành công!');
+            return redirect()->back()->with('message', 'Xóa thành công!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function createUrlImages($product) {

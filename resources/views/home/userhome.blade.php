@@ -3,6 +3,14 @@
 @section('title', 'Trang chủ Fruit-ya')
 
 @section('content')
+    @if(session('error'))
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+
+            {{ session('error') }}
+        </div>
+    @endif
+
     <!-- slider section -->
     @include('home.components.slider')
     <!-- end slider section -->

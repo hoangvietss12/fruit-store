@@ -3,6 +3,14 @@
 @section('title', 'Cửa hàng Fruit-ya')
 
 @section('content')
+    @if(session('error'))
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+
+            {{ session('error') }}
+        </div>
+    @endif
+
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
         <div class="container">

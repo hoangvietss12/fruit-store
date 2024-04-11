@@ -9,42 +9,58 @@ use App\Models\Category;
 class HomeController extends Controller
 {
     public function index() {
-        $data = Product::take(6)->get();
+        try {
+            $data = Product::take(6)->get();
 
-        $this->createUrlImages($data);
+            $this->createUrlImages($data);
 
-        return view('home.userhome', compact('data'));
+            return view('home.userhome', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function store() {
-        $data = Product::paginate(9);
-        $categories = Category::all();
+        try {
+            $data = Product::paginate(9);
+            $categories = Category::all();
 
-        $this->createUrlImages($data);
+            $this->createUrlImages($data);
 
-
-        return view('home.store', compact('data', 'categories'));
+            return view('home.store', compact('data', 'categories'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function loadMoreProducts(Request $request) {
-        $offset = $request->input('offset', 0);
-        $limit = 6;
+        try {
+            $offset = $request->input('offset', 0);
+            $limit = 6;
 
-        $products = Product::skip($offset)->take($limit)->get();
+            $products = Product::skip($offset)->take($limit)->get();
 
-        $this->createUrlImages($products);
+            $this->createUrlImages($products);
 
-        return response()->json($products);
+            return response()->json($products);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
+    // fix
     public function getProductsByCategory($category) {
-        $category = Category::where('id', $category)->get();
+        try {
+            $category = Category::where('id', $category)->get();
 
-        $data = Product::where('category', $category->category_name)->get();
+            $data = Product::where('category', $category->category_name)->get();
 
-        $this->createUrlImages($data);
+            $this->createUrlImages($data);
 
-        return response()->json($data);
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function createUrlImages($data) {

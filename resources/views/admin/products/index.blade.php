@@ -2,23 +2,31 @@
 
 @section('content')
     @if(session('message') == 'Thêm thành công!')
-    <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
 
-        {{session('message')}}
-    </div>
+            {{session('message')}}
+        </div>
     @elseif(session('message') == 'Xóa thành công!')
-    <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
 
-        {{session('message')}}
-    </div>
+            {{session('message')}}
+        </div>
     @elseif(session('message') == 'Cập nhật thành công!')
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
 
-        {{session('message')}}
-    </div>
+            {{session('message')}}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+
+            {{ session('error') }}
+        </div>
     @endif
 
     <div class="page-header">

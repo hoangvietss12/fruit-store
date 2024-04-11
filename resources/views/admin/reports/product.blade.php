@@ -1,6 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
+    @if(session('error'))
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+
+            {{ session('error') }}
+        </div>
+    @endif
 
     <div class="page-header">
         <h1 class="page-title"> Thống kê sản phẩm </h1>

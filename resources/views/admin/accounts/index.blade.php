@@ -8,6 +8,14 @@
             {{session('message')}}
         </div>
     @endif
+    
+    @if(session('error'))
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+
+            {{ session('error') }}
+        </div>
+    @endif
 
     <div class="page-header">
         <h3 class="page-title"> Danh sách tài khoản</h3>
