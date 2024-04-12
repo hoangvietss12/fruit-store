@@ -76,6 +76,8 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
 
         Route::post('/{id}', [CategoryController::class, 'update'])->name('category.update');
+
+        Route::get('/search', [CategoryController::class, 'search'])->name('category.search');
     });
 
     Route::prefix('product')->group(function () {

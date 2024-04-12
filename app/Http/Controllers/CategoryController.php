@@ -66,4 +66,15 @@ class CategoryController extends Controller
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
     }
+
+    public function search(Request $request) {
+        try {
+            $keyword = $request->category_name;
+            $data = Category::where('name', 'like', '%'.$keyword.'%')->get();
+
+            return view('admin.categories.index', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
 }

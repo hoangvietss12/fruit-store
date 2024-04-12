@@ -21209,3 +21209,12 @@ input:focus, textarea {
     padding: 10px;
     margin-bottom: 20px;
 }
+
+.btn-search {
+    background: #fff !important;
+    color: #333;
+}
+
+.btn-search:hover {
+    color: #333;
+}
