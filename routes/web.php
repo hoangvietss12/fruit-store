@@ -130,6 +130,8 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::get('/edit/{id}', [AccountController::class, 'edit'])->name('account.edit');
 
         Route::post('/{id}', [AccountController::class, 'update'])->name('account.update');
+
+        Route::get('/search', [AccountController::class, 'search'])->name('account.search');
     });
 
     Route::prefix('import')->group(function () {

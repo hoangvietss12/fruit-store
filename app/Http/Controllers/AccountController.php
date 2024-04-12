@@ -50,4 +50,32 @@ class AccountController extends Controller
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
     }
+
+    public function search(Request $request) {
+        try {
+            $name = $request->has('account_name') ? $request->account_name : null;
+            $email = $request->has('account_email') ? $request->account_email : null;
+            $status = $request->has('account_status') ? $request->input('account_status') : null;
+
+            $query = User::query();
+
+            if ($name !== null) {
+                $query->where('name', 'like', '%'.$name.'%');
+            }
+
+            if ($email !== null) {
+                $query->where('email', 'like', '%'.$email.'%');
+            }
+
+            if ($status !== null) {
+                $query->where('status', $status);
+            }
+
+            $data = $query->where('user_type', 0)->paginate(10);
+
+            return view('admin.accounts.index', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
 }
