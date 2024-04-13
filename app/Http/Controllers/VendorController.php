@@ -73,4 +73,37 @@ class VendorController extends Controller
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
     }
+
+    public function search(Request $request) {
+        try {
+            $name = $request->has('vendor_name') ? $request->vendor_name : null;
+            $email = $request->has('vendor_email') ? $request->vendor_email : null;
+            $phone = $request->has('vendor_phone') ? $request->vendor_phone : null;
+            $address = $request->has('vendor_address') ? $request->vendor_address : null;
+
+            $query = Vendor::query();
+
+            if ($name !== null) {
+                $query->where('name', 'like', '%'.$name.'%');
+            }
+
+            if ($email !== null) {
+                $query->where('email', 'like', '%'.$email.'%');
+            }
+
+            if ($phone !== null) {
+                $query->where('phone', 'like', '%'.$phone.'%');
+            }
+
+            if ($address !== null) {
+                $query->where('address', 'like', '%'.$address.'%');
+            }
+
+            $data = $query->paginate(10);
+
+            return view('admin.vendors.index', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
 }

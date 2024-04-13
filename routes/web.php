@@ -120,6 +120,8 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::get('/edit/{id}', [VendorController::class, 'edit'])->name('vendor.edit');
 
         Route::post('/{id}', [VendorController::class, 'update'])->name('vendor.update');
+
+        Route::get('/search', [VendorController::class, 'search'])->name('vendor.search');
     });
 
     Route::prefix('account')->group(function () {
