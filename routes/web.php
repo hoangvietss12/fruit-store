@@ -94,6 +94,8 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
 
         Route::post('/{id}', [ProductController::class, 'update'])->name('product.update');
+
+        Route::get('/search', [ProductController::class, 'search'])->name('product.search');
     });
 
     Route::prefix('order')->group(function () {

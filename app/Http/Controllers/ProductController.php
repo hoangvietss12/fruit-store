@@ -11,28 +11,24 @@ use Kreait\Firebase\ServiceAccount;
 
 class ProductController extends Controller
 {
+    private $range_price = [
+        '0-50000',
+        '50001-100000',
+        '100001-300000',
+        '300001-500000',
+        '500001-1000000',
+        '1000001-'
+    ];
     public function index() {
         try {
             $data = Product::paginate(8);
+            $categories = Category::all();
+            $vendors = Vendor::all();
+            $range_price = $this->range_price;
 
-            $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
-            foreach ($data as $product) {
-                $imageUrls = [];
-                $images = json_decode($product->images, true);
+            $this->createUrlImagesForProducts($data);
 
-                foreach($images as $image) {
-                    $imageReference = $bucket->object($image);
-
-                    if ($imageReference->exists()) {
-                        $expiresAt = new \DateTime('tomorrow');
-                        $imageUrls[] = $imageReference->signedUrl($expiresAt);
-                    }
-                }
-
-                $product->images = $imageUrls;
-            }
-
-            return view('admin.products.index', compact('data'));
+            return view('admin.products.index', compact('data', 'categories', 'vendors', 'range_price'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
@@ -73,7 +69,7 @@ class ProductController extends Controller
         try {
             $product = Product::where('id', $id)->with('category')->with('vendor')->first();
 
-            $this->createUrlImages($product);
+            $this->createUrlImagesForProduct($product);
 
             return view('admin.products.view', compact('product'));
         } catch (\Exception $e) {
@@ -154,7 +150,81 @@ class ProductController extends Controller
         }
     }
 
-    public function createUrlImages($product) {
+    public function search(Request $request) {
+        try {
+            $name = $request->has('product_name') ? $request->product_name : null;
+            $category = $request->has('product_category') ? $request->input('product_category') : null;
+            $vendor = $request->has('product_vendor') ? $request->input('product_vendor') : null;
+            $price = $request->has('product_price') ? $request->input('product_price') : null;
+            $discount = $request->has('product_discount') ? $request->input('product_discount') : null;
+            $status = $request->has('product_status') ? $request->input('product_status') : null;
+
+            $query = Product::query();
+
+            if ($name !== null) {
+                $query->where('name', 'like', '%'.$name.'%');
+            }
+
+            if ($category !== null) {
+                $query->where('category_id', '=', $category);
+            }
+
+            if ($vendor !== null) {
+                $query->where('vendor_id', '=', $vendor);
+            }
+
+            if ($price !=null ) {
+                $price_range = explode('-', $price);
+                $min_price = (int)$price_range[0];
+                $max_price = (int)$price_range[1];
+                $query->whereBetween('price', [$min_price, $max_price]);
+            }
+
+            if ($discount == 'true') {
+                $query->where('discount', '>', 0.0);
+            }else if($discount == 'false') {
+                $query->where('discount', '=', 0.0);
+            }
+
+            if ($discount == 'Còn hàng') {
+                $query->where('status', '=', 'Còn hàng');
+            }else if($discount == 'hết hàng') {
+                $query->where('status', '=', 'Hết hàng');
+            }
+
+            $data = $query->paginate(8);
+            $categories = Category::all();
+            $vendors = Vendor::all();
+            $range_price = $this->range_price;
+
+            $this->createUrlImagesForProducts($data);
+
+            return view('admin.products.index', compact('data', 'categories', 'vendors', 'range_price'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
+
+    public function createUrlImagesForProducts($data) {
+        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+        foreach ($data as $product) {
+            $imageUrls = [];
+            $images = json_decode($product->images, true);
+
+            foreach($images as $image) {
+                $imageReference = $bucket->object($image);
+
+                if ($imageReference->exists()) {
+                    $expiresAt = new \DateTime('tomorrow');
+                    $imageUrls[] = $imageReference->signedUrl($expiresAt);
+                }
+            }
+
+            $product->images = $imageUrls;
+        }
+    }
+
+    public function createUrlImagesForProduct($product) {
         $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
         $imageUrls = [];
         $images = json_decode($product->images, true);
@@ -202,6 +272,4 @@ class ProductController extends Controller
             $object->delete();
         }
     }
-
-
 }
