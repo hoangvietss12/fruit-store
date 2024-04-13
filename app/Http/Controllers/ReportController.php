@@ -83,10 +83,10 @@ class ReportController extends Controller
         }
 
         if ($price !=null ) {
-            $priceRange = explode('-', $price);
-            $minPrice = (int)$priceRange[0];
-            $maxPrice = (int)$priceRange[1];
-            $products->whereBetween('price', [$minPrice, $maxPrice]);
+            $price_range = explode('-', $price);
+            $min_price = (int)$price_range[0];
+            $max_price = (int)$price_range[1];
+            $products->whereBetween('price', [$min_price, $max_price]);
         }
 
         if ($discount == 'true') {

@@ -77,4 +77,36 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
     }
+
+    public function search(Request $request) {
+        try {
+            $user_name = $request->has('user_name') ? $request->user_name : null;
+            $date_start = $request->has('date_start') ? $request->input('date_start') : null;
+            $date_end = $request->has('date_end') ? $request->input('date_end') : null;
+
+            $query = Order::query();
+
+            if($date_start != null && $date_end != null) {
+                $date_start_formatted = date("Y-m-d H:i:s", strtotime($date_start));
+                $date_end_formatted = date("Y-m-d H:i:s", strtotime($date_end));
+                $query->whereBetween('created_at', [$date_start_formatted, $date_end_formatted]);
+            }else if($date_start != null) {
+                $date_start_formatted = date("Y-m-d H:i:s", strtotime($date_start));
+                $query->where('created_at', '>=', $date_start_formatted);
+            }else if($date_end != null) {
+                $date_end_formatted = date("Y-m-d H:i:s", strtotime($date_end));
+                $query->where('created_at', '<=', $date_end_formatted);
+            }
+
+            if($user_name != null) {
+                $query-with('user')->where('name', 'like', $user_name);
+            }
+
+            $data = $query->paginate(10);
+
+            return view('admin.imports.index', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
 }

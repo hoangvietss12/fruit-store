@@ -108,6 +108,8 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::get('/print/{id}', [OrderController::class, 'print'])->name('order.print');
 
         Route::post('/{id}', [OrderController::class, 'update'])->name('order.update');
+
+        Route::get('/search', [OrderController::class, 'search'])->name('order.search');
     });
 
     Route::prefix('vendor')->group(function () {
@@ -148,6 +150,8 @@ Route::prefix('fruitya-admin')->group(function() {
         Route::post('/', [ImportController::class, 'storeVendor'])->name('import.store');
 
         Route::post('/{id}', [ImportController::class, 'storeProduct'])->name('import.store.product');
+
+        Route::get('/search', [ImportController::class, 'search'])->name('import.search');
     });
 
     Route::prefix('report')->group(function () {

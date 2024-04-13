@@ -13,8 +13,9 @@ class ImportController extends Controller
     public function index() {
         try {
             $data = GoodsReceivedNote::orderBy('created_at', 'desc')->with('vendor')->paginate(10);
+            $vendors = Vendor::all();
 
-            return view('admin.imports.index', compact('data'));
+            return view('admin.imports.index', compact('data', 'vendors'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
@@ -88,6 +89,39 @@ class ImportController extends Controller
             return redirect('fruitya-admin/import')->with('message', 'Thêm thành công!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lỗi: ' . $e->getMessage());
+        }
+    }
+
+    public function search(Request $request) {
+        try {
+            $vendor = $request->has('vendor') ? $request->input('vendor') : null;
+            $date_start = $request->has('date_start') ? $request->input('date_start') : null;
+            $date_end = $request->has('date_end') ? $request->input('date_end') : null;
+
+            $query = GoodsReceivedNote::query();
+
+            if($vendor != null) {
+                $query->where('vendor_id', '=', $vendor);
+            }
+
+            if($date_start != null && $date_end != null) {
+                $date_start_formatted = date("Y-m-d H:i:s", strtotime($date_start));
+                $date_end_formatted = date("Y-m-d H:i:s", strtotime($date_end));
+                $query->whereBetween('created_at', [$date_start_formatted, $date_end_formatted]);
+            }else if($date_start != null) {
+                $date_start_formatted = date("Y-m-d H:i:s", strtotime($date_start));
+                $query->where('created_at', '>=', $date_start_formatted);
+            }else if($date_end != null) {
+                $date_end_formatted = date("Y-m-d H:i:s", strtotime($date_end));
+                $query->where('created_at', '<=', $date_end_formatted);
+            }
+
+            $data = $query->paginate(10);
+            $vendors = Vendor::all();
+
+            return view('admin.imports.index', compact('data', 'vendors'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
     }
 }
