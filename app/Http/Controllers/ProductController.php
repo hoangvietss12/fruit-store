@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use App\Models\Category;
 use Kreait\Firebase\Factory;
@@ -19,6 +20,40 @@ class ProductController extends Controller
         '500001-1000000',
         '1000001-'
     ];
+    private function validator(array $data)
+    {
+        return Validator::make($data, [
+            'product_name' => 'required|string',
+            'product_category' => 'required',
+            'product_vendor' => 'required',
+            'product_unit' => 'required|string',
+            'product_quantity' => ['required', 'string', 'regex:/^[0-9.]+$/', 'min:1'],
+            'product_price' => ['required', 'string', 'regex:/^[0-9]+$/', 'min:0'],
+            'product_discount' => ['required', 'string', 'regex:/^[0-9.]+$/', 'min:0', 'max:1'],
+            'product_description' => 'required|string',
+            'product_images' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024'
+        ],[
+            'product_name.required' => 'Tên sản phẩm là trường bắt buộc.',
+            'product_category.required' => 'Danh mục của sản phẩm là trường bắt buộc.',
+            'product_vendor.email' => 'Nhà cung cấp của sản phẩm phải là trường bắt buộc.',
+            'product_unit.required' => 'Đơn vị tính là trường bắt buộc.',
+            'product_quantity.required' => 'Số lượng sản phẩm là trường bắt buộc.',
+            'product_quantity.regex' => 'Số lượng sản phẩm phải là số.',
+            'product_quantity.min' => 'Số lượng sản phẩm phải lớn hơn 1.',
+            'product_price.required' => 'Giá của sản phẩm là trường bắt buộc.',
+            'product_price.regex' => 'Giá của sản phẩm phải là số.',
+            'product_price.min' => 'Giá của sản phẩm phải lớn hơn 0.',
+            'product_discount.required' => 'Giảm giá của sản phẩm là trường bắt buộc.',
+            'product_discount.regex' => 'Giảm giá của sản phẩm phải là số.',
+            'product_discount.min' => 'Giảm giá của sản phẩm phải lớn hơn 0.',
+            'product_discount.max' => 'Giảm giá của sản phẩm phải nhỏ hơn 1.',
+            'product_description.required' => 'Mô tả sản phẩm là trường bắt buộc.',
+            'product_images.required' => 'Ảnh sản phẩm là trường bắt buộc.',
+            'product_images.image' => 'Tệp phải là một hình ảnh.',
+            'product_images.mimes' => 'Ảnh sản phẩm phải có định dạng jpeg, png, jpg hoặc gif.',
+            'product_images.max' => 'Dung lượng ảnh sản phẩm không được vượt quá 1MB.'
+        ]);
+    }
     public function index() {
         try {
             $data = Product::paginate(8);
@@ -46,23 +81,33 @@ class ProductController extends Controller
     }
 
     public function store(Request $request) {
-        $data = new Product;
-        $data->name = $request->product_name;
-        $data->description = $request->product_description;
-        $data->unit = $request->product_unit;
-        $data->quantity = floatval($request->product_quantity);
-        $data->price = intval($request->product_price);
-        $data->discount = floatval($request->product_discount);
-        $data->category_id = intval($request->input('product_category'));
-        $data->vendor_id = intval($request->input('product_vendor'));
+        try {
+            $validator = $this->validator($request->all());
 
-        $imageUrls = $this->uploadImagesToFirebase($request);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
 
-        $data->images = json_encode($imageUrls);
+            $data = new Product;
+            $data->name = $request->product_name;
+            $data->description = $request->product_description;
+            $data->unit = $request->product_unit;
+            $data->quantity = floatval($request->product_quantity);
+            $data->price = intval($request->product_price);
+            $data->discount = floatval($request->product_discount);
+            $data->category_id = intval($request->input('product_category'));
+            $data->vendor_id = intval($request->input('product_vendor'));
 
-        $data->save();
+            $imageUrls = $this->uploadImagesToFirebase($request);
 
-        return redirect('fruitya-admin/product')->with('message', 'Thêm thành công!');
+            $data->images = json_encode($imageUrls);
+
+            $data->save();
+
+            return redirect('fruitya-admin/product')->with('message', 'Thêm thành công!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
     }
 
     public function view($id) {
@@ -92,41 +137,37 @@ class ProductController extends Controller
 
     public function update(Request $request, $id) {
         try {
+            $validator = $this->validator($request->all());
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $data = Product::find($id);
 
-            $quantity = floatval($request->quantity);
-            $price = intval($request->price);
-            $discount = floatval($request->discount);
-            $category = $request->input('category');
-            $vendor = $request->input('vendor');
+            $quantity = floatval($request->product_quantity);
+            $price = intval($request->product_price);
+            $discount = floatval($request->product_discount);
+            $category = $request->input('product_category');
+            $vendor = $request->input('product_vendor');
 
-            if($request->hasFile('images')) {
+            if($request->hasFile('product_images')) {
                 $this->deleteImageFromFirebase($data->images);
 
                 $imageUrls = $this->uploadImagesToFirebase($request);
 
                 $images = json_encode($imageUrls);
 
-                $data->update([ 'name' => $request->name,
+                $data->update([ 'name' => $request->product_name,
                                 'category_id' => $category,
                                 'vendor_id' => $vendor,
                                 'images' => $images,
-                                'description' => $request->description,
+                                'description' => $request->product_description,
                                 'quantity' => $quantity,
-                                'unit' => $request->unit,
+                                'unit' => $request->product_unit,
                                 'price' => $price,
                                 'discount' => $discount,
-                                'status' => $request->status
-                            ]);
-            }else {
-                $data->update([ 'name' => $request->name,
-                                'category' => $category,
-                                'vendor_id' => $vendor,
-                                'description' => $request->description,
-                                'quantity' => $request->quantity,
-                                'unit' => $request->unit,
-                                'price' => $price,
-                                'discount' => $discount
+                                'status' => $request->product_status
                             ]);
             }
 
@@ -248,7 +289,7 @@ class ProductController extends Controller
             $firebaseStorage = app('firebase.storage');
             $bucket = $firebaseStorage->getBucket('fruit-ya-store-6573c.appspot.com');
 
-            foreach($request->file('images') as $image) {
+            foreach($request->file('product_images') as $image) {
                 $imageUrl = 'products/' . uniqid() . '.' . $image->getClientOriginalExtension();
 
                 $bucket->upload($image->getContent(), [

@@ -2,11 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
 
 class VendorController extends Controller
 {
+    private function validator(array $data)
+    {
+        return Validator::make($data, [
+            'vendor_name' => 'required|string',
+            'vendor_email' => 'required|string|email|unique:vendors',
+            'vendor_phone' => ['required', 'string', 'regex:/^[0-9 ]+$/', 'max:20'],
+            'vendor_address' => 'required|string'
+        ],[
+            'vendor_name.required' => 'Tên nhà cung cấp là trường bắt buộc.',
+            'vendor_email.required' => 'Email là trường bắt buộc.',
+            'vendor_email.email' => 'Email phải là địa chỉ email hợp lệ.',
+            'vendor_email.unique' => 'Email đã tồn tại.',
+            'vendor_phone.required' => 'Số điện thoại là trường bắt buộc.',
+            'vendor_phone.max' => 'Số điện thoại không được vượt quá :max ký tự.',
+            'vendor_phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và dấu cách.',
+            'vendor_address.required' => 'Địa chỉ là trường bắt buộc.',
+        ]);
+    }
     public function index() {
         try {
             $data = Vendor::paginate(10);
@@ -23,6 +42,12 @@ class VendorController extends Controller
 
     public function store(Request $request) {
         try {
+            $validator = $this->validator($request->all());
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $data = new Vendor;
             $data->name = $request->vendor_name;
             $data->email = $request->vendor_email;
@@ -60,6 +85,12 @@ class VendorController extends Controller
 
     public function update(Request $request, $id) {
         try {
+            $validator = $this->validator($request->all());
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $data = Vendor::findOrNew($id);
 
             $data->update([ 'name' => $request->vendor_name,

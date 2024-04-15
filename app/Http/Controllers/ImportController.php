@@ -7,9 +7,26 @@ use App\Models\GoodsReceivedNoteDetail;
 use App\Models\Product;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ImportController extends Controller
 {
+    private function validator(array $data)
+    {
+        return Validator::make($data, [
+            'vendor_name' => 'required',
+            'product.*' => 'required',
+            'quantity.*' => ['required', 'string', 'regex:/^[0-9.]+$/'],
+            'price.*' => ['required', 'string', 'regex:/^[0-9]+$/']
+        ],[
+            'vendor_name.required' => 'Nhà cung cấp là trường bắt buộc.',
+            'product.*.required' => 'Sản phẩm là trường bắt buộc.',
+            'quantity.*.required' => 'Số lượng sản phẩm là trường bắt buộc.',
+            'quantity.*.regex' => 'Số lượng sản phẩm phải là số.',
+            'price.*.required' => 'Giá sản phẩm là trường bắt buộc.',
+            'price.*.regex' => 'Giá sản phẩm phải là số.',
+        ]);
+    }
     public function index() {
         try {
             $data = GoodsReceivedNote::orderBy('created_at', 'desc')->with('vendor')->paginate(10);
@@ -45,7 +62,8 @@ class ImportController extends Controller
 
     public function storeVendor(Request $request) {
         try {
-            $vendor_id = $request->input('vendor');
+
+            $vendor_id = $request->input('vendor_name');
 
             $goods_received_note = new GoodsReceivedNote;
             $goods_received_note->vendor_id = $vendor_id;
@@ -61,6 +79,12 @@ class ImportController extends Controller
 
     public function storeProduct(Request $request, $id) {
         try {
+            $validator = $this->validator($request->all());
+
+            if($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $note = GoodsReceivedNote::findOrFail($id);
 
             $data = $request->all();

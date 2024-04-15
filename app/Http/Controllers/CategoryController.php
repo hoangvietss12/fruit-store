@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    private function validator(array $data)
+    {
+        return Validator::make($data, [
+            'category_name' => 'required|string'
+        ],[
+            'category_name.required' => 'Danh mục sản phẩm là trường bắt buộc.'
+        ]);
+    }
     public function index() {
         try {
             $data = Category::all();
@@ -23,6 +32,12 @@ class CategoryController extends Controller
 
     public function store(Request $request) {
         try {
+            $validator = $this->validator($request->all());
+
+            if($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $data = new Category;
             $data->name = $request->category_name;
             $data->save();
@@ -57,6 +72,13 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id) {
         try {
+
+            $validator = $this->validator($request->all());
+
+            if($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $input = $request->only(['category_name']);;
             $category = Category::findOrNew($id);
             $category->update($input);

@@ -20,8 +20,10 @@
                         @csrf
                         <div class="form-group">
                             <label>Sửa danh mục sản phẩm:</label>
-                            <input type="text" class="form-control" name="category_name"
-                                placeholder="Sửa danh mục sản phẩm..." value="{{$data->name}}">
+                            <input type="text" class="form-control" name="category_name" placeholder="Sửa danh mục sản phẩm..." value="{{$data->name}}">
+                            @error('category_name')
+                                <p class="text-danger mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-warning mr-2">Sửa</button>
                     </form>
