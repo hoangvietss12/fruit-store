@@ -117,6 +117,10 @@
                             <li>Thanh toán <span>{{ number_format($total_price) }}đ</span></li>
                         </ul>
                         <button type="submit" class="primary-btn" id="btn-submit-order">Đặt Hàng</button>
+                        <form action="{{ route('payment.index') }}" method="post">
+                            @csrf
+                            <button type="submit" name="redirect" class="secondary-btn mt-3" >Thanh toán với VN Pay</button>
+                        </form>
                     </div>
                     @else
                     <div class="cart__total">

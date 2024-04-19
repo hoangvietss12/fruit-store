@@ -1388,6 +1388,17 @@ a:focus {
     font-weight: bold;
 }
 
+.cart__total .secondary-btn {
+	display: block;
+    width: 100%;
+	padding: 12px 10px;
+	text-align: center;
+	letter-spacing: 2px;
+    background: var(--secondary);
+    color: var(--white);
+    font-weight: bold;
+}
+
 .cart__total .cart__fee {
     display: none;
 }

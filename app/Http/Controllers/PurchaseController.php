@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Cart;
 use App\Models\CartDetail;
 
@@ -81,7 +81,7 @@ class PurchaseController extends Controller
                 $new_order_detail->save();
             }
 
-            return back()->with('message', 'Đặt hàng thành công!');
+            return redirect('purchase')->with('message', 'Đặt hàng thành công!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
@@ -94,7 +94,7 @@ class PurchaseController extends Controller
 
             $user_order->delete();
 
-            return back()->with('message', 'Hủy đặt hàng thành công!');
+            return redirect('purchase')->with('message', 'Hủy đặt hàng thành công!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }

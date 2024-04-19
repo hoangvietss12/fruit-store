@@ -27,6 +27,10 @@ class OrderController extends Controller
 
             $order_detail_info = OrderDetail::where('order_id', $order_info->id)->with('product')->get();
 
+            if($order_info->order_type == 'Thanh toán VN Pay') {
+                $order_detail_info = OrderDetail::where('order_id', $order_info->id)->with('product')->take(floor($order_detail_info->count() / 2))->get();
+            }
+
             return view('admin.orders.view', compact('order_info', 'order_detail_info'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
@@ -67,7 +71,9 @@ class OrderController extends Controller
             $order_info = Order::where('id', $id)->with('user')->first();
 
             $order_detail_info = OrderDetail::where('order_id', $order_info->id)->with('product')->get();
-
+            if($order_info->order_type == 'Thanh toán VN Pay') {
+                $order_detail_info = OrderDetail::where('order_id', $order_info->id)->with('product')->take(floor($order_detail_info->count() / 2))->get();
+            }
 
             $pdf = PDF::loadView('admin.orders.view', compact('order_info', 'order_detail_info'));
             $today_date = Carbon::now()->format('d/m/Y');

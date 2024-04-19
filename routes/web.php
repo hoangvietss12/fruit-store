@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
@@ -43,6 +44,8 @@ Route::prefix('/')->group(function() {
         Route::post('/', [PurchaseController::class, 'checkout'])->name('purchase.order');
         Route::get('/cancel', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
 
+        Route::post('/payment', [PaymentController::class, 'index'])->name('payment.index');
+        Route::get('/return', [PaymentController::class, 'purchaseReturn'])->name('payment.return');
     });
 
     Route::get('/load-more-products', [HomeController::class, 'loadMoreProducts'])->name('load.more.products');

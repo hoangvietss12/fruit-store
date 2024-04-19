@@ -180,7 +180,7 @@
                     </tr>
                 @endif
                 <tr>
-                    <td colspan="4" class="total-heading">Tổng tiền:</td>
+                    <td colspan="5" class="total-heading">Tổng tiền:</td>
                     <td colspan="1" class="total-heading">{{ number_format($order_info->total) }}đ</td>
                 </tr>
             </tr>

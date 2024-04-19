@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="container px-0">
-      <div id="customCarousel2" class="carousel  slide" data-ride="carousel">
+      <div id="customCarousel2" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
             <div class="container">

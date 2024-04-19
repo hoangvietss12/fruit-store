@@ -10,7 +10,7 @@
     <!-- plugins:css -->
     @include('admin.assets.css')
 
-    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/x-icon" />
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon" />
   </head>
   <body>
     <div class="container-scroller">
