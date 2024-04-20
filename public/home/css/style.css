@@ -654,6 +654,7 @@ a:focus {
 .about_section .detail-box p {
   color: var(--textCol);
   margin-top: 15px;
+  text-align: justify;
 }
 
 .about_section .detail-box a {

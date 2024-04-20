@@ -15,13 +15,10 @@
               <a class="nav-link" href="{{ route('home.index') }}">Trang chủ <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about.html"> Về chúng tôi</a>
+              <a class="nav-link" href="{{ route('home.about') }}"> Giới thiệu </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ route('home.store') }}">Cửa hàng</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="blog.html">Blog</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="contact.html">Liên hệ</a>

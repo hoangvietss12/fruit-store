@@ -20,6 +20,14 @@ class HomeController extends Controller
         }
     }
 
+    public function about() {
+        try {
+            return view('home.about');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
+
     public function store() {
         try {
             $data = Product::paginate(9);
