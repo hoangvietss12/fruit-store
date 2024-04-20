@@ -2,7 +2,7 @@
     <div class="container">
       <p>
         &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Fruit-ya</a>
+        <a href="{{ route('home.index') }}">Fruit-ya 2024</a>
       </p>
     </div>
 </footer>

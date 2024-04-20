@@ -18,7 +18,7 @@
                 <div class="col-lg-10 mx-auto">
                   <div class="box">
                     <div class="img-box">
-                      <img src="images/client1.jpg" alt="">
+                      <img src="{{ asset('images/client1.jpg') }}" alt="">
                     </div>
                     <div class="detail-box">
                       <div class="client_info">
@@ -47,7 +47,7 @@
                 <div class="col-md-10 mx-auto">
                   <div class="box">
                     <div class="img-box">
-                      <img src="images/client2.jpg" alt="">
+                      <img src="{{ asset('images/client2.jpg') }}" alt="">
                     </div>
                     <div class="detail-box">
                       <div class="client_info">
@@ -76,7 +76,7 @@
                 <div class="col-md-10 mx-auto">
                   <div class="box">
                     <div class="img-box">
-                      <img src="images/client3.jpg" alt="">
+                      <img src="{{ asset('images/client3.jpg') }}" alt="">
                     </div>
                     <div class="detail-box">
                       <div class="client_info">

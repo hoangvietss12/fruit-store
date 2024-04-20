@@ -150,16 +150,11 @@
             </div>
         </div>
     </section>
-
     <!-- end blog section -->
 
     <!-- client section -->
     @include('home.components.testimonials')
     <!-- end client section -->
-
-    <!-- contact section -->
-    @include('home.components.contact')
-    <!-- end contact section -->
 @stop
 
 @section('script')

@@ -21,7 +21,7 @@
               <a class="nav-link" href="{{ route('home.store') }}">Cửa hàng</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Liên hệ</a>
+              <a class="nav-link" href="{{ route('home.contact') }}">Liên hệ</a>
             </li>
             @if (Route::has('login'))
                 @auth

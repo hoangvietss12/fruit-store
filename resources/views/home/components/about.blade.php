@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col-md-6 ">
           <div class="img-box">
-            <img src="images/about-img.png" alt="">
+            <img src="{{ asset('images/about-img.png') }}" alt="">
           </div>
         </div>
         <div class="col-md-6">
@@ -22,7 +22,7 @@
             <p>
                 "Fruit-ya - Nơi kết nối yêu thương và sức khỏe thông qua hương vị tinh tế của trái cây. Hãy đồng hành cùng chúng tôi trên hành trình tìm kiếm những khoảnh khắc ngon miệng.
             </p>
-            <a href="">
+            <a href="{{ route('home.about') }}">
               Tìm hiểu thêm
             </a>
           </div>
