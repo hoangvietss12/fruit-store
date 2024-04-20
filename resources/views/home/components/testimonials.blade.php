@@ -1,4 +1,4 @@
-<section class="client_section ">
+<section class="client_section mb-5">
     <div class="container">
       <div class="heading_container heading_center">
         <h2>

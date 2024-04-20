@@ -97,53 +97,45 @@
         <div class="container">
             <div class="heading_container">
                 <h2>
-                    Blog mới nhất
+                    Tin mới
                 </h2>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="box">
                         <div class="img-box">
-                            <img src="images/b1.jpg" alt="">
+                            <img src="{{ asset('images/b1.jpg') }}" alt="">
                             <h4 class="blog_date">
                                 29 <br>
-                                June
+                                Tháng 4
                             </h4>
                         </div>
                         <div class="detail-box">
                             <h5>
-                                Look even slightly believable. If you are
+                                Fruit-ya ra mắt chương trình khuyến mãi mùa hè: Mua nhiều giá hời
                             </h5>
-                            <p>
-                                alteration in some form, by injected humour, or randomised words which don't look even
-                                slightly believable.
+                            <p class="mt-3">
+                                Fruit-ya vừa công bố chương trình khuyến mãi hấp dẫn cho mùa hè này, khi mua bất kỳ sản phẩm nào tại cửa hàng, khách hàng sẽ được giảm giá ngay một sản phẩm khác cùng loại.
                             </p>
-                            <a href="">
-                                Read More
-                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="box">
                         <div class="img-box">
-                            <img src="images/b2.jpg" alt="">
+                            <img src="{{ asset('images/b2.jpg') }}" alt="">
                             <h4 class="blog_date">
                                 28 <br>
-                                June
+                                Tháng 4
                             </h4>
                         </div>
                         <div class="detail-box">
                             <h5>
-                                Anything embarrassing hidden in the middle
+                                Fruit-ya mở rộng dịch vụ giao hàng tận nơi trong khu vực Hà Nội
                             </h5>
-                            <p>
-                                alteration in some form, by injected humour, or randomised words which don't look even
-                                slightly believable.
+                            <p class="mt-3">
+                                Fruit-ya vừa công bố việc mở rộng dịch vụ giao hàng tận nơi đến khách hàng trong khu vực Hà Nội, giúp họ có thể dễ dàng tiếp cận với các loại trái cây tươi ngon ngay tại nhà.
                             </p>
-                            <a href="">
-                                Read More
-                            </a>
                         </div>
                     </div>
                 </div>
