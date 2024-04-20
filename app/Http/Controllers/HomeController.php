@@ -28,6 +28,14 @@ class HomeController extends Controller
         }
     }
 
+    public function contact() {
+        try {
+            return view('home.contact');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
+
     public function store() {
         try {
             $data = Product::paginate(9);

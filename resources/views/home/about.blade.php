@@ -88,9 +88,3 @@
 
   <!-- end about section -->
 @stop
-
-@section('script')
-    <script>
-        var loadMoreProductsUrl = "{{ route('load.more.products') }}";
-    </script>
-@stop
