@@ -516,6 +516,16 @@ a:focus {
   border-radius: 5px;
 }
 
+.product_section .box .img-box .sale-label {
+    position: absolute;
+    top: 10%;
+    right: 0;
+    color: var(--white);
+    background: red;
+    padding: 2px 12px;
+    font-weight: 600;
+}
+
 .product_section .box .img-box img {
   max-width: 175px;
   max-height: 175px;
@@ -580,13 +590,23 @@ a:focus {
   color: var(--black);
 }
 
-.product_section .box .detail-box .price_heading {
-  margin-top: 10px;
-  margin-bottom: 0;
+.product_section .box .detail-box .price {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 0;
+    color: red;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
-.product_section .box .detail-box .price_heading span {
-  color: var(--primary);
+.product_section .box .detail-box .price.price_old {
+    text-decoration: line-through;
+    color: var(--textCol);
+    font-size: 0.9rem;
+}
+
+.product_section .box .detail-box .price span {
+    text-decoration: underline;
 }
 
 .product_section .btn-box {

@@ -37,6 +37,9 @@
                 <div class="col-sm-6 col-lg-4 product-item">
                     <div class="box">
                         <div class="img-box">
+                            @if($product->discount > 0)
+                                <span class="sale-label">Sale {{ $product->discount*100 }}%</span>
+                            @endif
                             <a href=""><img src="{{$product->images[0]}}" alt="{{$product->name}}"></a>
                             <div class="product-overlay">
                                 <form action="{{ route('cart.store', ['id' => $product->id]) }}" method="post">
@@ -48,19 +51,28 @@
                         </div>
                         <div class="detail-box">
                             <span class="rating">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
                             </span>
                             <a href="">
                                 {{$product->name}}
                             </a>
                             <div class="price_box">
-                                <h6 class="price_heading">
-                                    {{number_format($product->price)}} <span>đ</span>
-                                </h6>
+                                @if($product->discount > 0)
+                                    <p class="price">
+                                        {{number_format($product->price - ($product->price * $product->discount))}} <span>đ</span>
+                                    </p>
+                                    <p class="price price_old">
+                                        {{number_format($product->price)}} <span>đ</span>
+                                    </p>
+                                @else
+                                    <p class="price">
+                                        {{number_format($product->price)}} <span>đ</span>
+                                    </p>
+                                @endif
                             </div>
                         </div>
                     </div>
