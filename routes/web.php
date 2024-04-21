@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::prefix('/')->group(function() {
+Route::prefix('/')->middleware('checkUserType')->group(function() {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::get('/about', [HomeController::class, 'about'])->name('home.about');
     Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
@@ -35,13 +35,13 @@ Route::prefix('/')->group(function() {
         Route::get('/{category}', [HomeController::class, 'getProductsByCategory'])->name('store.category');
     });
 
-    Route::prefix('cart')->group(function() {
+    Route::prefix('cart')->middleware('checkLoggedIn')->group(function() {
         Route::get('/', [CartController::class, 'index'])->name('cart.index');
 
-        Route::post('/{id}', [CartController::class, 'addToCart'])->middleware('checkLoggedIn')->name('cart.store');
+        Route::post('/{id}', [CartController::class, 'addToCart'])->name('cart.store');
     });
 
-    Route::prefix('purchase')->group(function() {
+    Route::prefix('purchase')->middleware('checkLoggedIn')->group(function() {
         Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
         Route::post('/', [PurchaseController::class, 'checkout'])->name('purchase.order');
         Route::get('/cancel', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
@@ -66,108 +66,121 @@ Route::middleware([
 
 
 // Admin Page
-Route::prefix('fruitya-admin')->group(function() {
+Route::prefix('fruitya-admin')->middleware('checkUserType')->group(function() {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 
     Route::prefix('category')->group(function () {
-        Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+        Route::middleware('checkUserType')->group(function () {
+            Route::get('/', [CategoryController::class, 'index'])->name('category.index');
 
-        Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+            Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
 
-        Route::post('/', [CategoryController::class, 'store'])->name('category.store');
+            Route::post('/', [CategoryController::class, 'store'])->name('category.store');
 
-        Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
+            Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
 
-        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+            Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
 
-        Route::post('/{id}', [CategoryController::class, 'update'])->name('category.update');
+            Route::post('/{id}', [CategoryController::class, 'update'])->name('category.update');
 
-        Route::get('/search', [CategoryController::class, 'search'])->name('category.search');
+            Route::get('/search', [CategoryController::class, 'search'])->name('category.search');
+        });
     });
 
     Route::prefix('product')->group(function () {
-        Route::get('/', [ProductController::class, 'index'])->name('product.index');
+        Route::middleware('checkUserType')->group(function () {
+            Route::get('/', [ProductController::class, 'index'])->name('product.index');
 
-        Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+            Route::get('/create', [ProductController::class, 'create'])->name('product.create');
 
-        Route::post('/', [ProductController::class, 'store'])->name('product.store');
+            Route::post('/', [ProductController::class, 'store'])->name('product.store');
 
-        Route::get('/view/{id}', [ProductController::class, 'view'])->name('product.view');
+            Route::get('/view/{id}', [ProductController::class, 'view'])->name('product.view');
 
-        Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+            Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
 
-        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+            Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
 
-        Route::post('/{id}', [ProductController::class, 'update'])->name('product.update');
+            Route::post('/{id}', [ProductController::class, 'update'])->name('product.update');
 
-        Route::get('/search', [ProductController::class, 'search'])->name('product.search');
+            Route::get('/search', [ProductController::class, 'search'])->name('product.search');
+        });
     });
 
     Route::prefix('order')->group(function () {
-        Route::get('/', [OrderController::class, 'index'])->name('order.index');
+        Route::middleware('checkUserType')->group(function () {
+            Route::get('/', [OrderController::class, 'index'])->name('order.index');
 
-        Route::get('/view/{id}', [OrderController::class, 'view'])->name('order.view');
+            Route::get('/view/{id}', [OrderController::class, 'view'])->name('order.view');
 
-        Route::get('/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
+            Route::get('/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
 
-        Route::get('/print/{id}', [OrderController::class, 'print'])->name('order.print');
+            Route::get('/print/{id}', [OrderController::class, 'print'])->name('order.print');
 
-        Route::post('/{id}', [OrderController::class, 'update'])->name('order.update');
+            Route::post('/{id}', [OrderController::class, 'update'])->name('order.update');
 
-        Route::get('/search', [OrderController::class, 'search'])->name('order.search');
+            Route::get('/search', [OrderController::class, 'search'])->name('order.search');
+        });
     });
 
     Route::prefix('vendor')->group(function () {
-        Route::get('/', [VendorController::class, 'index'])->name('vendor.index');
+        Route::middleware('checkUserType')->group(function () {
+            Route::get('/', [VendorController::class, 'index'])->name('vendor.index');
 
-        Route::get('/create', [VendorController::class, 'create'])->name('vendor.create');
+            Route::get('/create', [VendorController::class, 'create'])->name('vendor.create');
 
-        Route::post('/', [VendorController::class, 'store'])->name('vendor.store');
+            Route::post('/', [VendorController::class, 'store'])->name('vendor.store');
 
-        Route::get('/delete/{id}', [VendorController::class, 'delete'])->name('vendor.delete');
+            Route::get('/delete/{id}', [VendorController::class, 'delete'])->name('vendor.delete');
 
-        Route::get('/edit/{id}', [VendorController::class, 'edit'])->name('vendor.edit');
+            Route::get('/edit/{id}', [VendorController::class, 'edit'])->name('vendor.edit');
 
-        Route::post('/{id}', [VendorController::class, 'update'])->name('vendor.update');
+            Route::post('/{id}', [VendorController::class, 'update'])->name('vendor.update');
 
-        Route::get('/search', [VendorController::class, 'search'])->name('vendor.search');
+            Route::get('/search', [VendorController::class, 'search'])->name('vendor.search');
+        });
     });
 
     Route::prefix('account')->group(function () {
-        Route::get('/', [AccountController::class, 'index'])->name('account.index');
+        Route::middleware('checkUserType')->group(function () {
+            Route::get('/', [AccountController::class, 'index'])->name('account.index');
 
-        Route::get('/view/{id}', [AccountController::class, 'view'])->name('account.view');
+            Route::get('/view/{id}', [AccountController::class, 'view'])->name('account.view');
 
-        Route::get('/edit/{id}', [AccountController::class, 'edit'])->name('account.edit');
+            Route::get('/edit/{id}', [AccountController::class, 'edit'])->name('account.edit');
 
-        Route::post('/{id}', [AccountController::class, 'update'])->name('account.update');
+            Route::post('/{id}', [AccountController::class, 'update'])->name('account.update');
 
-        Route::get('/search', [AccountController::class, 'search'])->name('account.search');
+            Route::get('/search', [AccountController::class, 'search'])->name('account.search');
+        });
     });
 
     Route::prefix('import')->group(function () {
-        Route::get('/', [ImportController::class, 'index'])->name('import.index');
+        Route::middleware('checkUserType')->group(function () {
+            Route::get('/', [ImportController::class, 'index'])->name('import.index');
 
-        Route::get('/view/{id}', [ImportController::class, 'view'])->name('import.view');
+            Route::get('/view/{id}', [ImportController::class, 'view'])->name('import.view');
 
-        Route::get('/create', [ImportController::class, 'addVendor'])->name('import.create');
+            Route::get('/create', [ImportController::class, 'addVendor'])->name('import.create');
 
-        Route::post('/', [ImportController::class, 'storeVendor'])->name('import.store');
+            Route::post('/', [ImportController::class, 'storeVendor'])->name('import.store');
 
-        Route::post('/{id}', [ImportController::class, 'storeProduct'])->name('import.store.product');
+            Route::post('/{id}', [ImportController::class, 'storeProduct'])->name('import.store.product');
 
-        Route::get('/search', [ImportController::class, 'search'])->name('import.search');
+            Route::get('/search', [ImportController::class, 'search'])->name('import.search');
+        });
     });
 
     Route::prefix('report')->group(function () {
-        Route::get('/products', [ReportController::class, 'indexProduct'])->name('report.product.index');
+        Route::middleware('checkUserType')->group(function () {
+            Route::get('/products', [ReportController::class, 'indexProduct'])->name('report.product.index');
 
-        Route::post('/products/search', [ReportController::class, 'searchProduct'])->name('report.product.search');
+            Route::post('/products/search', [ReportController::class, 'searchProduct'])->name('report.product.search');
 
-        Route::get('/products/export/{categoryId}/{vendorId}/{price}', [ReportController::class, 'exportProduct'])->name('report.product.export');
+            Route::get('/products/export/{categoryId}/{vendorId}/{price}', [ReportController::class, 'exportProduct'])->name('report.product.export');
 
-        Route::get('/revenues', [ReportController::class, 'indexRevenue'])->name('report.revenue.index');
-
+            Route::get('/revenues', [ReportController::class, 'indexRevenue'])->name('report.revenue.index');
+        });
     });
 });
 

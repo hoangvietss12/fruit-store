@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class CheckLoggedIn
+class CheckUserType
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,12 @@ class CheckLoggedIn
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập!');
+        $user = Auth::user();
+
+        if ($user && $user->user_type == 0 && $request->is('fruitya-admin*')) {
+            abort(404);
+        }else if ($user && $user->user_type == 1 && !$request->is('fruitya-admin*')) {
+            abort(404);
         }
 
         return $next($request);
