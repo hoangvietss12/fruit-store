@@ -38,7 +38,7 @@ Route::prefix('/')->group(function() {
     Route::prefix('cart')->group(function() {
         Route::get('/', [CartController::class, 'index'])->name('cart.index');
 
-        Route::post('/{id}', [CartController::class, 'addToCart'])->name('cart.store');
+        Route::post('/{id}', [CartController::class, 'addToCart'])->middleware('checkLoggedIn')->name('cart.store');
     });
 
     Route::prefix('purchase')->group(function() {
