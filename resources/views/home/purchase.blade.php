@@ -94,19 +94,47 @@
                 <div class="col-lg-4">
                     @if(!$check_order)
                     <div class="cart__discount">
-                        <h6>Lựa chọn phương thức đặt hàng</h6>
-                        <form id="order-form" action="{{ route('purchase.order') }}" method="post">
-                            @csrf
-                            <select class="js-example-basic-single" name="order_type" style="width:100%">
-                                <option value="" disabled>Chọn phương thức</option>
-                                <option value="Đến lấy hàng" selected>Đến lấy hàng</option>
-                                <option value="Ship tận nơi">Ship tận nơi</option>
-                            </select>
-                            <button class="btn-type-order">Áp dụng</button>
-                        </form>
+                        <div class="payment-select-1">
+                            <h6>Lựa chọn phương thức đặt hàng</h6>
+                            <form id="order-form" action="{{ route('purchase.order') }}" method="post">
+                                @csrf
+                                <select class="js-example-basic-single" name="order_type" style="width:100%">
+                                    <option value="" disabled>Chọn phương thức</option>
+                                    <option value="Đến lấy hàng" selected>Đến lấy hàng</option>
+                                    <option value="Ship tận nơi">Ship tận nơi</option>
+                                </select>
+                                <button class="btn-type-order">Áp dụng</button>
+                            </form>
+                        </div>
+
+                        <div class="payment-select-2">
+                            <h6>Lựa chọn phương thức thanh toán</h6>
+                            <form id="payment-form" action="{{ route('payment.index') }}" method="post">
+                                @csrf
+                                <select class="js-example-basic-single" name="bank_code" style="width:100%">
+                                    <option value="" disabled>Chọn phương thức</option>
+                                    <option value="NCB" selected>NCB</option>
+                                    <option value="VISA">VISA</option>
+                                    <option value="MasterCard">MasterCard</option>
+                                    <option value="JCB">JCB</option>
+                                    <option value="EXIMBANK">EXIMBANK</option>
+                                </select>
+                                <div class="cart__total mt-5">
+                                    <h6>Tổng đơn hàng</h6>
+                                        <ul>
+                                            <li>Tổng cộng <span>{{ number_format($total_price) }}đ</span></li>
+                                            <li>Thanh toán <span>{{ number_format($total_price) }}đ</span></li>
+                                        </ul>
+                                        <button type="submit" name="redirect" class="secondary-btn" id="btn-submit-payment">Thanh toán</button>
+                                        <div class="continue__btn mt-3">
+                                            <a href="{{ route('purchase.index') }}" class="w-100 text-center">Quay lại</a>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
 
                     </div>
-                    <div class="cart__total">
+                    <div class="cart__total" id="cart">
                         <h6>Tổng đơn hàng</h6>
                         <ul>
                             <li>Tổng cộng <span>{{ number_format($total_price) }}đ</span></li>
@@ -117,10 +145,7 @@
                             <li>Thanh toán <span>{{ number_format($total_price) }}đ</span></li>
                         </ul>
                         <button type="submit" class="primary-btn" id="btn-submit-order">Đặt Hàng</button>
-                        <form action="{{ route('payment.index') }}" method="post">
-                            @csrf
-                            <button type="submit" name="redirect" class="secondary-btn mt-3" >Thanh toán với VN Pay</button>
-                        </form>
+                        <button id="btn-check-payment" class="secondary-btn mt-3">Thanh toán với VN Pay</button>
                     </div>
                     @else
                     <div class="cart__total">

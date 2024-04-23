@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\CartDetail;
 use App\Models\Order;
@@ -19,7 +20,7 @@ class PaymentController extends Controller
         }
         return $randomString;
     }
-    public function index() {
+    public function index(Request $request) {
         $vnp_Url = env('VNPAY_URL');
         $vnp_Returnurl = env('VNPAY_RETURN_URL');
         $vnp_TmnCode = env('VNPAY_MERCHANT_ID');
@@ -40,8 +41,8 @@ class PaymentController extends Controller
         $vnp_OrderInfo = 'Thanh toán VN Pay';
         $vnp_OrderType = 'Thanh toán VN Pay';
         $vnp_Amount = $total_price * 100;
-        $vnp_Locale = 'VN';
-        $vnp_BankCode = 'NCB';
+        $vnp_Locale = 'Vi';
+        $vnp_BankCode = $request->input('bank_code');
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
 
         //Billing
