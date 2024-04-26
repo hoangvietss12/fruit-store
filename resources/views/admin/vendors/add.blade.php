@@ -21,29 +21,29 @@
                         @csrf
                         <div class="form-group">
                             <label>Tên nhà cung cấp:</label>
-                            <input type="text" class="form-control" name="vendor_name" placeholder="Tên nhà cung cấp..." value="{{ old('vendor_name') }}">
-                            @error('vendor_name')
+                            <input type="text" class="form-control" name="name" placeholder="Tên nhà cung cấp..." value="{{ old('name') }}">
+                            @error('name')
                                 <p class="text-danger mt-2">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label>Email:</label>
-                            <input type="email" class="form-control" name="vendor_email" placeholder="Email..." value="{{ old('vendor_email') }}">
-                            @error('vendor_email')
+                            <input type="email" class="form-control" name="email" placeholder="Email..." value="{{ old('email') }}">
+                            @error('email')
                                 <p class="text-danger mt-2">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label>Số điện thoại:</label>
-                            <input type="text" class="form-control" name="vendor_phone" placeholder="Số điện thoại..." value="{{ old('vendor_phone') }}">
-                            @error('vendor_phone')
+                            <input type="text" class="form-control" name="phone" placeholder="Số điện thoại..." value="{{ old('phone') }}">
+                            @error('phone')
                                 <p class="text-danger mt-2">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label>Địa chỉ:</label>
-                            <input type="text" class="form-control" name="vendor_address" placeholder="Địa chỉ..." value="{{ old('vendor_address') }}">
-                            @error('vendor_address')
+                            <input type="text" class="form-control" name="address" placeholder="Địa chỉ..." value="{{ old('address') }}">
+                            @error('address')
                                 <p class="text-danger mt-2">{{ $message }}</p>
                             @enderror
                         </div>

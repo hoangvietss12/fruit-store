@@ -11,19 +11,19 @@ class VendorController extends Controller
     private function validator(array $data)
     {
         return Validator::make($data, [
-            'vendor_name' => 'required|string',
-            'vendor_email' => 'required|string|email|unique:vendors',
-            'vendor_phone' => ['required', 'string', 'regex:/^[0-9 ]+$/', 'max:20'],
-            'vendor_address' => 'required|string'
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:vendors',
+            'phone' => ['required', 'string', 'regex:/^[0-9 ]+$/', 'max:20'],
+            'address' => 'required|string'
         ],[
-            'vendor_name.required' => 'Tên nhà cung cấp là trường bắt buộc.',
-            'vendor_email.required' => 'Email là trường bắt buộc.',
-            'vendor_email.email' => 'Email phải là địa chỉ email hợp lệ.',
-            'vendor_email.unique' => 'Email đã tồn tại.',
-            'vendor_phone.required' => 'Số điện thoại là trường bắt buộc.',
-            'vendor_phone.max' => 'Số điện thoại không được vượt quá :max ký tự.',
-            'vendor_phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và dấu cách.',
-            'vendor_address.required' => 'Địa chỉ là trường bắt buộc.',
+            'name.required' => 'Tên nhà cung cấp là trường bắt buộc.',
+            'email.required' => 'Email là trường bắt buộc.',
+            'email.email' => 'Email phải là địa chỉ email hợp lệ.',
+            'email.unique' => 'Email đã tồn tại.',
+            'phone.required' => 'Số điện thoại là trường bắt buộc.',
+            'phone.max' => 'Số điện thoại không được vượt quá :max ký tự.',
+            'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và dấu cách.',
+            'address.required' => 'Địa chỉ là trường bắt buộc.',
         ]);
     }
     public function index() {
@@ -49,10 +49,10 @@ class VendorController extends Controller
             }
 
             $data = new Vendor;
-            $data->name = $request->vendor_name;
-            $data->email = $request->vendor_email;
-            $data->phone = $request->vendor_phone;
-            $data->address = $request->vendor_address;
+            $data->name = $request->name;
+            $data->email = $request->email;
+            $data->phone = $request->phone;
+            $data->address = $request->address;
             $data->save();
 
             return redirect('fruitya-admin/vendor')->with('message', 'Thêm thành công!');
@@ -93,10 +93,10 @@ class VendorController extends Controller
 
             $data = Vendor::findOrNew($id);
 
-            $data->update([ 'name' => $request->vendor_name,
-                              'email' => $request->vendor_email,
-                              'phone' => $request->vendor_phone,
-                              'address' => $request->vendor_address
+            $data->update([ 'name' => $request->name,
+                              'email' => $request->email,
+                              'phone' => $request->phone,
+                              'address' => $request->address
                             ]);
 
             return redirect('fruitya-admin/vendor')->with('message', 'Cập nhật thành công!');
@@ -107,10 +107,10 @@ class VendorController extends Controller
 
     public function search(Request $request) {
         try {
-            $name = $request->has('vendor_name') ? $request->vendor_name : null;
-            $email = $request->has('vendor_email') ? $request->vendor_email : null;
-            $phone = $request->has('vendor_phone') ? $request->vendor_phone : null;
-            $address = $request->has('vendor_address') ? $request->vendor_address : null;
+            $name = $request->has('name') ? $request->name : null;
+            $email = $request->has('email') ? $request->email : null;
+            $phone = $request->has('phone') ? $request->phone : null;
+            $address = $request->has('address') ? $request->address : null;
 
             $query = Vendor::query();
 

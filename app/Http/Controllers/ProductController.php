@@ -31,7 +31,8 @@ class ProductController extends Controller
             'product_price' => ['required', 'string', 'regex:/^[0-9]+$/', 'min:0'],
             'product_discount' => ['required', 'string', 'regex:/^[0-9.]+$/', 'min:0', 'max:1'],
             'product_description' => 'required|string',
-            'product_images' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024'
+            'product_images' => 'required|array',
+            'product_images.*' => 'file|mimes:jpeg,png,jpg,gif,webp|max:1024',
         ],[
             'product_name.required' => 'Tên sản phẩm là trường bắt buộc.',
             'product_category.required' => 'Danh mục của sản phẩm là trường bắt buộc.',
@@ -50,7 +51,7 @@ class ProductController extends Controller
             'product_description.required' => 'Mô tả sản phẩm là trường bắt buộc.',
             'product_images.required' => 'Ảnh sản phẩm là trường bắt buộc.',
             'product_images.image' => 'Tệp phải là một hình ảnh.',
-            'product_images.mimes' => 'Ảnh sản phẩm phải có định dạng jpeg, png, jpg hoặc gif.',
+            'product_images.mimes' => 'Ảnh sản phẩm phải có định dạng jpeg, png, jpg, webp hoặc gif.',
             'product_images.max' => 'Dung lượng ảnh sản phẩm không được vượt quá 1MB.'
         ]);
     }
@@ -285,17 +286,24 @@ class ProductController extends Controller
     private function uploadImagesToFirebase($request) {
         $imageUrls = [];
 
-        if($request->hasFile('images')) {
-            $firebaseStorage = app('firebase.storage');
-            $bucket = $firebaseStorage->getBucket('fruit-ya-store-6573c.appspot.com');
+        // Kiểm tra xem request có chứa file ảnh không
+        if ($request->hasFile('product_images')) {
+            // Lấy danh sách các file ảnh từ request
+            $images = $request->file('product_images');
 
-            foreach($request->file('product_images') as $image) {
+            // Tạo đường dẫn lưu trữ trên Firebase Storage cho mỗi file ảnh
+            foreach ($images as $image) {
+                // Tạo đường dẫn lưu trữ trên Firebase Storage cho mỗi file ảnh
+                $firebaseStorage = app('firebase.storage');
+                $bucket = $firebaseStorage->getBucket('fruit-ya-store-6573c.appspot.com');
                 $imageUrl = 'products/' . uniqid() . '.' . $image->getClientOriginalExtension();
 
+                // Upload file ảnh lên Firebase Storage
                 $bucket->upload($image->getContent(), [
                     'name' => $imageUrl,
                 ]);
 
+                // Thêm URL của file ảnh vào mảng
                 $imageUrls[] = $imageUrl;
             }
         }

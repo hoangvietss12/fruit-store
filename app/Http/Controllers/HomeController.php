@@ -80,18 +80,22 @@ class HomeController extends Controller
     }
 
     public function createUrlImages($data) {
-        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
-        foreach ($data as $product) {
-            $imageUrls = [];
-            $images = json_decode($product->images, true);
-            $imageReference = $bucket->object($images[0]);
+        try {
+            $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+            foreach ($data as $product) {
+                $imageUrls = [];
+                $images = json_decode($product->images, true);
+                $imageReference = $bucket->object($images[0]);
 
-            if ($imageReference->exists()) {
-                $expiresAt = new \DateTime('tomorrow');
-                $imageUrls[] = $imageReference->signedUrl($expiresAt);
+                if ($imageReference->exists()) {
+                    $expiresAt = new \DateTime('tomorrow');
+                    $imageUrls[] = $imageReference->signedUrl($expiresAt);
+                }
+
+                $product->images = $imageUrls;
             }
-
-            $product->images = $imageUrls;
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
     }
 }
