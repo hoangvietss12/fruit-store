@@ -33,6 +33,14 @@
     <!-- cart section -->
     <section class="shopping-cart spad">
         <div class="container">
+        @if(session('message'))
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+
+                {{ session('message') }}
+            </div>
+        @endif
+
             @if( $data->isEmpty() )
             <p style="font-size: 20px; text-align: center;">Không có sản phẩm nào</p>
             <div class="continue__btn">
@@ -62,7 +70,12 @@
                                             </div>
                                             <div class="product__cart__item__text">
                                                 <h6>{{ $item->product->name }}</h6>
-                                                <h5>{{ number_format($item->price) }} <span>đ</span></h5>
+                                                @if($item->product->discount > 0)
+                                                    <h5 class="d-inline-block text-danger">{{ number_format($item->product->price - ($item->product->price * $item->product->discount)) }} <span>đ</span></h5>
+                                                    <h6 class="d-inline-block" style="text-decoration: line-through;">{{ number_format($item->product->price) }} <span>đ</span></h6>
+                                                @else
+                                                    <h5>{{ number_format($item->product->price) }} <span>đ</span></h5>
+                                                @endif
                                             </div>
                                         </a>
                                     </td>
@@ -70,12 +83,17 @@
                                         <div class="quantity">
                                             <div class="pro-qty-2">
                                                 <input type="text" value="{{ $item->quantity }}">
+                                                <span class="fw-bold">{{ $item->product->unit }}</span>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="cart__price">{{ number_format($item->quantity*$item->price) }} <span>đ</span>
+                                    @if($item->product->discount > 0)
+                                        <td class="cart__price">{{ number_format(($item->price - ($item->price * $item->product->discount)) * $item->quantity) }} <span>đ</span>
+                                    @else
+                                        <td class="cart__price">{{ number_format($item->quantity*$item->price) }} <span>đ</span>
+                                    @endif
                                     </td>
-                                    <td class="cart__close"><a href=""><i class="fa fa-close"></a></i></td>
+                                    <td class="cart__close"><a href="{{ route('cart.remove', ['id' => $item->product_id]) }}"><i class="fa fa-close"></a></i></td>
                                 </tr>
                                 @endforeach
                             </tbody>

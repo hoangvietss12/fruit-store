@@ -39,6 +39,8 @@ Route::prefix('/')->middleware('checkUserType')->group(function() {
         Route::get('/', [CartController::class, 'index'])->name('cart.index');
 
         Route::post('/{id}', [CartController::class, 'addToCart'])->name('cart.store');
+
+        Route::get('remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
     });
 
     Route::prefix('purchase')->middleware('checkLoggedIn')->group(function() {

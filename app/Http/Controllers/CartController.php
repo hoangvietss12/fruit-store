@@ -66,7 +66,23 @@ class CartController extends Controller
         }
     }
 
-    public function createUrlImages($data) {
+    public function removeFromCart($id) {
+        try {
+            $user_id = Auth::user()->id;
+
+            $user_cart = Cart::where('user_id', $user_id)->first();
+
+            CartDetail::where('cart_id', $user_cart->id)
+            ->where('product_id', $id)
+            ->delete();
+
+            return redirect()->back()->with('message', 'Xóa thành công!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
+
+    private function createUrlImages($data) {
         $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
         foreach ($data as $product) {
             $imageUrls = [];
