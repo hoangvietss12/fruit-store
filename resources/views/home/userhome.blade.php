@@ -152,63 +152,61 @@
 @section('script')
     <script>
         var loadMoreProductsUrl = "{{ route('load.more.products') }}";
-    //     function actionUrl(id) {
-    //     return `/cart/${id}`;
-    // }
+        function actionUrl(id) {
+        return "{{ route('cart.index') }}" + "/" + id;
+    }
 
-    // function displayMoreProducts(products) {
-    //     var productContainer = document.getElementById('product-container');
-    //     if (productContainer) {
-    //         productContainer.innerHTML = '';
+    function displayMoreProducts(products) {
+        var productContainer = document.getElementById('product-container');
+        if (productContainer) {
+            products.forEach(function(product) {
+                var productHtml = `
+                <div class="col-sm-6 col-lg-4 product-item">
+                    <div class="box">
+                        <div class="img-box">
+                            ${product.discount > 0 ? '<span class="sale-label">Sale '+ (product.discount*100) +' %</span>' : ''}
+                            <a href=""><img src="${product.images[0]}" alt="${product.name}"></a>
+                            <div class="product-overlay">
+                                <form action="${ actionUrl(product.id) }" method="post">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="${product.id}">
+                                    <button class="add-to-cart-button">+ Thêm</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <span class="rating">
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </span>
+                            <a href="">
+                                ${product.name}
+                            </a>
+                            <div class="price_box">
+                            ${product.discount > 0 ? `
+                                <p class="price">
+                                    ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price - product.price * product.discount)}
+                                </p>
+                                <p class="price price_old">
+                                    ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+                                </p>
+                            ` : `
+                                <p class="price">
+                                    ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+                                </p>
+                            `}
 
-    //         products.forEach(function(product) {
-    //             var productHtml = `
-    //             <div class="col-sm-6 col-lg-4 product-item">
-    //                 <div class="box">
-    //                     <div class="img-box">
-    //                         ${product.discount > 0 ? '<span class="sale-label">Sale '+ (product.discount*100) +' %</span>' : ''}
-    //                         <a href=""><img src="${product.images[0]}" alt="${product.name}"></a>
-    //                         <div class="product-overlay">
-    //                             <form action="${ actionUrl(product.id) }" method="post">
-    //                                 @csrf
-    //                                 <input type="hidden" name="product_id" value="${product.id}">
-    //                                 <button class="add-to-cart-button">+ Thêm</button>
-    //                             </form>
-    //                         </div>
-    //                     </div>
-    //                     <div class="detail-box">
-    //                         <span class="rating">
-    //                             <i class="fa fa-star-o" aria-hidden="true"></i>
-    //                             <i class="fa fa-star-o" aria-hidden="true"></i>
-    //                             <i class="fa fa-star-o" aria-hidden="true"></i>
-    //                             <i class="fa fa-star-o" aria-hidden="true"></i>
-    //                             <i class="fa fa-star-o" aria-hidden="true"></i>
-    //                         </span>
-    //                         <a href="">
-    //                             ${product.name}
-    //                         </a>
-    //                         <div class="price_box">
-    //                         ${product.discount > 0 ? `
-    //                             <p class="price">
-    //                                 ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price - product.price * product.discount)} <span>đ</span>
-    //                             </p>
-    //                             <p class="price price_old">
-    //                                 ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)} <span>đ</span>
-    //                             </p>
-    //                         ` : `
-    //                             <p class="price">
-    //                                 ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)} <span>đ</span>
-    //                             </p>
-    //                         `}
-
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>`;
-    //             productContainer.innerHTML += productHtml;
-    //         });
-    //     }
-    // }
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                productContainer.innerHTML += productHtml;
+            });
+        }
+    }
 
     </script>
 @stop
