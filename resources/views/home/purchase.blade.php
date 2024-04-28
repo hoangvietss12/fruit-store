@@ -33,8 +33,14 @@
     <!-- cart section -->
     <section class="shopping-cart spad">
         <div class="container">
-            @if(session('message'))
-                <div class="alert alert-success mb-5">
+            @if(session('message') == "Bạn phải hủy đặt hàng trước đã!")
+                <div class="alert alert-danger mb-5">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+
+                    {{session('message')}}
+                </div>
+            @elseif(session('message'))
+            <div class="alert alert-success mb-5">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
 
                     {{session('message')}}
@@ -96,7 +102,7 @@
                     <div class="cart__discount">
                         <div class="payment-select-1">
                             <h6>Lựa chọn phương thức đặt hàng</h6>
-                            <form id="order-form" action="{{ route('purchase.order') }}" method="post">
+                            <form id="order-form" action="{{ route('purchase.submit') }}" method="post">
                                 @csrf
                                 <select class="js-example-basic-single" name="order_type" style="width:100%">
                                     <option value="" disabled>Chọn phương thức</option>
@@ -165,6 +171,9 @@
                         <a href="{{ route('purchase.cancel') }}" class="btn-cancel-order">Hủy đặt hàng</a>
                     </div>
                     @endif
+                    <div class="continue__btn mt-3">
+                        <a href="{{ route('cart.index') }}" class="w-100 text-center">Quay lại</a>
+                    </div>
                 </div>
             </div>
             @endif

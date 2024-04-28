@@ -47,7 +47,10 @@ Route::prefix('/')->middleware('checkUserType')->group(function() {
 
     Route::prefix('purchase')->middleware('checkLoggedIn')->group(function() {
         Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
-        Route::post('/', [PurchaseController::class, 'checkout'])->name('purchase.order');
+
+        Route::get('/order', [PurchaseController::class, 'orderFromCart'])->name('purchase.order');
+
+        Route::post('/', [PurchaseController::class, 'checkout'])->name('purchase.submit');
         Route::get('/cancel', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
 
         Route::post('/payment', [PaymentController::class, 'index'])->name('payment.index');

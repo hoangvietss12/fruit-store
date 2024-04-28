@@ -1219,7 +1219,7 @@ a:focus {
     text-align: end;
 }
 
-.order__btn a {
+.order__btn button {
     color: var(--white);
 	font-size: 14px;
 	font-weight: 700;

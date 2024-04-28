@@ -17,26 +17,59 @@ class PurchaseController extends Controller
 
             $user_cart = Cart::where('user_id', $user_id)->first();
 
-            if(!$user_cart) {
-                $new_cart = new Cart();
-                $new_cart->user_id = $user_id;
-                $new_cart->save();
-
-                $user_cart = $new_cart;
-            }
-
             $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
 
-            $total_price = 0;
-
-            foreach ($data as $product){
-                $total_price += $product->price * $product->quantity;
-            }
+            $total_price = $this->sumTotal($data);
 
             $this->createUrlImages($data);
             $check_order = $this->checkOrder();
             $check_order_type = $this->checkOrderType();
 
+            return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
+
+    public function orderFromCart(Request $request) {
+        try {
+            $user_id = Auth::user()->id;
+
+            $user_order = Order::where('user_id', $user_id)->where('status', "Chờ xác nhận")->first();
+
+            $user_cart = Cart::where('user_id', $user_id)->first();
+
+            $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
+
+            $has_order = $user_order ? true : false;
+            $message = '';
+            $quantity = $request->all();
+            $key = 0;
+            foreach ($data as $cart_detail) {
+                if ($cart_detail->quantity != floatval($quantity['product_quantity'][$key])) {
+                    if($has_order) {
+                        $message = 'Bạn phải hủy đặt hàng trước đã!';
+                        break;
+                    }
+
+                    $new_quantity = floatval($quantity['product_quantity'][$key]);
+                    CartDetail::where('cart_id', $user_cart->id)
+                                ->where('product_id', $cart_detail->product->id)
+                                ->update(['quantity' => $new_quantity]);
+                }
+
+                $key++;
+            }
+
+            $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
+
+            $total_price = $this->sumTotal($data);
+
+            $this->createUrlImages($data);
+            $check_order = $this->checkOrder();
+            $check_order_type = $this->checkOrderType();
+
+            session()->flash('message', $message);
             return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
@@ -50,11 +83,7 @@ class PurchaseController extends Controller
             $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
 
             // calculate total price
-            $total_price = 0;
-
-            foreach ($data as $product){
-                $total_price += $product->price * $product->quantity;
-            }
+            $total_price = $this->sumTotal($data);
 
             // create order
             $new_order = new Order();
@@ -100,7 +129,7 @@ class PurchaseController extends Controller
         }
     }
 
-    public function createUrlImages($data) {
+    private function createUrlImages($data) {
         $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
         foreach ($data as $product) {
             $imageUrls = [];
@@ -116,7 +145,17 @@ class PurchaseController extends Controller
         }
     }
 
-    public function checkOrder() {
+    private function sumTotal($data) {
+        $total_price = 0;
+
+        foreach ($data as $product){
+            $total_price += $product->price * $product->quantity;
+        }
+
+        return $total_price;
+    }
+
+    private function checkOrder() {
         $user_id = Auth::user()->id;
         $user_order = Order::where('user_id', $user_id)->where('status', "Chờ xác nhận")->first();
 
@@ -127,7 +166,7 @@ class PurchaseController extends Controller
         }
     }
 
-    public function checkOrderType() {
+    private function checkOrderType() {
         $user_id = Auth::user()->id;
         $user_order = Order::where('user_id', $user_id)->where('order_type', "Ship tận nơi")->first();
 

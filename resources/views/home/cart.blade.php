@@ -21,7 +21,7 @@
                         <div class="breadcrumb__links">
                             <a href="{{ route("home.index") }}">Trang chủ</a>
                             <a href="{{ route("home.store") }}">Shop</a>
-                            <a href="{{ route("home.cart") }}">Giỏ hàng</a>
+                            <a href="{{ route("cart.index") }}">Giỏ hàng</a>
                         </div>
                     </div>
                 </div>
@@ -62,6 +62,8 @@
             @else
             <div class="row">
                 <div class="col-lg-12">
+                    <form action="{{ route('purchase.order') }}" method="get">
+                    @csrf
                     <div class="shopping__cart__table">
                         <table>
                             <thead>
@@ -76,26 +78,30 @@
                                 @foreach($data as $item)
                                 <tr>
                                     <td class="product__cart__item">
-                                        <a href="">
                                             <div class="product__cart__item__pic">
-                                                <img style="width: 90px; height: 90px;"
-                                                    src="{{ $item->product->images[0] }}" alt="{{ $item->product->name }}">
+                                                <a href="">
+                                                    <img style="width: 90px; height: 90px;"
+                                                        src="{{ $item->product->images[0] }}" alt="{{ $item->product->name }}">
+                                                </a>
                                             </div>
                                             <div class="product__cart__item__text">
-                                                <h6>{{ $item->product->name }}</h6>
+                                                <a href="" class="d-inline">
+                                                    <h6>{{ $item->product->name }}</h6>
+                                                </a>
                                                 @if($item->product->discount > 0)
-                                                    <h5 class="d-inline-block text-danger">{{ number_format($item->product->price - ($item->product->price * $item->product->discount)) }} <span>đ</span></h5>
-                                                    <h6 class="d-inline-block" style="text-decoration: line-through;">{{ number_format($item->product->price) }} <span>đ</span></h6>
+                                                    <div class="d-block">
+                                                        <h5 class="d-inline-block text-danger">{{ number_format($item->product->price - ($item->product->price * $item->product->discount)) }} <span>đ</span></h5>
+                                                        <h6 class="d-inline-block" style="text-decoration: line-through;">{{ number_format($item->product->price) }} <span>đ</span></h6>
+                                                    </div>
                                                 @else
-                                                    <h5>{{ number_format($item->product->price) }} <span>đ</span></h5>
+                                                    <h5 class="text-danger">{{ number_format($item->product->price) }} <span>đ</span></h5>
                                                 @endif
                                             </div>
-                                        </a>
                                     </td>
                                     <td class="quantity__item">
                                         <div class="quantity">
                                             <div class="pro-qty-2">
-                                                <input type="text" value="{{ $item->quantity }}">
+                                                <input type="text" value="{{ $item->quantity }}" name="product_quantity[]">
                                                 <span class="fw-bold">{{ $item->product->unit }}</span>
                                             </div>
                                         </div>
@@ -122,10 +128,11 @@
 
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="order__btn">
-                                <a href="{{ route('purchase.index') }}">Mua hàng thôi!</a>
+                                <button type="submit">Mua hàng thôi!</button>
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
             @endif
