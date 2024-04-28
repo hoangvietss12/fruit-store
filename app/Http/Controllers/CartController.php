@@ -82,6 +82,28 @@ class CartController extends Controller
         }
     }
 
+    public function searchCart(Request $request) {
+        try {
+            $user_id = Auth::user()->id;
+
+            $user_cart = Cart::where('user_id', $user_id)->first();
+
+            $data = CartDetail::where('cart_id', $user_cart->id)
+                                ->whereHas('product', function ($query) use ($request) {
+                                    $query->where('name', 'like', '%' . $request->product_name . '%');
+                                })
+                                ->with('product')
+                                ->get();
+
+
+            $this->createUrlImages($data);
+
+            return view('home.cart', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
+
     private function createUrlImages($data) {
         $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
         foreach ($data as $product) {

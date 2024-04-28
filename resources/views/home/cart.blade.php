@@ -21,7 +21,7 @@
                         <div class="breadcrumb__links">
                             <a href="{{ route("home.index") }}">Trang chủ</a>
                             <a href="{{ route("home.store") }}">Shop</a>
-                            <span>Giỏ hàng</span>
+                            <a href="{{ route("home.cart") }}">Giỏ hàng</a>
                         </div>
                     </div>
                 </div>
@@ -29,6 +29,19 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
+
+    <section class="cart__search mt-3">
+        <form action="{{ route('cart.search') }}" method="get" class="d-flex justify-content-center align-items-baseline">
+            @csrf
+            <div class="form-group" style="width: 30%;">
+                <input type="text" class="form-control" name="product_name" placeholder="Nhập tên sản phẩm...">
+            </div>
+            <button class="btn btn-primary" style="border-radius: unset;">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Tìm kiếm
+            </button>
+        </form>
+    </section>
 
     <!-- cart section -->
     <section class="shopping-cart spad">

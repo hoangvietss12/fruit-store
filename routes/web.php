@@ -40,7 +40,9 @@ Route::prefix('/')->middleware('checkUserType')->group(function() {
 
         Route::post('/{id}', [CartController::class, 'addToCart'])->name('cart.store');
 
-        Route::get('remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+        Route::get('/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
+        Route::get('/search', [CartController::class, 'searchCart'])->name('cart.search');
     });
 
     Route::prefix('purchase')->middleware('checkLoggedIn')->group(function() {
