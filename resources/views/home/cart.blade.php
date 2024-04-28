@@ -47,7 +47,7 @@
     <section class="shopping-cart spad">
         <div class="container">
         @if(session('message'))
-            <div class="alert alert-success">
+            <div class="alert alert-danger mb-2">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
 
                 {{ session('message') }}
@@ -94,16 +94,22 @@
                                                         <h6 class="d-inline-block" style="text-decoration: line-through;">{{ number_format($item->product->price) }} <span>đ</span></h6>
                                                     </div>
                                                 @else
-                                                    <h5 class="text-danger">{{ number_format($item->product->price) }} <span>đ</span></h5>
+                                                    <div class="d-block">
+                                                        <h5 class="text-danger">{{ number_format($item->product->price) }} <span>đ</span></h5>
+                                                    </div>
                                                 @endif
+                                                <p style="font-size: 0.9rem;">Số lượng còn lại: {{ $item->product->quantity }} {{ $item->product->unit }}</p>
                                             </div>
                                     </td>
                                     <td class="quantity__item">
                                         <div class="quantity">
                                             <div class="pro-qty-2">
-                                                <input type="text" value="{{ $item->quantity }}" name="product_quantity[]">
+                                                <input type="text" value="{{ old('product_quantity', $item->quantity) }}" name="product_quantity[]">
                                                 <span class="fw-bold">{{ $item->product->unit }}</span>
                                             </div>
+                                            @error('product_quantity.*')
+                                                <p class="text-danger mt-2">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                     </td>
                                     @if($item->product->discount > 0)

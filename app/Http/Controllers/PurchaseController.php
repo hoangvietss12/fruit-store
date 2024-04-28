@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Cart;
@@ -11,6 +12,11 @@ use App\Models\CartDetail;
 
 class PurchaseController extends Controller
 {
+    private function validator(array $data) {
+        return Validator::make($data, [
+            'product_quantity.*' => 'required|numeric|gt:0'
+        ]);
+    }
     public function index() {
         try {
             $user_id = Auth::user()->id;
@@ -33,6 +39,12 @@ class PurchaseController extends Controller
 
     public function orderFromCart(Request $request) {
         try {
+            $validator = $this->validator($request->all());
+
+            if ($validator->fails()) {
+                return redirect()->back()->with('message', 'Vui lòng nhập giá trị thỏa mãn!');
+            }
+
             $user_id = Auth::user()->id;
 
             $user_order = Order::where('user_id', $user_id)->where('status', "Chờ xác nhận")->first();
@@ -46,10 +58,20 @@ class PurchaseController extends Controller
             $quantity = $request->all();
             $key = 0;
             foreach ($data as $cart_detail) {
-                if ($cart_detail->quantity != floatval($quantity['product_quantity'][$key])) {
+                $product_quantity = floatval($quantity['product_quantity'][$key]);
+
+                if ($cart_detail->quantity != $product_quantity) {
                     if($has_order) {
                         $message = 'Bạn phải hủy đặt hàng trước đã!';
                         break;
+                    }
+
+                    if($product_quantity > $cart_detail->product->quantity) {
+                        return redirect()->back()->with('message', 'Vượt quá sản phẩm hiện có');
+                    }
+
+                    if($cart_detail->product->unit != "kg" && floor($product_quantity) != $product_quantity) {
+                        return redirect()->back()->with('message', 'Vui lòng nhập giá trị thỏa mãn!');
                     }
 
                     $new_quantity = floatval($quantity['product_quantity'][$key]);
