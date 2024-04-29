@@ -75,7 +75,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($data as $item)
+                                @foreach($data as $index => $item)
                                 <tr>
                                     <td class="product__cart__item">
                                             <div class="product__cart__item__pic">
@@ -103,8 +103,8 @@
                                     </td>
                                     <td class="quantity__item">
                                         <div class="quantity">
-                                            <div class="pro-qty-2">
-                                                <input type="text" value="{{ old('product_quantity', $item->quantity) }}" name="product_quantity[]">
+                                            <div class="pro-qty-2" id="pro-qty-{{ $index }}">
+                                                <input type="text" value="{{ old('product_quantity', $item->quantity) }}" name="product_quantity[]" data-index="{{ $index }}">
                                                 <span class="fw-bold">{{ $item->product->unit }}</span>
                                             </div>
                                             @error('product_quantity.*')
@@ -113,9 +113,9 @@
                                         </div>
                                     </td>
                                     @if($item->product->discount > 0)
-                                        <td class="cart__price">{{ number_format(($item->price - ($item->price * $item->product->discount)) * $item->quantity) }} <span>đ</span>
+                                        <td class="cart__price has_discount" data-price="{{ $item->price }}" data-discount="{{  $item->product->discount }}">{{ number_format(($item->price - ($item->price * $item->product->discount)) * $item->quantity) }} <span>đ</span>
                                     @else
-                                        <td class="cart__price">{{ number_format($item->quantity*$item->price) }} <span>đ</span>
+                                        <td class="cart__price" data-price="{{ $item->price }}">{{ number_format($item->quantity*$item->price) }} <span>đ</span>
                                     @endif
                                     </td>
                                     <td class="cart__close"><a href="{{ route('cart.remove', ['id' => $item->product_id]) }}"><i class="fa fa-close"></a></i></td>

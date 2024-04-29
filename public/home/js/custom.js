@@ -71,8 +71,40 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// load products by category
+// update total price when change quanity in cart
+document.addEventListener("DOMContentLoaded", function() {
+    var quantityInputs = document.querySelectorAll('input[name="product_quantity[]"]');
 
+    quantityInputs.forEach(function(input) {
+        input.addEventListener('change', updateTotal);
+        input.addEventListener('blur', updateTotal);
+    });
 
-// display products
+    function updateTotal() {
+        var input = this;
+        var quantity = parseFloat(input.value);
+        var parentDiv = input.closest('.quantity__item');
+
+        if (parentDiv) {
+            var priceElement = parentDiv.nextElementSibling;
+
+            var price = parseFloat(priceElement.getAttribute('data-price'));
+            var total = 0;
+
+            if (priceElement.classList.contains('has_discount')) {
+                var discount = parseFloat(priceElement.getAttribute('data-discount'));
+                total = quantity * (price - (price * discount));
+            } else {
+                total = quantity * price;
+            }
+
+            priceElement.textContent = formatCurrency(total);
+        }
+    }
+
+    function formatCurrency(amount) {
+        var roundedAmount = Math.floor(amount);
+        return roundedAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
+    }
+});
 
