@@ -55,18 +55,54 @@
                 </p>
             </div>
 
-            <div class="product_filter mt-5">
-                <div class="product_options">
-                    <div class="product_options-categories">
-                        <label for="category">Danh mục sản phẩm:</label>
-                        <select name="category" id="category" class="form-control">
-                            <option value="" selected disabled>Chọn danh mục sản phẩm</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            <div class="form-container mt-5">
+                <form id="filter-form" action="{{route('store.filter')}}" method="get" class="d-flex justify-content-between flex-row flex-wrap">
+                    @csrf
+                    <div class="form-group form-search-category">
+                        <label>Danh mục sản phẩm:</label>
+                        <select class="js-example-basic-single" name="product_category" style="width:100%">
+                            <option value="" selected>Chọn danh mục sản phẩm</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
                             @endforeach
                         </select>
                     </div>
-                </div>
+                    <div class="form-group form-search-price">
+                        <label>Đơn giá:</label>
+                        <select class="js-example-basic-single" name="product_price" style="width:100%">
+                            <option value="" selected>Chọn khoảng giá</option>
+                            @foreach($range_price as $price)
+                                    @if($price == '1000001-')
+                                        <option value="{{$price}}">
+                                            > {{ number_format((float) explode('-', $price)[0]) }}đ
+                                        </option>
+                                    @else
+                                        <option value="{{$price}}">
+                                            {{ number_format((float) explode('-', $price)[0]) }}đ - {{ number_format((float) explode('-', $price)[1]) }}đ
+                                        </option>
+                                    @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group form-search-discount">
+                        <label>Giảm giá:</label>
+                        <select class="js-example-basic-single" name="product_discount" style="width:100%">
+                            <option value="true"> Có </option>
+                            <option value="false" selected> Không </option>
+                        </select>
+                    </div>
+                    <div class="form-group form-search-sort">
+                        <label>Giá:</label>
+                        <select class="js-example-basic-single" name="product_price_sort" style="width:100%">
+                            <option value="asc" selected> Tăng dần </option>
+                            <option value="desc"> Giảm dần </option>
+                        </select>
+                    </div>
+                </form>
+                <button class="btn btn-primary mr-2 d-block text-center" id="btn-product-filter">
+                    <i class="fa fa-filter" aria-hidden="true"></i>
+                    Lọc sản phẩm
+                </button>
             </div>
 
             @if( $data->isEmpty() )

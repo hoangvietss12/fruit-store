@@ -8,14 +8,22 @@ use App\Models\Category;
 
 class StoreController extends Controller
 {
+    private $range_price = [
+        '0-50000',
+        '50001-100000',
+        '100001-500000',
+        '500001-1000000',
+        '1000001-'
+    ];
     public function index() {
         try {
             $data = Product::paginate(9);
             $categories = Category::all();
 
+            $range_price = $this->range_price;
             $this->createUrlImages($data);
 
-            return view('home.store', compact('data', 'categories'));
+            return view('home.store', compact('data', 'categories', 'range_price'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
@@ -26,9 +34,50 @@ class StoreController extends Controller
             $data = Product::where('name', $request->product_name)->paginate(9);
             $categories = Category::all();
 
+            $range_price = $this->range_price;
             $this->createUrlImages($data);
 
-            return view('home.store', compact('data', 'categories'));
+            return view('home.store', compact('data', 'categories', 'range_price'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
+
+    public function filter(Request $request) {
+        try {
+            $category_id = $request->input('product_category') ?? null;
+            $price = $request->input('product_price') ?? null;
+            $is_discount = $request->input('product_discount');
+            $sort_price = $request->input('product_price_sort');
+
+            $products = Product::query();
+
+            if ($category_id != null) {
+                $products->where('category_id', $category_id);
+            }
+
+            if ($price !=null ) {
+                $price_range = explode('-', $price);
+                $min_price = (int)$price_range[0];
+                $max_price = (int)$price_range[1];
+                $products->whereBetween('price', [$min_price, $max_price]);
+            }
+
+            if ($is_discount == 'true') {
+                $products->where('discount', '>', 0.0);
+            }
+
+            if ($sort_price !=null) {
+                $products->orderBy('price', $sort_price);
+            }
+
+            $data = $products->paginate(9);
+
+            $categories = Category::all();
+            $range_price = $this->range_price;
+            $this->createUrlImages($data);
+
+            return view('home.store', compact('data', 'categories', 'range_price'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }

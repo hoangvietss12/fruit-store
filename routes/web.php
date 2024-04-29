@@ -34,6 +34,8 @@ Route::prefix('/')->middleware('checkUserType')->group(function() {
         Route::get('/', [StoreController::class, 'index'])->name('store.index');
 
         Route::get('/search', [StoreController::class, 'search'])->name('store.search');
+
+        Route::get('/filter', [StoreController::class, 'filter'])->name('store.filter');
     });
 
     Route::prefix('cart')->middleware('checkLoggedIn')->group(function() {

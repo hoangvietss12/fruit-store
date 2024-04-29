@@ -53,7 +53,9 @@
                             </option>
                         @else
                             @if($price == '1000001-')
-                                > {{ number_format((float) explode('-', $price)[0]) }}đ
+                                <option value="{{$price}}">
+                                    > {{ number_format((float) explode('-', $price)[0]) }}đ
+                                </option>
                             @else
                                 <option value="{{$price}}">
                                     {{ number_format((float) explode('-', $price)[0]) }}đ - {{ number_format((float) explode('-', $price)[1]) }}đ

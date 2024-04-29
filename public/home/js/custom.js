@@ -36,6 +36,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("btn-product-filter").addEventListener("click", function() {
+        document.getElementById("filter-form").submit();
+    });
+});
+
 // handle payment event
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelector('.payment-select-2').style.display = 'none';
