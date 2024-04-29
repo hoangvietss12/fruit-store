@@ -34,7 +34,7 @@ class StoreController extends Controller
         }
     }
 
-    public function createUrlImages($data) {
+    private function createUrlImages($data) {
         try {
             $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
             foreach ($data as $product) {

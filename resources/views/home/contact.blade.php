@@ -1,6 +1,6 @@
 @extends('layouts.home')
 
-@section('title', 'Giới thiệu - Fruit-ya')
+@section('title', 'Liên hệ - Fruit-ya')
 
 @section('content')
     @if(session('error'))

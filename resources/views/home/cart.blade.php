@@ -1,6 +1,6 @@
 @extends('layouts.home')
 
-@section('title', 'Cửa hàng Fruit-ya')
+@section('title', 'Giỏ hàng Fruit-ya')
 
 @section('content')
     @if(session('error'))
