@@ -18,7 +18,7 @@
               <a class="nav-link" href="{{ route('home.about') }}"> Giới thiệu </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('home.store') }}">Cửa hàng</a>
+              <a class="nav-link" href="{{ route('store.index') }}">Cửa hàng</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ route('home.contact') }}">Liên hệ</a>

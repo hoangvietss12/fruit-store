@@ -20,7 +20,7 @@
                         <h4>Cửa hàng</h4>
                         <div class="breadcrumb__links">
                             <a href="{{ route("home.index") }}">Trang chủ</a>
-                            <span>Shop</span>
+                            <a href="{{ route("store.index") }}">Shop</a>
                         </div>
                     </div>
                 </div>
@@ -28,6 +28,19 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
+
+    <section class="store__search mt-3">
+        <form action="{{ route('store.search') }}" method="get" class="d-flex justify-content-center align-items-baseline">
+            @csrf
+            <div class="form-group" style="width: 30%;">
+                <input type="text" class="form-control" name="product_name" placeholder="Nhập tên sản phẩm...">
+            </div>
+            <button class="btn btn-primary" style="border-radius: unset;">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Tìm kiếm
+            </button>
+        </form>
+    </section>
 
     <!-- product section -->
     <section class="product_section layout_padding2-top layout_padding-bottom">
@@ -42,7 +55,7 @@
                 </p>
             </div>
 
-            <div class="product_filter">
+            <div class="product_filter mt-5">
                 <div class="product_options">
                     <div class="product_options-categories">
                         <label for="category">Danh mục sản phẩm:</label>
@@ -56,6 +69,9 @@
                 </div>
             </div>
 
+            @if( $data->isEmpty() )
+                <p style="font-size: 20px;" class="mt-5 text-center">Không có sản phẩm nào</p>
+            @else
             <div class="row" id="product-container">
 
                 @foreach($data as $product)
@@ -105,6 +121,7 @@
                 @endforeach
 
             </div>
+            @endif
 
             @if( $data->total() > 8 )
             {{ $data->links('components.pagination') }}

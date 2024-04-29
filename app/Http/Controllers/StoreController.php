@@ -4,47 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 
-class HomeController extends Controller
+class StoreController extends Controller
 {
     public function index() {
         try {
-            $data = Product::take(6)->get();
+            $data = Product::paginate(9);
+            $categories = Category::all();
 
             $this->createUrlImages($data);
 
-            return view('home.userhome', compact('data'));
+            return view('home.store', compact('data', 'categories'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
     }
 
-    public function about() {
+    public function search(Request $request) {
         try {
-            return view('home.about');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
-        }
-    }
+            $data = Product::where('name', $request->product_name)->paginate(9);
+            $categories = Category::all();
 
-    public function contact() {
-        try {
-            return view('home.contact');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
-        }
-    }
+            $this->createUrlImages($data);
 
-    public function loadMoreProducts(Request $request) {
-        try {
-            $offset = $request->input('offset', 0);
-            $limit = 6;
-
-            $products = Product::skip($offset)->take($limit)->get();
-
-            $this->createUrlImages($products);
-
-            return response()->json($products);
+            return view('home.store', compact('data', 'categories'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }

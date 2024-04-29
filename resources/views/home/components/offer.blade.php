@@ -8,7 +8,7 @@
               <h2>
                 Siêu sale tới 20%
               </h2>
-              <a href="{{ route('home.store') }}">
+              <a href="{{ route('store.index') }}">
                 Ghé shop
               </a>
             </div>
@@ -21,7 +21,7 @@
               <h2>
                 Sale off 10%
               </h2>
-              <a href="{{ route('home.store') }}">
+              <a href="{{ route('store.index') }}">
                 Ghé shop
               </a>
             </div>
@@ -32,7 +32,7 @@
               <h2>
                 Giảm tới 15%
               </h2>
-              <a href="{{ route('home.store') }}">
+              <a href="{{ route('store.index') }}">
                 Ghé shop
               </a>
             </div>

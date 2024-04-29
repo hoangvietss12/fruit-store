@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,9 +31,9 @@ Route::prefix('/')->middleware('checkUserType')->group(function() {
     Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 
     Route::prefix('store')->group(function() {
-        Route::get('/', [HomeController::class, 'store'])->name('home.store');
+        Route::get('/', [StoreController::class, 'index'])->name('store.index');
 
-        Route::get('/{category}', [HomeController::class, 'getProductsByCategory'])->name('store.category');
+        Route::get('/search', [StoreController::class, 'search'])->name('store.search');
     });
 
     Route::prefix('cart')->middleware('checkLoggedIn')->group(function() {

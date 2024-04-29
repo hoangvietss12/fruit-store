@@ -20,7 +20,7 @@
                         <h4>Giỏ hàng</h4>
                         <div class="breadcrumb__links">
                             <a href="{{ route("home.index") }}">Trang chủ</a>
-                            <a href="{{ route("home.store") }}">Shop</a>
+                            <a href="{{ route("store.index") }}">Shop</a>
                             <a href="{{ route("cart.index") }}">Giỏ hàng</a>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
             @if( $data->isEmpty() )
             <p style="font-size: 20px; text-align: center;">Không có sản phẩm nào</p>
             <div class="continue__btn">
-                <a href="{{ route('home.store') }}">Mua sắm ngay!</a>
+                <a href="{{ route('store.index') }}">Mua sắm ngay!</a>
             </div>
             @else
             <div class="row">
@@ -128,7 +128,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="continue__btn">
-                                <a href="{{ route('home.store') }}">Đến cửa hàng!</a>
+                                <a href="{{ route('store.index') }}">Đến cửa hàng!</a>
                             </div>
                         </div>
 

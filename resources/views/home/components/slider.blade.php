@@ -14,7 +14,7 @@
                     Dẫn dắt bạn vào hành trình khám phá vị ngon tuyệt vời của trái cây chất lượng cao. Với tận tâm chọn lựa và đảm bảo sự tươi ngon, cửa hàng chúng tôi là điểm đến lý tưởng cho những người yêu thương sức khỏe và đam mê hương vị tự nhiên. Hãy đến và trải nghiệm sự khác biệt!
                  </p>
                   <div class="btn-box">
-                    <a href="{{ route('home.store') }}" class="btn-1">
+                    <a href="{{ route('store.index') }}" class="btn-1">
                       Mua ngay
                     </a>
                     <a href="{{ route('home.contact') }}" class="btn-2">
@@ -44,7 +44,7 @@
                     Tươi sạch từ vườn đến tay bạn - chúng tôi tự hào cung cấp trái cây tươi ngon, hoàn toàn tự nhiên và không chất bảo quản. Hãy trải nghiệm sức sống và nguyên vẹn của thiên nhiên trong từng quả trái tại cửa hàng của chúng tôi.
                  </p>
                   <div class="btn-box">
-                    <a href="{{ route('home.store') }}" class="btn-1">
+                    <a href="{{ route('store.index') }}" class="btn-1">
                       Mua ngay
                     </a>
                     <a href="{{ route('home.contact') }}" class="btn-2">
@@ -74,7 +74,7 @@
                     Khám phá thiên đường trái cây tươi ngon tại cửa hàng chúng tôi, nơi mà chất lượng và hương vị hoàn hảo gặp nhau. Mỗi quả đều là một tác phẩm nghệ thuật tự nhiên, mang đến cho bạn trải nghiệm thượng đẳng của sự tươi mới và ngon miệng.
                  </p>
                   <div class="btn-box">
-                    <a href="{{ route('home.store') }}" class="btn-1">
+                    <a href="{{ route('store.index') }}" class="btn-1">
                       Mua ngay
                     </a>
                     <a href="{{ route('home.contact') }}" class="btn-2">
