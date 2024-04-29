@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Cart;
+use App\Models\Product;
 use PDF;
 
 class OrderController extends Controller
@@ -50,6 +51,15 @@ class OrderController extends Controller
     public function update(Request $request, $id) {
         try {
             $status = $request->input('order_type');
+
+            $data = OrderDetail::where('order_id', $id)->get();
+            foreach ($data as $orders_detail) {
+                $product = Product::find($orders_detail->product_id);
+                $new_quantity = $product->quantity - $orders_detail->quantity;
+                $product->quantity = $new_quantity;
+                $product->save();
+            }
+
             $order = Order::findOrNew($id);
             $order->status = $status;
             $order->save();
