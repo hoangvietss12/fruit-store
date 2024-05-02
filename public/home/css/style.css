@@ -275,6 +275,10 @@ a:focus {
           transform: none;
 }
 
+.navbar-rounded {
+    border-radius: 50px;
+}
+
 .quote_btn-container {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -1,6 +1,6 @@
 <header class="header_section">
     <div class="container">
-      <nav class="navbar navbar-expand-lg custom_nav-container ">
+      <nav class="navbar navbar-expand-lg custom_nav-container" style="box-shadow: none;">
         <a class="navbar-brand" href="{{ route('home.index') }}">
           <img src="../images/logo.png" alt="" width="100px" height="100px" />
         </a>
