@@ -43,6 +43,14 @@
     height: 45px;
   }
 
+  .product-section1 .product-details {
+    margin-top: 100px;
+  }
+
+  .product-section2 {
+    margin-top: 50px;
+  }
+
 }
 
 @media (max-width: 767px) {

@@ -114,3 +114,39 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+// change quantity in product detail
+document.addEventListener('DOMContentLoaded', function() {
+    const btnMinus = document.querySelector('.btn-minus');
+    const btnPlus = document.querySelector('.btn-plus');
+    const inputQuantity = document.querySelector('input[name="product_quantity"]');
+    const maxQuantity = parseFloat(inputQuantity.getAttribute('data-max'));
+
+    btnMinus.addEventListener('click', function(event) {
+        event.preventDefault();
+        let currentValue = parseFloat(inputQuantity.value);
+        if (!isNaN(currentValue) && currentValue > 1) {
+            inputQuantity.value = (currentValue - 1);
+        }
+    });
+
+    btnPlus.addEventListener('click', function(event) {
+        event.preventDefault();
+        let currentValue = parseFloat(inputQuantity.value);
+        if (!isNaN(currentValue) && currentValue < maxQuantity) {
+            if((currentValue + 1) > maxQuantity) {
+                inputQuantity.value = maxQuantity;
+            }else {
+                inputQuantity.value = (currentValue + 1);
+            }
+        }
+    });
+
+    inputQuantity.addEventListener('input', function() {
+        let currentValue = parseFloat(inputQuantity.value);
+        if (isNaN(currentValue) || currentValue < 1) {
+            inputQuantity.value = 1;
+        } else if (currentValue > maxQuantity) {
+            inputQuantity.value = maxQuantity;
+        }
+    });
+});

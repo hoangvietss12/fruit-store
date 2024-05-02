@@ -117,13 +117,9 @@
                             @if($product->discount > 0)
                                 <span class="sale-label">Sale {{ $product->discount*100 }}%</span>
                             @endif
-                            <a href=""><img src="{{$product->images[0]}}" alt="{{$product->name}}"></a>
+                            <img src="{{$product->images[0]}}" alt="{{$product->name}}">
                             <div class="product-overlay">
-                                <form action="{{ route('cart.store', ['id' => $product->id]) }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{$product->id}}">
-                                    <button class="add-to-cart-button">+ Thêm</button>
-                                </form>
+                                <a class="add-to-cart-button" href="{{ route('cart.store', ['id' => $product->id]) }}">+ Thêm</a>
                             </div>
                         </div>
                         <div class="detail-box">
@@ -134,7 +130,7 @@
                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                             </span>
-                            <a href="">
+                            <a href="{{ route('store.product', ['id' => $product->id]) }}">
                                 {{$product->name}}
                             </a>
                             <div class="price_box">

@@ -40,13 +40,9 @@
                             @if($product->discount > 0)
                                 <span class="sale-label">Sale {{ $product->discount*100 }}%</span>
                             @endif
-                            <a href=""><img src="{{$product->images[0]}}" alt="{{$product->name}}"></a>
+                            <img src="{{$product->images[0]}}" alt="{{$product->name}}">
                             <div class="product-overlay">
-                                <form action="{{ route('cart.store', ['id' => $product->id]) }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{$product->id}}">
-                                    <button class="add-to-cart-button">+ Thêm</button>
-                                </form>
+                                <a class="add-to-cart-button" href="{{ route('cart.store', ['id' => $product->id]) }}">+ Thêm</a>
                             </div>
                         </div>
                         <div class="detail-box">
@@ -57,7 +53,7 @@
                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                             </span>
-                            <a href="">
+                            <a href="{{ route('store.product', ['id' => $product->id]) }}">
                                 {{$product->name}}
                             </a>
                             <div class="price_box">
@@ -152,61 +148,63 @@
 @section('script')
     <script>
         var loadMoreProductsUrl = "{{ route('load.more.products') }}";
+
         function actionUrl(id) {
-        return "{{ route('cart.index') }}" + "/" + id;
-    }
-
-    function displayMoreProducts(products) {
-        var productContainer = document.getElementById('product-container');
-        if (productContainer) {
-            products.forEach(function(product) {
-                var productHtml = `
-                <div class="col-sm-6 col-lg-4 product-item">
-                    <div class="box">
-                        <div class="img-box">
-                            ${product.discount > 0 ? '<span class="sale-label">Sale '+ (product.discount*100) +' %</span>' : ''}
-                            <a href=""><img src="${product.images[0]}" alt="${product.name}"></a>
-                            <div class="product-overlay">
-                                <form action="${ actionUrl(product.id) }" method="post">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="${product.id}">
-                                    <button class="add-to-cart-button">+ Thêm</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="detail-box">
-                            <span class="rating">
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                            </span>
-                            <a href="">
-                                ${product.name}
-                            </a>
-                            <div class="price_box">
-                            ${product.discount > 0 ? `
-                                <p class="price">
-                                    ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price - product.price * product.discount)}
-                                </p>
-                                <p class="price price_old">
-                                    ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
-                                </p>
-                            ` : `
-                                <p class="price">
-                                    ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
-                                </p>
-                            `}
-
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-                productContainer.innerHTML += productHtml;
-            });
+            return "{{ route('cart.index') }}" + "/" + id;
         }
-    }
+
+        function detailUrl(id) {
+            return "{{ route('store.index') }}" + "/" + id;
+        }
+
+        function displayMoreProducts(products) {
+            var productContainer = document.getElementById('product-container');
+            if (productContainer) {
+                products.forEach(function(product) {
+                    console.log(product.id)
+                    var productHtml = `
+                    <div class="col-sm-6 col-lg-4 product-item">
+                        <div class="box">
+                            <div class="img-box">
+                                ${product.discount > 0 ? '<span class="sale-label">Sale '+ (product.discount*100) +' %</span>' : ''}
+                                <img src="${product.images[0]}" alt="${product.name}">
+                                <div class="product-overlay">
+                                    <a class="add-to-cart-button" href="${actionUrl(product.id)}">+ Thêm</a>
+                                </div>
+                            </div>
+                            <div class="detail-box">
+                                <span class="rating">
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </span>
+                                <a href="${ detailUrl(product.id) }">
+                                    ${product.name}
+                                </a>
+                                <div class="price_box">
+                                ${product.discount > 0 ? `
+                                    <p class="price">
+                                        ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price - product.price * product.discount)}
+                                    </p>
+                                    <p class="price price_old">
+                                        ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+                                    </p>
+                                ` : `
+                                    <p class="price">
+                                        ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}
+                                    </p>
+                                `}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                    productContainer.innerHTML += productHtml;
+                });
+            }
+        }
 
     </script>
 @stop

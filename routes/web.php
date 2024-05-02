@@ -33,6 +33,8 @@ Route::prefix('/')->middleware('checkUserType')->group(function() {
     Route::prefix('store')->group(function() {
         Route::get('/', [StoreController::class, 'index'])->name('store.index');
 
+        Route::get('/{id}', [StoreController::class, 'product'])->name('store.product');
+
         Route::get('/search', [StoreController::class, 'search'])->name('store.search');
 
         Route::get('/filter', [StoreController::class, 'filter'])->name('store.filter');
@@ -41,7 +43,7 @@ Route::prefix('/')->middleware('checkUserType')->group(function() {
     Route::prefix('cart')->middleware('checkLoggedIn')->group(function() {
         Route::get('/', [CartController::class, 'index'])->name('cart.index');
 
-        Route::post('/{id}', [CartController::class, 'addToCart'])->name('cart.store');
+        Route::get('/{id}', [CartController::class, 'addToCart'])->name('cart.store');
 
         Route::get('/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 

@@ -29,6 +29,23 @@ class StoreController extends Controller
         }
     }
 
+    public function product($id) {
+        try {
+            $product = Product::with('category')->findOrFail($id);
+            $title = $product->name;
+
+            $this->createUrlImagesForProduct($product);
+
+            $random_products = Product::inRandomOrder()->take(6)->get();
+
+            $this->createUrlImages($random_products);
+
+            return view('home.product-details', compact('product', 'title', 'random_products'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+        }
+    }
+
     public function search(Request $request) {
         try {
             $data = Product::where('name', $request->product_name)->paginate(9);
@@ -101,5 +118,22 @@ class StoreController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }
+    }
+
+    private function createUrlImagesForProduct($product) {
+        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+        $imageUrls = [];
+        $images = json_decode($product->images, true);
+
+        foreach($images as $image) {
+            $imageReference = $bucket->object($image);
+
+            if ($imageReference->exists()) {
+                $expiresAt = new \DateTime('tomorrow');
+                $imageUrls[] = $imageReference->signedUrl($expiresAt);
+            }
+        }
+
+        $product->images = $imageUrls;
     }
 }

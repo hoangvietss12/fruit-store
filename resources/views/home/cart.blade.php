@@ -29,6 +29,13 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
+    @if(session('message'))
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+
+            {{ session('message') }}
+        </div>
+    @endif
 
     <section class="cart__search mt-3">
         <form action="{{ route('cart.search') }}" method="get" class="d-flex justify-content-center align-items-baseline">
@@ -79,13 +86,13 @@
                                 <tr>
                                     <td class="product__cart__item">
                                             <div class="product__cart__item__pic">
-                                                <a href="">
+                                                <a href="{{ route('store.product', ['id' => $item->product->id]) }}">
                                                     <img style="width: 90px; height: 90px;"
                                                         src="{{ $item->product->images[0] }}" alt="{{ $item->product->name }}">
                                                 </a>
                                             </div>
                                             <div class="product__cart__item__text">
-                                                <a href="" class="d-inline">
+                                                <a href="{{ route('store.product', ['id' => $item->product->id]) }}" class="d-inline">
                                                     <h6>{{ $item->product->name }}</h6>
                                                 </a>
                                                 @if($item->product->discount > 0)

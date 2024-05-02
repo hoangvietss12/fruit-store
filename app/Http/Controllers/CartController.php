@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Cart;
 use App\Models\CartDetail;
 use App\Models\Product;
@@ -34,13 +35,15 @@ class CartController extends Controller
         }
     }
 
-    public function addToCart(Request $request){
+    public function addToCart($id, Request $request){
         try {
+            $new_quantity = floatval($request->product_quantity) ?? null;
+
             $user_id = Auth::user()->id;
 
             $user_cart = Cart::where('user_id', $user_id)->first();
 
-            $product = Product::find($request->product_id);
+            $product = Product::findOrFail($id);
 
             $product_cart_id = CartDetail::where('cart_id', $user_cart->id)
                 ->where('product_id', $product->id)
@@ -50,17 +53,29 @@ class CartController extends Controller
                 $new_product_cart = new CartDetail();
                 $new_product_cart->cart_id = $user_cart->id;
                 $new_product_cart->product_id = $product->id;
-                $new_product_cart->quantity = 1;
                 $new_product_cart->price = $product->price;
-                $new_product_cart->save();
-            }
 
+                if($new_quantity) {
+                    $new_product_cart->quantity = $new_quantity;
+                }else {
+                    $new_product_cart->quantity = 1;
+                }
+
+                $new_product_cart->save();
+            }else {
+                if($new_quantity) {
+                    DB::table('cart_details')
+                    ->where('cart_id', $user_cart->id)
+                    ->where('product_id', $product->id)
+                    ->update(['quantity' => $new_quantity]);
+                }
+            }
 
             $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
 
             $this->createUrlImages($data);
 
-            return view('home.cart', compact('data'));
+            return view('home.cart', compact('data'))->with('message', 'Thêm sản phẩm thành công!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
         }

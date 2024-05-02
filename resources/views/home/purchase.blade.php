@@ -70,7 +70,7 @@
                                 @foreach($data as $item)
                                 <tr>
                                     <td class="product__cart__item">
-                                        <a href="">
+                                        <a href="{{ route('store.product', ['id' => $item->product_id]) }}">
                                             <div class="product__cart__item__pic">
                                                 <img style="width: 90px; height: 90px;"
                                                     src="{{ $item->product->images[0] }}" alt="{{ $item->product->name }}">
