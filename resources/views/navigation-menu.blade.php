@@ -11,9 +11,16 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                            @php
+                                $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+
+                                $object = $bucket->object(Auth::user()->profile_photo_url);
+
+                                $imageUrl = $object->signedUrl(new \DateTime('tomorrow'));
+                            @endphp
                                 <div class="inline-flex items-center">
                                     <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                        <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                        <img class="h-8 w-8 rounded-full object-cover" src="{{ $imageUrl }}" alt="{{ Auth::user()->name }}" />
                                     </button>
                                     <h5 class="ml-3 mr-2">{{ Auth::user()->name }}</h5>
                                 </div>

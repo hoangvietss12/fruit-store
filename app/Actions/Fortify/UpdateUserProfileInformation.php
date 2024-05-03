@@ -20,8 +20,23 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'phone' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
-        ])->validateWithBag('updateProfileInformation');
+        ], [
+            'name.required' => __('Vui lòng nhập tên.'),
+            'name.max' => __('Tên không được vượt quá :max ký tự.'),
+            'email.required' => __('Vui lòng nhập địa chỉ email.'),
+            'email.email' => __('Địa chỉ email không hợp lệ.'),
+            'email.max' => __('Địa chỉ email không được vượt quá :max ký tự.'),
+            'email.unique' => __('Địa chỉ email đã được sử dụng.'),
+            'phone.required' => __('Vui lòng nhập số điện thoại.'),
+            'phone.max' => __('Số điện thoại không được vượt quá :max ký tự.'),
+            'address.required' => __('Vui lòng nhập địa chỉ.'),
+            'address.max' => __('Địa chỉ không được vượt quá :max ký tự.'),
+            'photo.mimes' => __('Ảnh phải có định dạng jpg, jpeg, hoặc png.'),
+            'photo.max' => __('Ảnh không được vượt quá :max KB.'),
+        ])->validate();
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
@@ -34,6 +49,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'phone' => $input['phone'],
+                'address' => $input['address']
             ])->save();
         }
     }
