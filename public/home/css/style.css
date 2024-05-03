@@ -307,7 +307,7 @@ a:focus {
       -ms-flex-align: center;
           align-items: center;
   padding-top: 25px;
-  padding-bottom: 90px;
+  padding-bottom: 60px;
   position: relative;
 }
 
@@ -330,7 +330,7 @@ a:focus {
           align-items: center;
 }
 
-.slider_section #customCarousel1 {
+.slider_section #carouselBasicExample {
   width: 100%;
   position: unset;
 }
@@ -812,6 +812,7 @@ a:focus {
 
 .client_section .carousel-control-prev,
 .client_section .carousel-control-next {
+  color: var(--white) !important;
   width: 50px;
   height: 50px;
   background-color: var(--primary);

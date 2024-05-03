@@ -1,64 +1,64 @@
-// to get current year
-function getYear() {
-    var currentDate = new Date();
-    var currentYear = currentDate.getFullYear();
-    document.querySelector("#displayYear").innerHTML = currentYear;
-}
-
-getYear();
-
-// show fee delivery
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector('.btn-type-order').addEventListener('click', function(event) {
-        event.preventDefault();
-        var selectedOption = document.querySelector('.js-example-basic-single').value;
+    // show fee delivery
+    const btnTypeOrder = document.querySelector('.btn-type-order');
 
-        if (selectedOption === "Ship tận nơi") {
-            var totalPriceSpan = document.querySelector('.cart__total li:first-child span');
-            var total_price = parseFloat(totalPriceSpan.textContent.trim().replace('đ', '').replace(',', ''));
+    if (btnTypeOrder) {
+        btnTypeOrder.addEventListener('click', function(event) {
+            event.preventDefault();
+            var selectedOption = document.querySelector('.js-example-basic-single').value;
 
-            var fee = 15000;
-            var total_payment = total_price + fee;
+            if (selectedOption === "Ship tận nơi") {
+                var totalPriceSpan = document.querySelector('.cart__total li:first-child span');
+                var total_price = parseFloat(totalPriceSpan.textContent.trim().replace('đ', '').replace(',', ''));
 
-            document.querySelector('.cart__fee').classList.add('show');
-            document.querySelector('.cart__total li:nth-child(3) span').textContent = total_payment.toLocaleString('en-US') + 'đ';
-        } else {
-            document.querySelector('.cart__fee').classList.remove('show');
-            document.querySelector('.cart__total li:nth-child(3) span').textContent = document.querySelector('.cart__total li:first-child span').textContent;
-        }
-    });
-});
+                var fee = 15000;
+                var total_payment = total_price + fee;
 
-// click submit
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("btn-submit-order").addEventListener("click", function() {
-        document.getElementById("order-form").submit();
-    });
-});
+                document.querySelector('.cart__fee').classList.add('show');
+                document.querySelector('.cart__total li:nth-child(3) span').textContent = total_payment.toLocaleString('en-US') + 'đ';
+            } else {
+                document.querySelector('.cart__fee').classList.remove('show');
+                document.querySelector('.cart__total li:nth-child(3) span').textContent = document.querySelector('.cart__total li:first-child span').textContent;
+            }
+        });
+    }
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("btn-product-filter").addEventListener("click", function() {
-        document.getElementById("filter-form").submit();
-    });
-});
+    // click submit
+    const btnSubmitOrder = document.querySelector('.btn-submit-order');
 
-// handle payment event
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector('.payment-select-2').style.display = 'none';
+    if (btnSubmitOrder) {
+        document.getElementById("btn-submit-order").addEventListener("click", function() {
+            document.getElementById("order-form").submit();
+        });
+    }
+    const btnProductFilter = document.querySelector('.btn-product-filter');
 
-    document.getElementById('btn-check-payment').addEventListener('click', function() {
+    if (btnProductFilter) {
+        document.getElementById("btn-product-filter").addEventListener("click", function() {
+            document.getElementById("filter-form").submit();
+        });
+    }
 
-        document.querySelector('.payment-select-1').style.display = 'none';
-        document.getElementById('cart').style.display = 'none';
+    // handle btn check
+    const paymentSelect2 = document.querySelector('.payment-select-2');
+    const btnCheckPayment = document.querySelector('.btn-check-payment');
 
-        document.querySelector('.payment-select-2').style.display = 'block';
-    });
-});
+    if(paymentSelect2) {
+        document.querySelector('.payment-select-2').style.display = 'none';
+    }
 
+    if (btnCheckPayment) {
+        document.getElementById('btn-check-payment').addEventListener('click', function() {
 
-// load more event
-document.addEventListener('DOMContentLoaded', function() {
-    var loadMoreBtn = document.getElementById('load-more-btn');
+            document.querySelector('.payment-select-1').style.display = 'none';
+            document.getElementById('cart').style.display = 'none';
+
+            document.querySelector('.payment-select-2').style.display = 'block';
+        });
+    }
+
+    // load more event
+    const loadMoreBtn = document.getElementById('load-more-btn');
     var offset = 6;
 
     if (loadMoreBtn) {
@@ -75,11 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
             xhr.send();
         });
     }
-});
 
-// update total price when change quanity in cart
-document.addEventListener("DOMContentLoaded", function() {
-    var quantityInputs = document.querySelectorAll('input[name="product_quantity[]"]');
+    // update total price when change quanity in cart
+    const quantityInputs = document.querySelectorAll('input[name="product_quantity[]"]');
 
     quantityInputs.forEach(function(input) {
         input.addEventListener('change', updateTotal);
@@ -112,41 +110,46 @@ document.addEventListener("DOMContentLoaded", function() {
         var roundedAmount = Math.floor(amount);
         return roundedAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
     }
-});
 
-// change quantity in product detail
-document.addEventListener('DOMContentLoaded', function() {
+    // change quantity in product detail
     const btnMinus = document.querySelector('.btn-minus');
     const btnPlus = document.querySelector('.btn-plus');
     const inputQuantity = document.querySelector('input[name="product_quantity"]');
-    const maxQuantity = parseFloat(inputQuantity.getAttribute('data-max'));
 
-    btnMinus.addEventListener('click', function(event) {
-        event.preventDefault();
-        let currentValue = parseFloat(inputQuantity.value);
-        if (!isNaN(currentValue) && currentValue > 1) {
-            inputQuantity.value = (currentValue - 1);
-        }
-    });
+    if (inputQuantity) {
+        const maxQuantity = parseFloat(inputQuantity.getAttribute('data-max'));
 
-    btnPlus.addEventListener('click', function(event) {
-        event.preventDefault();
-        let currentValue = parseFloat(inputQuantity.value);
-        if (!isNaN(currentValue) && currentValue < maxQuantity) {
-            if((currentValue + 1) > maxQuantity) {
+        inputQuantity.addEventListener('input', function() {
+            let currentValue = parseFloat(inputQuantity.value);
+            if (isNaN(currentValue) || currentValue < 1) {
+                inputQuantity.value = 1;
+            } else if (currentValue > maxQuantity) {
                 inputQuantity.value = maxQuantity;
-            }else {
-                inputQuantity.value = (currentValue + 1);
             }
-        }
-    });
+        });
+    }
 
-    inputQuantity.addEventListener('input', function() {
-        let currentValue = parseFloat(inputQuantity.value);
-        if (isNaN(currentValue) || currentValue < 1) {
-            inputQuantity.value = 1;
-        } else if (currentValue > maxQuantity) {
-            inputQuantity.value = maxQuantity;
-        }
-    });
+    if (btnMinus) {
+        btnMinus.addEventListener('click', function(event) {
+            event.preventDefault();
+            let currentValue = parseFloat(inputQuantity.value);
+            if (!isNaN(currentValue) && currentValue > 1) {
+                inputQuantity.value = (currentValue - 1);
+            }
+        });
+    }
+
+    if (btnPlus) {
+        btnPlus.addEventListener('click', function(event) {
+            event.preventDefault();
+            let currentValue = parseFloat(inputQuantity.value);
+            if (!isNaN(currentValue) && currentValue < maxQuantity) {
+                if((currentValue + 1) > maxQuantity) {
+                    inputQuantity.value = maxQuantity;
+                }else {
+                    inputQuantity.value = (currentValue + 1);
+                }
+            }
+        });
+    }
 });

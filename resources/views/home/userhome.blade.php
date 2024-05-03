@@ -161,7 +161,6 @@
             var productContainer = document.getElementById('product-container');
             if (productContainer) {
                 products.forEach(function(product) {
-                    console.log(product.id)
                     var productHtml = `
                     <div class="col-sm-6 col-lg-4 product-item">
                         <div class="box">

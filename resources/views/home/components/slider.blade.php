@@ -1,6 +1,9 @@
-<section class="slider_section ">
-    <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
+<section class="slider_section">
+<!-- Carousel wrapper -->
+    <div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel" data-mdb-carousel-init>
+
+    <!-- Inner -->
+    <div class="carousel-inner">
         <div class="carousel-item active">
           <div class="container ">
             <div class="row">
@@ -32,7 +35,7 @@
           </div>
         </div>
         <div class="carousel-item">
-          <div class="container ">
+          <div class="container">
             <div class="row">
               <div class="col-md-6 col-lg-5">
                 <div class="detail-box">
@@ -92,10 +95,32 @@
           </div>
         </div>
       </div>
-      <ol class="carousel-indicators">
-        <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
-        <li data-target="#customCarousel1" data-slide-to="1"></li>
-        <li data-target="#customCarousel1" data-slide-to="2"></li>
-      </ol>
+    <!-- Inner -->
+
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li
+            type="button"
+            data-mdb-target="#carouselBasicExample"
+            data-mdb-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+            ></li>
+            <li
+            type="button"
+            data-mdb-target="#carouselBasicExample"
+            data-mdb-slide-to="1"
+            aria-label="Slide 2"
+            ></li>
+            <li
+            type="button"
+            data-mdb-target="#carouselBasicExample"
+            data-mdb-slide-to="2"
+            aria-label="Slide 3"
+            ></li>
+        </ol>
+
     </div>
+    <!-- Carousel wrapper -->
 </section>
