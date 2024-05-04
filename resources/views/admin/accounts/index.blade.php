@@ -22,7 +22,7 @@
     </div>
 
     <div class="form-container my-3">
-        <form action="{{ route('account.search') }}" method="get" class="d-flex align-items-center flex-wrap">
+        <form action="{{ route('account.search') }}" method="post" class="d-flex align-items-center flex-wrap">
             @csrf
             <div class="form-group" style="width: 200px">
                 <label for="account_name">Tên tài khoản:</label>
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-        
+
         {{ $data->links() }}
     @else
         <p class="text-notfound">Không có tài khoản nào</p>

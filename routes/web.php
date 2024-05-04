@@ -78,7 +78,7 @@ Route::middleware([
 
 
 // Admin Page
-Route::prefix('fruitya-admin')->middleware('checkUserType')->group(function() {
+Route::prefix('fruitya-admin')->group(function() {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 
     Route::prefix('category')->group(function () {
@@ -87,13 +87,13 @@ Route::prefix('fruitya-admin')->middleware('checkUserType')->group(function() {
 
             Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
 
+            Route::post('/{id}', [CategoryController::class, 'update'])->name('category.update');
+
             Route::post('/', [CategoryController::class, 'store'])->name('category.store');
 
             Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
 
             Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
-
-            Route::post('/{id}', [CategoryController::class, 'update'])->name('category.update');
 
             Route::get('/search', [CategoryController::class, 'search'])->name('category.search');
         });
@@ -105,6 +105,8 @@ Route::prefix('fruitya-admin')->middleware('checkUserType')->group(function() {
 
             Route::get('/create', [ProductController::class, 'create'])->name('product.create');
 
+            Route::post('/search', [ProductController::class, 'search'])->name('product.search');
+
             Route::post('/', [ProductController::class, 'store'])->name('product.store');
 
             Route::get('/view/{id}', [ProductController::class, 'view'])->name('product.view');
@@ -115,7 +117,6 @@ Route::prefix('fruitya-admin')->middleware('checkUserType')->group(function() {
 
             Route::post('/{id}', [ProductController::class, 'update'])->name('product.update');
 
-            Route::get('/search', [ProductController::class, 'search'])->name('product.search');
         });
     });
 
@@ -141,15 +142,17 @@ Route::prefix('fruitya-admin')->middleware('checkUserType')->group(function() {
 
             Route::get('/create', [VendorController::class, 'create'])->name('vendor.create');
 
+            Route::post('/search', [VendorController::class, 'search'])->name('vendor.search');
+
+            Route::post('/{id}', [VendorController::class, 'update'])->name('vendor.update');
+
             Route::post('/', [VendorController::class, 'store'])->name('vendor.store');
 
             Route::get('/delete/{id}', [VendorController::class, 'delete'])->name('vendor.delete');
 
             Route::get('/edit/{id}', [VendorController::class, 'edit'])->name('vendor.edit');
 
-            Route::post('/{id}', [VendorController::class, 'update'])->name('vendor.update');
 
-            Route::get('/search', [VendorController::class, 'search'])->name('vendor.search');
         });
     });
 
@@ -161,9 +164,9 @@ Route::prefix('fruitya-admin')->middleware('checkUserType')->group(function() {
 
             Route::get('/edit/{id}', [AccountController::class, 'edit'])->name('account.edit');
 
-            Route::post('/{id}', [AccountController::class, 'update'])->name('account.update');
+            Route::post('/search', [AccountController::class, 'search'])->name('account.search');
 
-            Route::get('/search', [AccountController::class, 'search'])->name('account.search');
+            Route::post('/{id}', [AccountController::class, 'update'])->name('account.update');
         });
     });
 

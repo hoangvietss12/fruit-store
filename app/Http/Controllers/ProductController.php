@@ -31,8 +31,8 @@ class ProductController extends Controller
             'product_price' => ['required', 'string', 'regex:/^[0-9]+$/', 'min:0'],
             'product_discount' => ['required', 'numeric', 'between:0,1'],
             'product_description' => 'required|string',
-            'product_images' => 'required|array',
-            'product_images.*' => 'file|mimes:jpeg,png,jpg,gif,webp|max:1024',
+            // 'product_images' => 'required|array',
+            // 'product_images.*' => 'file|mimes:jpeg,png,jpg,gif,webp|max:1024',
         ],[
             'product_name.required' => 'Tên sản phẩm là trường bắt buộc.',
             'product_category.required' => 'Danh mục của sản phẩm là trường bắt buộc.',
@@ -49,9 +49,9 @@ class ProductController extends Controller
             'product_discount.between' => 'Giảm giá của sản phẩm phải là từ 0 đến 1.',
             'product_description.required' => 'Mô tả sản phẩm là trường bắt buộc.',
             'product_images.required' => 'Ảnh sản phẩm là trường bắt buộc.',
-            'product_images.image' => 'Tệp phải là một hình ảnh.',
-            'product_images.mimes' => 'Ảnh sản phẩm phải có định dạng jpeg, png, jpg, webp hoặc gif.',
-            'product_images.max' => 'Dung lượng ảnh sản phẩm không được vượt quá 1MB.'
+            // 'product_images.image' => 'Tệp phải là một hình ảnh.',
+            // 'product_images.mimes' => 'Ảnh sản phẩm phải có định dạng jpeg, png, jpg, webp hoặc gif.',
+            // 'product_images.max' => 'Dung lượng ảnh sản phẩm không được vượt quá 1MB.'
         ]);
     }
     public function index() {
@@ -101,7 +101,6 @@ class ProductController extends Controller
             $imageUrls = $this->uploadImagesToFirebase($request);
 
             $data->images = json_encode($imageUrls);
-            dd($data);
             $data->save();
 
             return redirect('fruitya-admin/product')->with('message', 'Thêm thành công!');
@@ -193,12 +192,12 @@ class ProductController extends Controller
 
     public function search(Request $request) {
         try {
-            $name = $request->has('product_name') ? $request->product_name : null;
-            $category = $request->has('product_category') ? $request->input('product_category') : null;
-            $vendor = $request->has('product_vendor') ? $request->input('product_vendor') : null;
-            $price = $request->has('product_price') ? $request->input('product_price') : null;
-            $discount = $request->has('product_discount') ? $request->input('product_discount') : null;
-            $status = $request->has('product_status') ? $request->input('product_status') : null;
+            $name = $request->product_name;
+            $category =$request->input('product_category');
+            $vendor = $request->input('product_vendor');
+            $price = $request->input('product_price');
+            $discount = $request->input('product_discount');
+            $status = $request->input('product_status');
 
             $query = Product::query();
 
@@ -214,24 +213,27 @@ class ProductController extends Controller
                 $query->where('vendor_id', '=', $vendor);
             }
 
-            if ($price !=null ) {
+            $price = $request->input('product_price');
+            if ($price !== null) {
                 $price_range = explode('-', $price);
                 $min_price = (int)$price_range[0];
-                $max_price = (int)$price_range[1];
+                $max_price = isset($price_range[1]) ? (int)$price_range[1] : PHP_INT_MAX;
                 $query->whereBetween('price', [$min_price, $max_price]);
             }
 
+
             if ($discount == 'true') {
                 $query->where('discount', '>', 0.0);
-            }else if($discount == 'false') {
+            } else if ($discount == 'false') {
                 $query->where('discount', '=', 0.0);
             }
 
-            if ($discount == 'Còn hàng') {
+            if ($status == 'Còn hàng') {
                 $query->where('status', '=', 'Còn hàng');
-            }else if($discount == 'hết hàng') {
+            } else if ($status == 'Hết hàng') {
                 $query->where('status', '=', 'Hết hàng');
             }
+
 
             $data = $query->paginate(8);
 

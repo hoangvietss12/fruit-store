@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-container mt-3">
-        <form action="{{ route('product.search') }}" method="get" class="d-flex align-items-center flex-wrap">
+        <form action="{{ route('product.search') }}" method="post" class="d-flex align-items-center flex-wrap">
             @csrf
             <div class="form-group" style="width: 250px">
                 <label for="vendor_name">Tên sản phẩm:</label>
@@ -64,7 +64,9 @@
                     <option value="" selected>Chọn khoảng giá</option>
                     @foreach($range_price as $price)
                             @if($price == '1000001-')
-                                > {{ number_format((float) explode('-', $price)[0]) }}đ
+                                 <option value="{{$price}}">
+                                    > {{ number_format((float) explode('-', $price)[0]) }}đ
+                                </option>
                             @else
                                 <option value="{{$price}}">
                                     {{ number_format((float) explode('-', $price)[0]) }}đ - {{ number_format((float) explode('-', $price)[1]) }}đ
@@ -76,9 +78,9 @@
             <div class="form-group ml-2" style="width: 150px">
                 <label>Giảm giá:</label>
                 <select class="js-example-basic-single" name="product_discount" style="width:100%">
-                    <option value="" selected disable> Chọn giảm giá </option>
+                    <option value="" selected> Chọn giảm giá </option>
                     <option value="true"> Có </option>
-                    <option value="false" selected> Không </option>
+                    <option value="false"> Không </option>
                 </select>
             </div>
             <div class="form-group ml-2" style="width: 200px">

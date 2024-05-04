@@ -107,10 +107,10 @@ class VendorController extends Controller
 
     public function search(Request $request) {
         try {
-            $name = $request->has('name') ? $request->name : null;
-            $email = $request->has('email') ? $request->email : null;
-            $phone = $request->has('phone') ? $request->phone : null;
-            $address = $request->has('address') ? $request->address : null;
+            $name = $request->has('vendor_name') ? $request->vendor_name : null;
+            $email = $request->has('vendor_email') ? $request->vendor_email : null;
+            $phone = $request->has('vendor_phone') ? $request->vendor_phone : null;
+            $address = $request->has('vendor_address') ? $request->vendor_address : null;
 
             $query = Vendor::query();
 

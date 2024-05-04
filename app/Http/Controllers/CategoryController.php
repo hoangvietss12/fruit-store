@@ -79,10 +79,9 @@ class CategoryController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $input = $request->only(['category_name']);;
-            $category = Category::findOrNew($id);
-            $category->update($input);
-
+            $category = Category::find($id);
+            $category->update(['name' => $request->category_name]);
+            
             return redirect('fruitya-admin/category')->with('message', 'Cập nhật thành công!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());

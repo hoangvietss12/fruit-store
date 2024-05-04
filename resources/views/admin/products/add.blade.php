@@ -80,7 +80,7 @@
                         </div>
                         <div class="form-group">
                             <label for="product_description">Mô tả sản phẩm:</label>
-                            <textarea class="form-control" id="product_description" rows="4" name="product_description" placeholder="Mô tả về sản phẩm..." value="{{ old('product_description') }}"></textarea>
+                            <textarea class="form-control" id="product_description" id="summernote" name="product_description" placeholder="Mô tả về sản phẩm..." value="{{ old('product_description') }}"></textarea>
                             @error('product_description')
                                 <p class="text-danger mt-2">{{ $message }}</p>
                             @enderror
@@ -102,4 +102,17 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('script')
+<!-- Tải Summernote từ CDN -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+</script>
+
 @stop

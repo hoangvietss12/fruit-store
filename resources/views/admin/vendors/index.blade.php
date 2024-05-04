@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-container mt-3">
-        <form action="{{ route('vendor.search') }}" method="get" class="d-flex align-items-center flex-wrap">
+        <form action="{{ route('vendor.search') }}" method="post" class="d-flex align-items-center flex-wrap">
             @csrf
             <div class="form-group" style="width: 200px">
                 <label for="vendor_name">Tên nhà cung cấp:</label>
