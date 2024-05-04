@@ -30,7 +30,7 @@
     <!-- Breadcrumb Section End -->
 
     <section class="store__search mt-3">
-        <form action="{{ route('store.search') }}" method="get" class="d-flex justify-content-center align-items-baseline">
+        <form action="{{ route('store.search') }}" method="post" class="d-flex justify-content-center align-items-baseline">
             @csrf
             <div class="form-group" style="width: 30%;">
                 <input type="text" class="form-control" name="product_name" placeholder="Nhập tên sản phẩm...">
@@ -56,7 +56,7 @@
             </div>
 
             <div class="form-container mt-5">
-                <form id="filter-form" action="{{route('store.filter')}}" method="get" class="d-flex justify-content-between flex-row flex-wrap">
+                <form id="filter-form" action="{{route('store.filter')}}" method="post" class="d-flex justify-content-between flex-row flex-wrap">
                     @csrf
                     <div class="form-group form-search-category">
                         <label>Danh mục sản phẩm:</label>

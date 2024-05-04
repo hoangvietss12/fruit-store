@@ -101,7 +101,7 @@ class ProductController extends Controller
             $imageUrls = $this->uploadImagesToFirebase($request);
 
             $data->images = json_encode($imageUrls);
-
+            dd($data);
             $data->save();
 
             return redirect('fruitya-admin/product')->with('message', 'Thêm thành công!');
@@ -234,6 +234,7 @@ class ProductController extends Controller
             }
 
             $data = $query->paginate(8);
+
             $categories = Category::all();
             $vendors = Vendor::all();
             $range_price = $this->range_price;

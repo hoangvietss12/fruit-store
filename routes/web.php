@@ -35,9 +35,9 @@ Route::prefix('/')->middleware('checkUserType')->group(function() {
 
         Route::get('/{id}', [StoreController::class, 'product'])->name('store.product');
 
-        Route::get('/search', [StoreController::class, 'search'])->name('store.search');
+        Route::post('/search', [StoreController::class, 'search'])->name('store.search');
 
-        Route::get('/filter', [StoreController::class, 'filter'])->name('store.filter');
+        Route::post('/filter', [StoreController::class, 'filter'])->name('store.filter');
     });
 
     Route::prefix('cart')->middleware('checkLoggedIn')->group(function() {

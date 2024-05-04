@@ -48,7 +48,7 @@ class StoreController extends Controller
 
     public function search(Request $request) {
         try {
-            $data = Product::where('name', $request->product_name)->paginate(9);
+            $data = Product::where('name', 'like', '%'.$request->product_name.'%')->paginate(9);
             $categories = Category::all();
 
             $range_price = $this->range_price;
@@ -62,15 +62,15 @@ class StoreController extends Controller
 
     public function filter(Request $request) {
         try {
-            $category_id = $request->input('product_category') ?? null;
-            $price = $request->input('product_price') ?? null;
+            $category_id = $request->input('product_category');
+            $price = $request->input('product_price');
             $is_discount = $request->input('product_discount');
             $sort_price = $request->input('product_price_sort');
 
             $products = Product::query();
 
             if ($category_id != null) {
-                $products->where('category_id', $category_id);
+                $products->where('category_id', '=' ,$category_id);
             }
 
             if ($price !=null ) {

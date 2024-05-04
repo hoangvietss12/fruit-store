@@ -24,14 +24,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // click submit
-    const btnSubmitOrder = document.querySelector('.btn-submit-order');
+    const btnSubmitOrder = document.querySelector('#btn-submit-order');
 
     if (btnSubmitOrder) {
         document.getElementById("btn-submit-order").addEventListener("click", function() {
             document.getElementById("order-form").submit();
         });
     }
-    const btnProductFilter = document.querySelector('.btn-product-filter');
+    const btnProductFilter = document.querySelector('#btn-product-filter');
 
     if (btnProductFilter) {
         document.getElementById("btn-product-filter").addEventListener("click", function() {
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // handle btn check
     const paymentSelect2 = document.querySelector('.payment-select-2');
-    const btnCheckPayment = document.querySelector('.btn-check-payment');
+    const btnCheckPayment = document.querySelector('#btn-check-payment');
 
     if(paymentSelect2) {
         document.querySelector('.payment-select-2').style.display = 'none';
