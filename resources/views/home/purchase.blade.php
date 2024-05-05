@@ -4,12 +4,14 @@
 
 @section('content')
     @if(session('error'))
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
 
-            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
         </div>
-    @endif
+    @endifF
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
@@ -34,16 +36,20 @@
     <section class="shopping-cart spad">
         <div class="container">
             @if(session('message') == "Bạn phải hủy đặt hàng trước đã!")
-                <div class="alert alert-danger mb-5">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('message') }}
 
-                    {{session('message')}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
                 </div>
             @elseif(session('message'))
-            <div class="alert alert-success mb-5">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('message') }}
 
-                    {{session('message')}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
                 </div>
             @endif
 

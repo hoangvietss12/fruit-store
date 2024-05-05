@@ -32,7 +32,7 @@ class VendorController extends Controller
 
             return view('admin.vendors.index', compact('data'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -57,7 +57,7 @@ class VendorController extends Controller
 
             return redirect('fruitya-admin/vendor')->with('message', 'Thêm thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -69,7 +69,7 @@ class VendorController extends Controller
 
             return redirect()->back()->with('message', 'Xóa thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -79,7 +79,7 @@ class VendorController extends Controller
 
             return view('admin.vendors.edit', compact('data'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -101,7 +101,7 @@ class VendorController extends Controller
 
             return redirect('fruitya-admin/vendor')->with('message', 'Cập nhật thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -134,7 +134,7 @@ class VendorController extends Controller
 
             return view('admin.vendors.index', compact('data'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 }

@@ -5116,7 +5116,7 @@ a.badge-dark:focus, a.badge-dark.focus {
   padding-right: 4rem;
 }
 
-.alert-dismissible .close {
+.alert-dismissible .btn-close {
   position: absolute;
   top: 0;
   right: 0;

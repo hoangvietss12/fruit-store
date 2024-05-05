@@ -65,7 +65,7 @@ class ProductController extends Controller
 
             return view('admin.products.index', compact('data', 'categories', 'vendors', 'range_price'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -76,7 +76,7 @@ class ProductController extends Controller
 
             return view('admin.products.add', compact('categories', 'vendors'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -105,7 +105,7 @@ class ProductController extends Controller
 
             return redirect('fruitya-admin/product')->with('message', 'Thêm thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -117,7 +117,7 @@ class ProductController extends Controller
 
             return view('admin.products.view', compact('product'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -130,7 +130,7 @@ class ProductController extends Controller
 
             return view('admin.products.edit', compact('data', 'categories', 'vendors'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -172,7 +172,7 @@ class ProductController extends Controller
 
             return redirect('fruitya-admin/product')->with('message', 'Cập nhật thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -186,7 +186,7 @@ class ProductController extends Controller
 
             return redirect()->back()->with('message', 'Xóa thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -245,7 +245,7 @@ class ProductController extends Controller
 
             return view('admin.products.index', compact('data', 'categories', 'vendors', 'range_price'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 

@@ -41,7 +41,7 @@ class PurchaseController extends Controller
 
             return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -102,7 +102,7 @@ class PurchaseController extends Controller
             session()->flash('message', $message);
             return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -142,7 +142,7 @@ class PurchaseController extends Controller
 
             return redirect('purchase')->with('message', 'Đặt hàng thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -155,7 +155,7 @@ class PurchaseController extends Controller
 
             return redirect('purchase')->with('message', 'Hủy đặt hàng thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 

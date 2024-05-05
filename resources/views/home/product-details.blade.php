@@ -4,12 +4,14 @@
 
 @section('content')
     @if(session('error'))
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
 
-            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
         </div>
-    @endif
+    @endifF
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
@@ -196,13 +198,10 @@
 @stop
 
 @section('script')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-
 <script>
     var maxQuantity = "{{ $product->quantity }}"
     // handle carousel
-    $('#myCarousel.carousel .carousel-item').each(function () {
+    $('#myCarousel .carousel-item').each(function () {
         var minPerSlide = 4;
         var next = $(this).next();
         if (!next.length) {

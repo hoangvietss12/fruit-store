@@ -29,7 +29,7 @@ class ReportController extends Controller
 
             return view('admin.reports.product', compact('categories', 'vendors', 'range_price'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -56,7 +56,7 @@ class ReportController extends Controller
 
             return view('admin.reports.product', compact('data', 'categories', 'vendors', 'range_price', 'is_discount', 'params'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -67,7 +67,7 @@ class ReportController extends Controller
             $today_date = Carbon::now()->format('d/m/Y');
             return Excel::download(new ProductExport($data), 'data_'.$today_date.'.xlsx');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 

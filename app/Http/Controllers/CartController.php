@@ -31,7 +31,7 @@ class CartController extends Controller
 
             return view('home.cart', compact('data'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -42,6 +42,14 @@ class CartController extends Controller
             $user_id = Auth::user()->id;
 
             $user_cart = Cart::where('user_id', $user_id)->first();
+
+            if(!$user_cart) {
+                $new_cart = new Cart();
+                $new_cart->user_id = $user_id;
+                $new_cart->save();
+
+                $user_cart = $new_cart;
+            }
 
             $product = Product::findOrFail($id);
 
@@ -77,7 +85,7 @@ class CartController extends Controller
 
             return view('home.cart', compact('data'))->with('message', 'Thêm sản phẩm thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -93,7 +101,7 @@ class CartController extends Controller
 
             return redirect()->back()->with('message', 'Xóa thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -115,7 +123,7 @@ class CartController extends Controller
 
             return view('home.cart', compact('data'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 

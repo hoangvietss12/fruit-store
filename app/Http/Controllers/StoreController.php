@@ -25,7 +25,7 @@ class StoreController extends Controller
 
             return view('home.store', compact('data', 'categories', 'range_price'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -42,7 +42,7 @@ class StoreController extends Controller
 
             return view('home.product-details', compact('product', 'title', 'random_products'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -56,7 +56,7 @@ class StoreController extends Controller
 
             return view('home.store', compact('data', 'categories', 'range_price'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -96,7 +96,7 @@ class StoreController extends Controller
 
             return view('home.store', compact('data', 'categories', 'range_price'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -116,7 +116,7 @@ class StoreController extends Controller
                 $product->images = $imageUrls;
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 

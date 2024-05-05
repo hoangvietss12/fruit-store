@@ -4,13 +4,14 @@
 
 @section('content')
     @if(session('error'))
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
 
-            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
         </div>
-    @endif
-
+    @endifF
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
         <div class="container">
@@ -29,13 +30,6 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-    @if(session('message'))
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-
-            {{ session('message') }}
-        </div>
-    @endif
 
     <section class="cart__search mt-3">
         <form action="{{ route('cart.search') }}" method="get" class="d-flex justify-content-center align-items-baseline">
@@ -54,10 +48,12 @@
     <section class="shopping-cart spad">
         <div class="container">
         @if(session('message'))
-            <div class="alert alert-danger mb-2">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 {{ session('message') }}
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
             </div>
         @endif
 

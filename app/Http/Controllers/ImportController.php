@@ -34,7 +34,7 @@ class ImportController extends Controller
 
             return view('admin.imports.index', compact('data', 'vendors'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -46,7 +46,7 @@ class ImportController extends Controller
 
             return view('admin.imports.view', compact('note_info', 'note_detail_info'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -56,7 +56,7 @@ class ImportController extends Controller
 
             return view('admin.imports.add-vendor', compact('vendors'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -145,7 +145,7 @@ class ImportController extends Controller
 
             return view('admin.imports.index', compact('data', 'vendors'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 }

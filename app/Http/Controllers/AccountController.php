@@ -14,7 +14,7 @@ class AccountController extends Controller
 
             return view('admin.accounts.index', compact('data'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -24,7 +24,7 @@ class AccountController extends Controller
 
             return view('admin.accounts.view', compact('data'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -34,7 +34,7 @@ class AccountController extends Controller
 
             return view('admin.accounts.edit', compact('data'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -47,7 +47,7 @@ class AccountController extends Controller
 
             return redirect('fruitya-admin/account')->with('message', 'Cập nhật thành công!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
@@ -75,7 +75,7 @@ class AccountController extends Controller
 
             return view('admin.accounts.index', compact('data'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 }

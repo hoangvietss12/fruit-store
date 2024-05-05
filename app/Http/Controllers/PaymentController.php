@@ -125,7 +125,7 @@ class PaymentController extends Controller
 
             return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
     }
 
