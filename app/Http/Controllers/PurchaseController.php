@@ -23,6 +23,14 @@ class PurchaseController extends Controller
 
             $user_cart = Cart::where('user_id', $user_id)->first();
 
+            if(!$user_cart) {
+                $new_cart = new Cart();
+                $new_cart->user_id = $user_id;
+                $new_cart->save();
+
+                $user_cart = $new_cart;
+            }
+
             $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
 
             $total_price = $this->sumTotal($data);
@@ -119,7 +127,7 @@ class PurchaseController extends Controller
             $new_order->save();
 
             // create order detail
-            $order_id = Order::where('user_id', $user_id)->first();
+            $order_id = Order::where('user_id', $user_id)->where('status', '=', 'Chờ xác nhận')->first();
             foreach($data as $item) {
                 $new_order_detail = new OrderDetail();
 

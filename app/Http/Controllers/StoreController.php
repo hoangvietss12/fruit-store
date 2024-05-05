@@ -36,7 +36,7 @@ class StoreController extends Controller
 
             $this->createUrlImagesForProduct($product);
 
-            $random_products = Product::inRandomOrder()->take(6)->get();
+            $random_products = Product::inRandomOrder()->take(8)->get();
 
             $this->createUrlImages($random_products);
 

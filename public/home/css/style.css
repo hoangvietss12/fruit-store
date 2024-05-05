@@ -613,6 +613,10 @@ a:focus {
     text-decoration: underline;
 }
 
+.product_section .box .detail-box .price.price_out {
+    color: var(--primary);
+}
+
 .product_section .btn-box {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -118,9 +118,12 @@
                                 <span class="sale-label">Sale {{ $product->discount*100 }}%</span>
                             @endif
                             <img src="{{$product->images[0]}}" alt="{{$product->name}}">
-                            <div class="product-overlay">
-                                <a class="add-to-cart-button" href="{{ route('cart.store', ['id' => $product->id]) }}">+ Thêm</a>
-                            </div>
+
+                            @if($product->status === "Còn hàng")
+                                <div class="product-overlay">
+                                    <a class="add-to-cart-button" href="{{ route('cart.store', ['id' => $product->id]) }}">+ Thêm</a>
+                                </div>
+                            @endif
                         </div>
                         <div class="detail-box">
                             <span class="rating">
@@ -134,16 +137,22 @@
                                 {{$product->name}}
                             </a>
                             <div class="price_box">
-                                @if($product->discount > 0)
-                                    <p class="price">
-                                        {{number_format($product->price - ($product->price * $product->discount))}} <span>đ</span>
-                                    </p>
-                                    <p class="price price_old">
-                                        {{number_format($product->price)}} <span>đ</span>
-                                    </p>
+                                @if($product->status === "Còn hàng")
+                                    @if($product->discount > 0)
+                                        <p class="price">
+                                            {{number_format($product->price - ($product->price * $product->discount))}} <span>đ</span>
+                                        </p>
+                                        <p class="price price_old">
+                                            {{number_format($product->price)}} <span>đ</span>
+                                        </p>
+                                    @else
+                                        <p class="price">
+                                            {{number_format($product->price)}} <span>đ</span>
+                                        </p>
+                                    @endif
                                 @else
-                                    <p class="price">
-                                        {{number_format($product->price)}} <span>đ</span>
+                                    <p class="price price_out">
+                                        Tạm hết hàng
                                     </p>
                                 @endif
                             </div>

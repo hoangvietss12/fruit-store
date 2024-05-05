@@ -75,10 +75,12 @@
                                                     <span class="mdi mdi-eye-outline mr-1"></span>
                                                     Xem chi tiết
                                                 </a>
-                                                <a class="btn btn-warning ml-2 d-flex" href="{{route('order.edit', ['id' => $item->id])}}" role="button">
-                                                    <span class="mdi mdi-pencil mr-1"></span>
-                                                    Sửa trạng thái
-                                                </a>
+                                                @if($item->status === "Chờ xác nhận")
+                                                    <a class="btn btn-warning ml-2 d-flex" href="{{route('order.edit', ['id' => $item->id])}}" role="button">
+                                                        <span class="mdi mdi-pencil mr-1"></span>
+                                                        Sửa trạng thái
+                                                    </a>
+                                                @endif
                                                 <a class="btn btn-success ml-2 d-flex" target="_blank" href="{{route('order.print', ['id' => $item->id])}}" role="button">
                                                     <span class="mdi mdi-printer-pos mr-1"></span>
                                                     In hóa đơn

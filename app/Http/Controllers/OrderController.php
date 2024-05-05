@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
     public function index() {
         try {
-            $data = Order::with('user')->paginate(10);
+            $data = Order::with('user')->orderBy('status')->paginate(10);
 
             return view('admin.orders.index', compact('data'));
         } catch (\Exception $e) {
@@ -57,6 +57,11 @@ class OrderController extends Controller
                 $product = Product::find($orders_detail->product_id);
                 $new_quantity = $product->quantity - $orders_detail->quantity;
                 $product->quantity = $new_quantity;
+
+                if($product->quantity == 0) {
+                    $product->status = "Tạm hết hàng";
+                }
+
                 $product->save();
             }
 

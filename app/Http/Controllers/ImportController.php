@@ -40,7 +40,7 @@ class ImportController extends Controller
 
     public function view($id) {
         try {
-            $note_info = GoodsReceivedNote::findOrFail($id)->with('vendor')->first();
+            $note_info = GoodsReceivedNote::with('vendor')->findOrFail($id);
 
             $note_detail_info = GoodsReceivedNoteDetail::where('goods_received_note_id', $id)->with('product')->get();
 
@@ -79,11 +79,11 @@ class ImportController extends Controller
 
     public function storeProduct(Request $request, $id) {
         try {
-            $validator = $this->validator($request->all());
+            // $validator = $this->validator($request->all());
 
-            if($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
+            // if($validator->fails()) {
+            //     return redirect()->back()->withErrors($validator)->withInput();
+            // }
 
             $note = GoodsReceivedNote::findOrFail($id);
 

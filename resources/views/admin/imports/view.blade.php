@@ -135,6 +135,7 @@
             <tr class="bg-blue">
                 <th>STT</th>
                 <th>Tên sản phẩm</th>
+                <th>Ghi chú</th>
                 <th>Đơn giá</th>
                 <th>Số lượng</th>
                 <th>Đơn vị tính</th>
@@ -148,7 +149,10 @@
                 <td>
                     {{ $item->product->name }}
                 </td>
-                <td width="15%">{{ number_format($item->price) }}đ</td>
+                <td width="15%">
+                    {{ $item->note == null ? 'Không' : $item->note }}
+                </td>
+                <td width="10%">{{ number_format($item->price) }}đ</td>
                 <td width="10%">{{ $item->quantity }}</td>
                 <td width="10%">{{ $item->product->unit }}</td>
                 <td width="15%" class="fw-bold">{{ number_format($item->total_price) }}đ</td>
@@ -157,7 +161,7 @@
 
             <tr>
             <tr>
-                <td colspan="5" class="total-heading">Tổng tiền:</td>
+                <td colspan="6" class="total-heading">Tổng tiền:</td>
                 <td colspan="1" class="total-heading">{{ number_format($note_info->total) }}đ</td>
             </tr>
             </tr>

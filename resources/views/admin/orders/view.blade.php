@@ -175,7 +175,7 @@
             <tr>
                 @if($order_info->order_type == "Ship tận nơi")
                     <tr>
-                        <td colspan="4" class="total-heading">Phí vận chuyển:</td>
+                        <td colspan="5" class="total-heading">Phí vận chuyển:</td>
                         <td colspan="1" class="total-heading">15,000đ</td>
                     </tr>
                 @endif
