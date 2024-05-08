@@ -29,6 +29,7 @@ Route::prefix('/')->middleware('checkUserType')->group(function() {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::get('/about', [HomeController::class, 'about'])->name('home.about');
     Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
+    Route::get('/history', [HomeController::class, 'history'])->name('home.history');
 
     Route::prefix('store')->group(function() {
         Route::get('/', [StoreController::class, 'index'])->name('store.index');

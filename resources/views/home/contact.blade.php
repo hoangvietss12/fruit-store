@@ -11,7 +11,7 @@
                 <i class="fa fa-times" aria-hidden="true"></i>
             </button>
         </div>
-    @endifF
+    @endif
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">

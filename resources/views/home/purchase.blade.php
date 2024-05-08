@@ -11,7 +11,7 @@
                 <i class="fa fa-times" aria-hidden="true"></i>
             </button>
         </div>
-    @endifF
+    @endif
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
@@ -83,7 +83,16 @@
                                             </div>
                                             <div class="product__cart__item__text">
                                                 <h6>{{ $item->product->name }}</h6>
-                                                <h5>{{ number_format($item->price) }} <span>đ</span></h5>
+                                                @if($item->product->discount > 0)
+                                                    <div class="d-block">
+                                                        <h5 class="d-inline-block text-danger">{{ number_format($item->product->price - ($item->product->price * $item->product->discount)) }} <span>đ</span></h5>
+                                                        <h6 class="d-inline-block" style="text-decoration: line-through;">{{ number_format($item->product->price) }} <span>đ</span></h6>
+                                                    </div>
+                                                @else
+                                                    <div class="d-block">
+                                                        <h5 class="text-danger">{{ number_format($item->product->price) }} <span>đ</span></h5>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </a>
                                     </td>
@@ -94,7 +103,11 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="cart__price">{{ number_format($item->quantity*$item->price) }} <span>đ</span>
+                                    @if($item->product->discount > 0)
+                                        <td class="cart__price has_discount" data-price="{{ $item->price }}" data-discount="{{  $item->product->discount }}">{{ number_format(($item->price - ($item->price * $item->product->discount)) * $item->quantity) }} <span>đ</span>
+                                    @else
+                                        <td class="cart__price" data-price="{{ $item->price }}">{{ number_format($item->quantity*$item->price) }} <span>đ</span>
+                                    @endif
                                     </td>
                                 </tr>
                                 @endforeach

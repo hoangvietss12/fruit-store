@@ -145,8 +145,12 @@ class PaymentController extends Controller
                 $new_order_detail->order_id = $order_id->id;
                 $new_order_detail->product_id = $item->product->id;
                 $new_order_detail->quantity = $item->quantity;
-                $new_order_detail->price = $item->product->price;
-                $new_order_detail->total_price = $item->price * $item->quantity;
+                if($item->product->discount > 0) {
+                    $new_order_detail->price = $item->product->price - ($item->product->price * $item->product->discount);
+                }else {
+                    $new_order_detail->price = $item->product->price;
+                }
+                $new_order_detail->total_price = $new_order_detail->price * $item->quantity;
 
                 $new_order_detail->save();
             }

@@ -56,6 +56,10 @@
                                     {{ __('Mua hàng') }}
                                 </x-dropdown-link>
 
+                                <x-dropdown-link href="{{ route('home.history') }}">
+                                    {{ __('Lịch sử mua hàng') }}
+                                </x-dropdown-link>
+
                                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                     <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                         {{ __('API Tokens') }}
