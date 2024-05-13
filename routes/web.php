@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportProductController;
+use App\Http\Controllers\ReportRevenueController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -196,7 +197,11 @@ Route::prefix('fruitya-admin')->group(function() {
 
             Route::get('/products/export/{categoryId?}/{vendorId?}/{start?}/{end?}', [ReportProductController::class, 'exportProduct'])->name('report.product.export');
 
+            Route::get('/revenue', [ReportRevenueController::class, 'indexRevenue'])->name('report.revenue.index');
 
+            Route::post('/revenue/search', [ReportRevenueController::class, 'searchRevenue'])->name('report.revenue.search');
+
+            Route::get('/revenue/export/{start?}/{end?}', [ReportRevenueController::class, 'exportRevenue'])->name('report.revenue.export');
         });
     });
 });

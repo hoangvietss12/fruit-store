@@ -94,7 +94,6 @@ class ReportProductController extends Controller
                     }])
                     ->get();
         }else if($date_end != 'all') {
-            // $date_end_formatted = date("Y-m-d H:i:s", strtotime($date_end));
             $end = Carbon::createFromFormat('Y-m-d', $date_end)->endOfDay();
 
             $data = $products->with(['vendor', 'category', 'goodsReceivedNoteDetails' => function($query) use ($end) {
