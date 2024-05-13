@@ -21,11 +21,7 @@
                 <select class="js-example-basic-single" name="product_category" style="width:100%">
                     <option value="" selected>Chọn danh mục sản phẩm</option>
                     @foreach($categories as $category)
-                        @if(!empty($params) && $params['category'] == $category->id)
-                            <option value="{{$category->id}}" selected>{{$category->name}}</option>
-                        @else
-                            <option value="{{$category->id}}">{{$category->name}}</option>
-                        @endif
+                        <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -34,48 +30,17 @@
                 <select class="js-example-basic-single" name="product_vendor" style="width:100%">
                     <option value="" selected>Chọn nhà cung cấp</option>
                     @foreach($vendors as $vendor)
-                        @if(!empty($params) && $params['vendor'] == $vendor->id)
-                            <option value="{{$vendor->id}}" selected>{{$vendor->name}}</option>
-                        @else
-                            <option value="{{$vendor->id}}">{{$vendor->name}}</option>
-                        @endif
+                        <option value="{{$vendor->id}}">{{$vendor->name}}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="form-group form-search-price">
-                <label>Đơn giá:</label>
-                <select class="js-example-basic-single" name="product_price" style="width:100%">
-                    <option value="" selected>Chọn khoảng giá</option>
-                    @foreach($range_price as $price)
-                        @if(!empty($params) && $params['price'] == $price)
-                            <option value="{{$price}}" selected>
-                                {{ number_format((float) explode('-', $price)[0]) }}đ - {{ number_format((float) explode('-', $price)[1]) }}đ
-                            </option>
-                        @else
-                            @if($price == '1000001-')
-                                <option value="{{$price}}">
-                                    > {{ number_format((float) explode('-', $price)[0]) }}đ
-                                </option>
-                            @else
-                                <option value="{{$price}}">
-                                    {{ number_format((float) explode('-', $price)[0]) }}đ - {{ number_format((float) explode('-', $price)[1]) }}đ
-                                </option>
-                            @endif
-                        @endif
-                    @endforeach
-                </select>
+            <div class="form-group ml-2" style="width: 200px">
+                <label>Ngày bắt đầu:</label>
+                <input type="date" class="form-control" name="date_start">
             </div>
-            <div class="form-group form-search-discount">
-                <label>Giảm giá:</label>
-                <select class="js-example-basic-single" name="product_discount" style="width:100%">
-                        @if(!empty($params) && $params['discount'] == 'true')
-                            <option value="true" selected> Có </option>
-                            <option value="false"> Không </option>
-                        @else
-                            <option value="true"> Có </option>
-                            <option value="false" selected> Không </option>
-                        @endif
-                </select>
+            <div class="form-group ml-2" style="width: 200px">
+                <label>Ngày kết thúc:</label>
+                <input type="date" class="form-control" name="date_end">
             </div>
         </form>
         <button class="btn btn-success mr-2 d-block text-center" id="btn-report-search">
@@ -91,13 +56,13 @@
                     href="{{route('report.product.export',
                     [
                         'categoryId' => $params['category'],
-                        'vendorId' => !$params['vendor'],
-                        'price' => $params['price']
-                    ])}}"
-                    role="button"
-                >
-                    <span class="mdi mdi-export-variant mr-1"></span>
-                    Xuất file
+                        'vendorId' => $params['vendor'],
+                        'start' => $params['start'],
+                        'end' => $params['end']
+                    ])}}">
+
+                        <span class="mdi mdi-export-variant mr-1"></span>
+                        Xuất file
                 </a>
             </div>
 
@@ -113,12 +78,9 @@
                                             <th> Tên sản phẩm </th>
                                             <th> Danh mục sản phẩm </th>
                                             <th> Nhà cung cấp </th>
-                                            <th> Số lượng </th>
-                                            <th> Đơn giá </th>
-                                            @if($is_discount == 'true')
-                                                <th> Giảm giá </th>
-                                            @endif
-                                            <th> Tình trạng </th>
+                                            <th> Số lượng đã nhập </th>
+                                            <th> Số lượng đã bán </th>
+                                            <th> Số lượng còn lại </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -128,12 +90,9 @@
                                             <td>{{$item->name}}</td>
                                             <td>{{$item->category->name}}</td>
                                             <td>{{$item->vendor->name}}</td>
+                                            <td>{{$item->goodsReceivedNoteDetails->sum('quantity')}} {{$item->unit}}</td>
+                                            <td>{{$item->orderDetails->sum('quantity')}} {{$item->unit}}</td>
                                             <td>{{$item->quantity}} {{$item->unit}}</td>
-                                            <td>{{number_format($item->price)}}đ</td>
-                                            @if($is_discount == 'true')
-                                                <th> {{$item->discount}} </th>
-                                            @endif
-                                            <td>{{$item->status}}</td>
                                         </tr>
                                         @endforeach
 

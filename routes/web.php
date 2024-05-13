@@ -10,7 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ReportProductController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -190,13 +190,13 @@ Route::prefix('fruitya-admin')->group(function() {
 
     Route::prefix('report')->group(function () {
         Route::middleware('checkUserType')->group(function () {
-            Route::get('/products', [ReportController::class, 'indexProduct'])->name('report.product.index');
+            Route::get('/products', [ReportProductController::class, 'indexProduct'])->name('report.product.index');
 
-            Route::post('/products/search', [ReportController::class, 'searchProduct'])->name('report.product.search');
+            Route::post('/products/search', [ReportProductController::class, 'searchProduct'])->name('report.product.search');
 
-            Route::get('/products/export/{categoryId}/{vendorId}/{price}', [ReportController::class, 'exportProduct'])->name('report.product.export');
+            Route::get('/products/export/{categoryId?}/{vendorId?}/{start?}/{end?}', [ReportProductController::class, 'exportProduct'])->name('report.product.export');
 
-            Route::get('/revenues', [ReportController::class, 'indexRevenue'])->name('report.revenue.index');
+
         });
     });
 });

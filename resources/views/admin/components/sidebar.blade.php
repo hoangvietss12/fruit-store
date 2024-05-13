@@ -71,7 +71,6 @@
         <div class="collapse" id="auth">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="{{route('report.product.index')}}"> Thống kê sản phẩm </a></li>
-            <li class="nav-item"> <a class="nav-link" href="{{route('report.revenue.index')}}"> Báo cáo doanh thu </a></li>
           </ul>
         </div>
       </li>

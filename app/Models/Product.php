@@ -38,6 +38,14 @@ class Product extends Model
     public function vendor() {
         return $this->belongsTo(Vendor::class, 'vendor_id');
     }
+    public function goodsReceivedNoteDetails(){
+        return $this->hasMany(GoodReceivedNoteDetail::class);
+    }
+    // Product.php
+    public function orderDetails(){
+        return $this->hasMany(OrderDetail::class);
+    }
+
     public function updateQuantity($productId, $quantityChange) {
         $product = Product::findOrFail($productId);
         $product->quantity += $quantityChange;
