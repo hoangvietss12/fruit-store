@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GoodsReceivedNote;
-use App\Models\GoodsReceivedNoteDetail;
+use App\Models\GoodReceivedNote;
+use App\Models\GoodReceivedNoteDetail;
 use App\Models\Product;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class ImportController extends Controller
     }
     public function index() {
         try {
-            $data = GoodsReceivedNote::orderBy('created_at', 'desc')->with('vendor')->paginate(10);
+            $data = GoodReceivedNote::orderBy('created_at', 'desc')->with('vendor')->paginate(10);
             $vendors = Vendor::all();
 
             return view('admin.imports.index', compact('data', 'vendors'));
@@ -40,9 +40,9 @@ class ImportController extends Controller
 
     public function view($id) {
         try {
-            $note_info = GoodsReceivedNote::with('vendor')->findOrFail($id);
+            $note_info = GoodReceivedNote::with('vendor')->findOrFail($id);
 
-            $note_detail_info = GoodsReceivedNoteDetail::where('goods_received_note_id', $id)->with('product')->get();
+            $note_detail_info = GoodReceivedNoteDetail::where('goods_received_note_id', $id)->with('product')->get();
 
             return view('admin.imports.view', compact('note_info', 'note_detail_info'));
         } catch (\Exception $e) {
@@ -65,7 +65,7 @@ class ImportController extends Controller
 
             $vendor_id = $request->input('vendor_name');
 
-            $goods_received_note = new GoodsReceivedNote;
+            $goods_received_note = new GoodReceivedNote;
             $goods_received_note->vendor_id = $vendor_id;
             $goods_received_note->save();
 
@@ -85,13 +85,13 @@ class ImportController extends Controller
             //     return redirect()->back()->withErrors($validator)->withInput();
             // }
 
-            $note = GoodsReceivedNote::findOrFail($id);
+            $note = GoodReceivedNote::findOrFail($id);
 
             $data = $request->all();
             $total = 0;
 
             foreach($data['product'] as $key=>$product) {
-                $goods_received_note_detail = new GoodsReceivedNoteDetail;
+                $goods_received_note_detail = new GoodReceivedNoteDetail;
 
                 $goods_received_note_detail->goods_received_note_id = $id;
                 $goods_received_note_detail->product_id = $product;
@@ -122,7 +122,7 @@ class ImportController extends Controller
             $date_start = $request->has('date_start') ? $request->input('date_start') : null;
             $date_end = $request->has('date_end') ? $request->input('date_end') : null;
 
-            $query = GoodsReceivedNote::query();
+            $query = GoodReceivedNote::query();
 
             if($vendor != null) {
                 $query->where('vendor_id', '=', $vendor);

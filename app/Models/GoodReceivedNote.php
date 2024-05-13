@@ -5,10 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GoodsReceivednote extends Model
+class GoodReceivednote extends Model
 {
     use HasFactory;
     protected $table = 'goods_received_note';
+    private $id;
+    private $id_vendor;
+    private $total;
+    private $date;
     protected $fillable = [
         'vendor_id',
         'total'

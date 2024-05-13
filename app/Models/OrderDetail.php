@@ -9,6 +9,11 @@ class OrderDetail extends Model
 {
     use HasFactory;
     protected $table = 'order_details';
+    private $id_order;
+    private $quantity;
+    private $price;
+    private $total_price;
+    private $id_product;
     protected $fillable = [
         'order _id',
         'product_id',

@@ -81,6 +81,7 @@ Route::middleware([
 // Admin Page
 Route::prefix('fruitya-admin')->group(function() {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/history', [AdminController:: class, 'session'])->name('admin.history');
 
     Route::prefix('category')->group(function () {
         Route::middleware('checkUserType')->group(function () {

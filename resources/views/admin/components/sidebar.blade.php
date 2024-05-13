@@ -75,5 +75,13 @@
           </ul>
         </div>
       </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{{route('admin.history')}}">
+          <span class="menu-icon">
+            <span class="mdi mdi-history"></span>
+          </span>
+          <span class="menu-title">Lịch sử truy cập</span>
+        </a>
+      </li>
     </ul>
   </nav>
