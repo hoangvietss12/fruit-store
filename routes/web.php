@@ -11,6 +11,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportProductController;
+use App\Http\Controllers\ReportSaleController;
+use App\Http\Controllers\ReportImportController;
 use App\Http\Controllers\ReportRevenueController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\VendorController;
@@ -202,6 +204,18 @@ Route::prefix('fruitya-admin')->group(function() {
             Route::post('/revenue/search', [ReportRevenueController::class, 'searchRevenue'])->name('report.revenue.search');
 
             Route::get('/revenue/export/{start?}/{end?}', [ReportRevenueController::class, 'exportRevenue'])->name('report.revenue.export');
+
+            Route::get('/sales', [ReportSaleController::class, 'indexSale'])->name('report.sale.index');
+
+            Route::post('/sales/search', [ReportSaleController::class, 'searchSale'])->name('report.sale.search');
+
+            Route::get('/sales/export/{categoryId?}/{vendorId?}/{start?}/{end?}', [ReportSaleController::class, 'exportSale'])->name('report.sale.export');
+
+            Route::get('/imports', [ReportImportController::class, 'indexImport'])->name('report.import.index');
+
+            Route::post('/imports/search', [ReportImportController::class, 'searchImport'])->name('report.import.search');
+
+            Route::get('/imports/export/{categoryId?}/{vendorId?}/{start?}/{end?}', [ReportImportController::class, 'exportImport'])->name('report.import.export');
         });
     });
 });
