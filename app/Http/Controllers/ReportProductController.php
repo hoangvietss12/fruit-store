@@ -94,9 +94,9 @@ class ReportProductController extends Controller
             $end = Carbon::createFromFormat('Y-m-d', $date_end)->endOfDay();
 
             $data = $products->with(['vendor', 'category', 'goodsReceivedNoteDetails' => function($query) use ($end) {
-                                $query->where('created_at', '>=', $end);
+                                $query->where('created_at', '<=', $end);
                             }, 'orderDetails' => function($query) use ($end) {
-                                $query->where('created_at', '>=', $end);
+                                $query->where('created_at', '<=', $end);
                             }])
                             ->get();
         }else {
