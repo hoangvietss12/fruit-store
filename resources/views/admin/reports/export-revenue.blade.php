@@ -1,5 +1,5 @@
 @if(isset($data))
-
+<h2>Báo cáo doanh thu từ {{ date('d/m/Y', strtotime($start)) }} đến {{ date('d/m/Y', strtotime($end)) }}</h2>
     <table class="table table-bordered">
         <thead>
             <tr>

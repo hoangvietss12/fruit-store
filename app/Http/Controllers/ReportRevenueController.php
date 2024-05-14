@@ -43,12 +43,12 @@ class ReportRevenueController extends Controller
         try {
             $data = $this->queryRevenue($start, $end);
 
-            $start = $start === 'all' ? Carbon::now()->format('d-m-Y') : Carbon::createFromFormat('d-m-Y', $start);
-            $end = $end === 'all' ? Carbon::now()->format('d-m-Y') : Carbon::createFromFormat('d-m-Y', $end);
+            // $start = $start === 'all' ? Carbon::now()->format('d-m-Y') : Carbon::createFromFormat('d-m-Y', $start);
+            // $end = $end === 'all' ? Carbon::now()->format('d-m-Y') : Carbon::createFromFormat('d-m-Y', $end);
 
-            $file_name = "revenue_{$start}_to_{$end}.xlsx";
+            $file_name = "revenue.xlsx";
 
-            return Excel::download(new RevenueExport($data), $file_name);
+            return Excel::download(new RevenueExport($data, $start, $end), $file_name);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }

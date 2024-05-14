@@ -52,12 +52,9 @@ class ReportProductController extends Controller
         try {
             $data = $this->queryProducts($categoryId, $vendorId, $start, $end);
 
-            $start = $start === 'all' ? Carbon::now()->format('d-m-Y') : Carbon::createFromFormat('d-m-Y', $start);
-            $end = $end === 'all' ? Carbon::now()->format('d-m-Y') : Carbon::createFromFormat('d-m-Y', $end);
+            $file_name = "products.xlsx";
 
-            $file_name = "products_{$start}_to_{$end}.xlsx";
-
-            return Excel::download(new ProductExport($data), $file_name);
+            return Excel::download(new ProductExport($data, $start, $end), $file_name);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
