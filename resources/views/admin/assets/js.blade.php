@@ -1,5 +1,6 @@
     <!-- plugins:js -->
     <script src="{{ asset('admin/assets/vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="{{ asset('admin/assets/vendors/chart.js/Chart.min.js') }}"></script>

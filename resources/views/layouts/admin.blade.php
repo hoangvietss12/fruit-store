@@ -27,10 +27,17 @@
 
             @yield('content')
 
+                <footer class="footer_section mt-5 text-center">
+                    <div class="container">
+                        <p>
+                            &copy; <span id="displayYear"></span> All Rights Reserved By
+                            <a href="{{ route('admin.index') }}">Fruit-ya 2024</a>
+                        </p>
+                    </div>
+                </footer>
             </div>
+            <!-- main-panel ends -->
         </div>
-
-        <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->
     </div>
