@@ -28,13 +28,19 @@ class LoginController extends Controller
      * @var string
      */
     protected function authenticated(Request $request, $user){
-        $usertype = Auth::user()->user_type;
+        $user = Auth::user();
 
-        if ($usertype == 1) {
-            return redirect('/fruitya-admin');
-        } else {
-            return redirect('/');
+        if($user->status == 'deactive') {
+            Auth::logout();
+
+            return redirect('/login')->with('error', 'Tài khoản đã bị khóa! Vui lòng liên hệ với chúng tôi');
         }
+
+        if ($user->user_type == 1) {
+            return redirect('/fruitya-admin');
+        }
+
+        return redirect('/');
     }
 
     /**
