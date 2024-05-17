@@ -20,6 +20,8 @@ class CheckUserType
 
         if ($user && $user->user_type == 0 && $request->is('fruitya-admin*')) {
             abort(404);
+        }elseif(!$user && $request->is('fruitya-admin*')) {
+            abort(404);
         }
 
         return $next($request);

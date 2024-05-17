@@ -12,11 +12,13 @@
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                             @php
-                                $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+                                if(Auth::user()->profile_photo_url) {
+                                    $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
 
-                                $object = $bucket->object(Auth::user()->profile_photo_url);
+                                    $object = $bucket->object(Auth::user()->profile_photo_url);
 
-                                $imageUrl = $object->signedUrl(new \DateTime('tomorrow'));
+                                    $imageUrl = $object->signedUrl(new \DateTime('tomorrow'));
+                                }
                             @endphp
                                 <div class="inline-flex items-center">
                                     <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
