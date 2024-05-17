@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -124,6 +125,7 @@ class PurchaseController extends Controller
             }else {
                 $new_order->total = $total_price;
             }
+            $new_order->created_at = Carbon::now('Asia/Bangkok');
             $new_order->save();
 
             // create order detail
@@ -140,6 +142,7 @@ class PurchaseController extends Controller
                     $new_order_detail->price = $item->product->price;
                 }
                 $new_order_detail->total_price = $new_order_detail->price * $item->quantity;
+                $new_order_detail->created_at = Carbon::now('Asia/Bangkok');
 
                 $new_order_detail->save();
             }

@@ -76,7 +76,7 @@
                                     <tr>
                                         <td>{{$index+1}}</td>
                                         <td>{{$item->vendor->name}}</td>
-                                        <td>{{date("d/m/Y", strtotime($item->created_at))}}</td>
+                                        <td>{{date("H:i:s d/m/Y", strtotime($item->created_at))}}</td>
                                         <td>{{number_format($item->total)}}đ</td>
                                         <td>
                                             <div class="d-flex justify-center">

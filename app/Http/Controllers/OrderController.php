@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
     public function index() {
         try {
-            $data = Order::with('user')->orderBy('status')->paginate(10);
+            $data = Order::with('user')->orderBy('status')->orderBy('created_at', 'desc')->paginate(10);
 
             return view('admin.orders.index', compact('data'));
         } catch (\Exception $e) {

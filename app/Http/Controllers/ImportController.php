@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\GoodReceivedNote;
 use App\Models\GoodReceivedNoteDetail;
 use App\Models\Product;
@@ -67,6 +68,7 @@ class ImportController extends Controller
 
             $goods_received_note = new GoodReceivedNote;
             $goods_received_note->vendor_id = $vendor_id;
+            $goods_received_note->created_at = Carbon::now('Asia/Bangkok');
             $goods_received_note->save();
 
             $products = Product::where('vendor_id', $vendor_id)->get();
@@ -99,6 +101,7 @@ class ImportController extends Controller
                 $goods_received_note_detail->price = $data['price'][$key];
                 $goods_received_note_detail->total_price = $data['quantity'][$key] * $data['price'][$key];
                 $goods_received_note_detail->note = $data['note'][$key];
+                $goods_received_note_detail->created_at = Carbon::now('Asia/Bangkok');
                 $goods_received_note_detail->save();
 
                 $product_model = new Product();
