@@ -109,9 +109,18 @@
                 allowDecimals: false
             },
             series: [{
-                name: 'Số tiền',
-                data: formattedRevenueData
-            }],
+                    name: 'Lợi nhuận',
+                    data: formattedRevenueData
+                },
+                {
+                    name: 'Số tiền nhập hàng',
+                    data: revenueData.map(item => item['total_import_price'])
+                },
+                {
+                    name: 'Số tiền bán hàng',
+                    data: revenueData.map(item => item['total_sale_price'])
+                }
+            ],
             tooltip: {
                 pointFormatter: function() {
                     return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.y)}</b><br/>`;

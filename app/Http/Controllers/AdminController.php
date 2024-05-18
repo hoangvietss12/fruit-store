@@ -66,15 +66,14 @@ class AdminController extends Controller
     }
 
     private function getRevenueData() {
-        $current_date = Carbon::now();
-
-        $seven_days_ago = $current_date->subDays(8);
+        $current_date = Carbon::now()->subDays(1)->endOfDay();
+        $seven_days_ago = Carbon::now()->subDays(7)->startOfDay();
 
         $total_order_data = Order::select(
                                 DB::raw('DATE(created_at) as date'),
                                 DB::raw('SUM(total) as total_sale_price')
                             )
-                            ->where('created_at', '>', $seven_days_ago)
+                            ->whereBetween('created_at', [$seven_days_ago, $current_date])
                             ->groupBy('date')
                             ->orderBy('date')
                             ->get();
@@ -83,7 +82,7 @@ class AdminController extends Controller
                                 DB::raw('DATE(created_at) as date'),
                                 DB::raw('SUM(total) as total_import_price')
                             )
-                            ->where('created_at', '>', $seven_days_ago)
+                            ->whereBetween('created_at', [$seven_days_ago, $current_date])
                             ->groupBy('date')
                             ->orderBy('date')
                             ->get();
@@ -103,15 +102,14 @@ class AdminController extends Controller
     }
 
     private function getOrderData() {
-        $current_date = Carbon::now();
-
-        $seven_days_ago = $current_date->subDays(8);
+        $current_date = Carbon::now()->subDays(1)->endOfDay();
+        $seven_days_ago = Carbon::now()->subDays(7)->startOfDay();
 
         $order_data = Order::select(
                             DB::raw('DATE(created_at) as order_date'),
                             DB::raw('COUNT(*) as total_orders')
                         )
-                        ->where('created_at', '>', $seven_days_ago)
+                        ->whereBetween('created_at', [$seven_days_ago, $current_date])
                         ->groupBy('order_date')
                         ->orderBy('order_date')
                         ->get();
@@ -120,15 +118,14 @@ class AdminController extends Controller
     }
 
     private function getGoodsReceivedNoteData() {
-        $current_date = Carbon::now();
-
-        $seven_days_ago = $current_date->subDays(8);
+        $current_date = Carbon::now()->subDays(1)->endOfDay();
+        $seven_days_ago = Carbon::now()->subDays(7)->startOfDay();
 
         $goods_received_note_data = GoodReceivednote::select(
                                         DB::raw('DATE(created_at) as date'),
                                         DB::raw('COUNT(*) as total')
                                     )
-                                    ->where('created_at', '>', $seven_days_ago)
+                                    ->whereBetween('created_at', [$seven_days_ago, $current_date])
                                     ->groupBy('date')
                                     ->orderBy('date')
                                     ->get();
