@@ -34,13 +34,15 @@ class PurchaseController extends Controller
 
             $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
 
+            $order_status = Order::where('user_id', $user_id)->where('status', 'Đang giao hàng')->first();
+
             $total_price = $this->sumTotal($data);
 
             $this->createUrlImages($data);
             $check_order = $this->checkOrder();
             $check_order_type = $this->checkOrderType();
 
-            return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type'));
+            return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type', 'order_status'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
@@ -56,52 +58,51 @@ class PurchaseController extends Controller
 
             $user_id = Auth::user()->id;
 
-            $user_order = Order::where('user_id', $user_id)->where('status', "Chờ xác nhận")->first();
-
             $user_cart = Cart::where('user_id', $user_id)->first();
 
             $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
 
-            $has_order = $user_order ? true : false;
+            $has_order = $this->checkOrder() ? true : false;
             $message = '';
-            $quantity = $request->all();
-            $key = 0;
-            foreach ($data as $cart_detail) {
-                $product_quantity = floatval($quantity['product_quantity'][$key]);
 
-                if ($cart_detail->quantity != $product_quantity) {
-                    if($has_order) {
-                        $message = 'Bạn phải hủy đặt hàng trước đã!';
-                        break;
+            if($has_order) {
+                $message = "Bạn phải hủy đặt hàng trước đã!";
+            }else {
+                $quantity = $request->all();
+                $key = 0;
+                foreach ($data as $cart_detail) {
+                    $product_quantity = floatval($quantity['product_quantity'][$key]);
+
+                    if ($cart_detail->quantity != $product_quantity) {
+                        if($product_quantity > $cart_detail->product->quantity) {
+                            return redirect()->back()->with('message', 'Vượt quá sản phẩm hiện có');
+                        }
+
+                        if($cart_detail->product->unit != "kg" && floor($product_quantity) != $product_quantity) {
+                            return redirect()->back()->with('message', 'Vui lòng nhập giá trị thỏa mãn!');
+                        }
+
+                        $new_quantity = floatval($quantity['product_quantity'][$key]);
+                        CartDetail::where('cart_id', $user_cart->id)
+                                    ->where('product_id', $cart_detail->product->id)
+                                    ->update(['quantity' => $new_quantity]);
                     }
 
-                    if($product_quantity > $cart_detail->product->quantity) {
-                        return redirect()->back()->with('message', 'Vượt quá sản phẩm hiện có');
-                    }
-
-                    if($cart_detail->product->unit != "kg" && floor($product_quantity) != $product_quantity) {
-                        return redirect()->back()->with('message', 'Vui lòng nhập giá trị thỏa mãn!');
-                    }
-
-                    $new_quantity = floatval($quantity['product_quantity'][$key]);
-                    CartDetail::where('cart_id', $user_cart->id)
-                                ->where('product_id', $cart_detail->product->id)
-                                ->update(['quantity' => $new_quantity]);
+                    $key++;
                 }
 
-                $key++;
+                $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
             }
-
-            $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
 
             $total_price = $this->sumTotal($data);
 
             $this->createUrlImages($data);
+            $order_status = Order::where('user_id', $user_id)->where('status', 'Đang giao hàng')->first();
             $check_order = $this->checkOrder();
             $check_order_type = $this->checkOrderType();
 
             session()->flash('message', $message);
-            return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type'));
+            return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type', 'order_status'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
@@ -156,11 +157,20 @@ class PurchaseController extends Controller
     public function cancel() {
         try {
             $user_id = Auth::user()->id;
-            $user_order = Order::where('user_id', $user_id)->where('status', "Chờ xác nhận")->first();
+            $user_order = Order::where('user_id', $user_id)
+                                ->where('status', "Chờ xác nhận")
+                                ->orWhere('status', "Đang giao hàng")
+                                ->first();
 
-            $user_order->delete();
+            if($user_order) {
+                $user_order->delete();
+                $message = 'Hủy đặt hàng thành công!';
+            }
 
-            return redirect('purchase')->with('message', 'Hủy đặt hàng thành công!');
+            $message = 'Đơn hàng đã được giao đến!';
+
+            session()->flash('message', $message);
+            return redirect('purchase');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
@@ -194,7 +204,10 @@ class PurchaseController extends Controller
 
     private function checkOrder() {
         $user_id = Auth::user()->id;
-        $user_order = Order::where('user_id', $user_id)->where('status', "Chờ xác nhận")->first();
+        $user_order = Order::where('user_id', $user_id)
+                            ->where('status', "Chờ xác nhận")
+                            ->orWhere('status', "Đang giao hàng")
+                            ->first();
 
         if($user_order){
             return true;

@@ -24,11 +24,13 @@
                                 @if($data->status == "Chờ xác nhận")
                                     <option value="" disable>Chọn trạng thái</option>
                                     <option value="Chờ xác nhận" selected>Chờ xác nhận</option>
+                                    <option value="Đang giao hàng">Đang giao hàng</option>
                                     <option value="Đã xác nhận">Đã xác nhận</option>
                                 @else
                                     <option value="" disable>Chọn trạng thái</option>
                                     <option value="Chờ xác nhận">Chờ xác nhận</option>
-                                    <option value="Đã xác nhận" selected>Đã xác nhận</option>
+                                    <option value="Đang giao hàng" selected>Đang giao hàng</option>
+                                    <option value="Đã xác nhận">Đã xác nhận</option>
                                 @endif
                             </select>
                         </div>

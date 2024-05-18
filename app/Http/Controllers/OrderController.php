@@ -14,7 +14,10 @@ class OrderController extends Controller
 {
     public function index() {
         try {
-            $data = Order::with('user')->orderBy('status')->orderBy('created_at', 'desc')->paginate(10);
+            $data = Order::with('user')
+                            ->orderByRaw("FIELD(status, 'Chờ xác nhận', 'Đang giao hàng', 'Đã xác nhận')")
+                            ->orderBy('created_at', 'desc')
+                            ->paginate(10);
 
             return view('admin.orders.index', compact('data'));
         } catch (\Exception $e) {
@@ -52,27 +55,31 @@ class OrderController extends Controller
         try {
             $status = $request->input('order_type');
 
-            $data = OrderDetail::where('order_id', $id)->get();
-            foreach ($data as $orders_detail) {
-                $product = Product::find($orders_detail->product_id);
-                $new_quantity = $product->quantity - $orders_detail->quantity;
-                $product->quantity = $new_quantity;
+            if($status == "Đã xác nhận") {
+                $data = OrderDetail::where('order_id', $id)->get();
+                foreach ($data as $orders_detail) {
+                    $product = Product::find($orders_detail->product_id);
+                    $new_quantity = $product->quantity - $orders_detail->quantity;
+                    $product->quantity = $new_quantity;
 
-                if($product->quantity == 0) {
-                    $product->status = "Tạm hết hàng";
+                    if($product->quantity == 0) {
+                        $product->status = "Tạm hết hàng";
+                    }
+
+                    $product->save();
                 }
 
-                $product->save();
-            }
+                $order = Order::findOrFail($id);
+                $order->status = $status;
+                $order->save();
 
-            $order = Order::findOrNew($id);
-            $order->status = $status;
-            $order->save();
-
-            if($status == "Đã xác nhận") {
                 $cart_user = Cart::where('user_id', $order->user_id)->first();
 
                 $cart_user->delete();
+            }else{
+                $order = Order::findOrFail($id);
+                $order->status = $status;
+                $order->save();
             }
 
             return redirect('fruitya-admin/order')->with('message', 'Cập nhật thành công!');

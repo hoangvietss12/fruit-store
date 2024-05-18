@@ -75,7 +75,7 @@
                                                     <span class="mdi mdi-eye-outline mr-1"></span>
                                                     Xem chi tiết
                                                 </a>
-                                                @if($item->status === "Chờ xác nhận")
+                                                @if($item->status !== "Đã xác nhận")
                                                     <a class="btn btn-warning ml-2 d-flex" href="{{route('order.edit', ['id' => $item->id])}}" role="button">
                                                         <span class="mdi mdi-pencil mr-1"></span>
                                                         Sửa trạng thái

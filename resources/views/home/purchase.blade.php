@@ -1,6 +1,6 @@
 @extends('layouts.home')
 
-@section('title', 'Mua Fruit-ya')
+@section('title', 'Mua hàng Fruit-ya')
 
 @section('content')
     @if(session('error'))
@@ -46,6 +46,16 @@
             @elseif(session('message'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('message') }}
+
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            @endif
+
+            @if($order_status)
+                <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+                    Đơn hàng đang được vận chuyển
 
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                         <i class="fa fa-times" aria-hidden="true"></i>
