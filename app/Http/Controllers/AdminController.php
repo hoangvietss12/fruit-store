@@ -96,7 +96,7 @@ class AdminController extends Controller
                 'total_sale_price' => $item->sum('total_sale_price'),
                 'total_import_price' => $item->sum('total_import_price')
             ];
-        })->values();
+        })->sortBy('date')->values();
 
         return $merger_data;
     }

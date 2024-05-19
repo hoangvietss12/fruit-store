@@ -46,9 +46,12 @@ class Product extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
-    public function updateQuantity($productId, $quantityChange) {
-        $product = Product::findOrFail($productId);
-        $product->quantity += $quantityChange;
-        $product->save();
-    }
+    // public function updateQuantity($quantityChange) {
+    //     if($this->quantity == 0) {
+    //         $this->status = 'Còn hàng';
+    //     }
+
+    //     $this->quantity += floatval($quantityChange);
+    //     $this->save();
+    // }
 }

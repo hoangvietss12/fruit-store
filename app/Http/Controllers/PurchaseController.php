@@ -165,9 +165,9 @@ class PurchaseController extends Controller
             if($user_order) {
                 $user_order->delete();
                 $message = 'Hủy đặt hàng thành công!';
+            }else {
+                $message = 'Đơn hàng đã được giao đến!';
             }
-
-            $message = 'Đơn hàng đã được giao đến!';
 
             session()->flash('message', $message);
             return redirect('purchase');
@@ -196,7 +196,11 @@ class PurchaseController extends Controller
         $total_price = 0;
 
         foreach ($data as $product){
-            $total_price += $product->price * $product->quantity;
+            if($product->product->discount > 0) {
+                $total_price += ($product->price - ($product->price * $product->product->discount)) * $product->quantity;
+            }else {
+                $total_price += $product->price * $product->quantity;
+            }
         }
 
         return $total_price;

@@ -97,15 +97,19 @@ class ImportController extends Controller
 
                 $goods_received_note_detail->goods_received_note_id = $id;
                 $goods_received_note_detail->product_id = $product;
-                $goods_received_note_detail->quantity = $data['quantity'][$key];
-                $goods_received_note_detail->price = $data['price'][$key];
-                $goods_received_note_detail->total_price = $data['quantity'][$key] * $data['price'][$key];
+                $goods_received_note_detail->quantity = floatval($data['quantity'][$key]);
+                $goods_received_note_detail->price = intval($data['price'][$key]);
+                $goods_received_note_detail->total_price = intval($data['quantity'][$key] * $data['price'][$key]);
                 $goods_received_note_detail->note = $data['note'][$key];
                 $goods_received_note_detail->created_at = Carbon::now('Asia/Bangkok');
                 $goods_received_note_detail->save();
 
-                $product_model = new Product();
-                $product_model->updateQuantity($product, $data['quantity'][$key]);
+                $product_model = Product::findOrFail($product);
+                if($product_model->status == 'Tạm hết hàng') {
+                    $product_model->status = 'Còn hàng';
+                }
+                $product_model->quantity += floatval($data['quantity'][$key]);;
+                $product_model->save();
 
                 $total += $goods_received_note_detail->total_price;
             }

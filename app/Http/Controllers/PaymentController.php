@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Cart;
@@ -104,11 +105,16 @@ class PaymentController extends Controller
             $user_id = Auth::user()->id;
             $user_cart = Cart::where('user_id', $user_id)->first();
             $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
+            $order_status = Order::where('user_id', $user_id)->where('status', 'Đang giao hàng')->first();
 
             $total_price = 0;
 
             foreach ($data as $product){
-                $total_price += $product->price * $product->quantity;
+                if($product->product->discount > 0) {
+                    $total_price += ($product->price - ($product->price * $product->product->discount)) * $product->quantity;
+                }else {
+                    $total_price += $product->price * $product->quantity;
+                }
             }
 
             $this->createOrder($data, $user_id, $total_price);
@@ -123,7 +129,7 @@ class PaymentController extends Controller
                 $second_order->delete();
             }
 
-            return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type'));
+            return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type', 'order_status'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
@@ -135,6 +141,7 @@ class PaymentController extends Controller
             $new_order->user_id = $user_id;
             $new_order->order_type = "Thanh toán VN Pay";
             $new_order->total = $total_price;
+            $new_order->created_at = Carbon::now('Asia/Bangkok');
             $new_order->save();
 
             // create order detail
@@ -151,6 +158,7 @@ class PaymentController extends Controller
                     $new_order_detail->price = $item->product->price;
                 }
                 $new_order_detail->total_price = $new_order_detail->price * $item->quantity;
+                $new_order_detail->created_at = Carbon::now('Asia/Bangkok');
 
                 $new_order_detail->save();
             }
