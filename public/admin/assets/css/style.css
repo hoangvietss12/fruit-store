@@ -21224,3 +21224,9 @@ input:focus, textarea {
 .btn-search:hover {
     color: #333;
 }
+
+@media(max-width: 640px) {
+    .navbar-custom {
+        border-radius: 0px !important;
+    }
+}

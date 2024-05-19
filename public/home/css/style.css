@@ -122,6 +122,11 @@ a:focus {
 }
 
 /*header section*/
+.header_section {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: var(--white);
+}
+
 .header_section .container-fluid {
   padding-right: 25px;
   padding-left: 25px;
@@ -140,7 +145,7 @@ a:focus {
 }
 
 .custom_nav-container {
-  padding: 10px 0;
+  box-shadow: none;
 }
 
 .custom_nav-container .navbar-nav .nav-item .nav-link {
@@ -308,6 +313,7 @@ a:focus {
           align-items: center;
   padding-top: 25px;
   padding-bottom: 60px;
+  margin-top: 126px;
   position: relative;
 }
 
@@ -1028,23 +1034,13 @@ a:focus {
 .pagination ul li.active {
     text-decoration: underline;
 }
-/* Policy */
-#policy {
-    margin-top: 40px;
+/* Policy & terms*/
+#policy, #terms {
+    margin-top: 176px;
     margin-bottom: 50px;
 }
 
-#policy h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Term */
-#terms {
-    margin-top: 40px;
-    margin-bottom: 50px;
-}
-
+#policy h2,
 #terms h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -1058,6 +1054,7 @@ a:focus {
 .breadcrumb-option {
 	background: var(--primary3);
 	padding: 40px 0;
+    margin-top: 126px;
 }
 
 .breadcrumb__text h4 {

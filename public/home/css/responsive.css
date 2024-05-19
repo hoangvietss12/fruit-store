@@ -8,6 +8,10 @@
     padding: 15px 0 0 0;
   }
 
+  .custom-navbar-home {
+    justify-content: center !important;
+  }
+
   .custom_nav-container .navbar-nav .nav-item .nav-link {
     padding: 10px 20px;
   }
@@ -96,6 +100,14 @@
 
   .info_section .info_links {
     align-items: center;
+  }
+
+  .info_section .info_contact .link-box {
+    margin-bottom: 0;
+  }
+
+  .info_section .info_contact .col-md-4>.link-box {
+    margin-bottom: 30px;
   }
 
   .continue__btn {
