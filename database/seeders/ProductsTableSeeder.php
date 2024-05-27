@@ -152,7 +152,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 15,
                 'category_id' => 1,
-                'brand_id' => 1,
+                'vendor_id' => 1,
                 'name' => 'Quýt nội địa Trung',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635f66e91885.webp", "products/6635f66fc815b.webp", "products/6635f670c5909.webp"]',
@@ -167,7 +167,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 16,
                 'category_id' => 2,
-                'brand_id' => 3,
+                'vendor_id' => 3,
                 'name' => 'Vải trứng Daklak có cành',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635f785583b4.webp"]',
@@ -182,7 +182,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 17,
                 'category_id' => 2,
-                'brand_id' => 3,
+                'vendor_id' => 3,
                 'name' => 'Sầu riêng cơm Musang King Việt Nam',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635f84498575.webp"]',
@@ -197,7 +197,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 18,
                 'category_id' => 2,
-                'brand_id' => 3,
+                'vendor_id' => 3,
                 'name' => 'Mận xanh Tam Hoa',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635f8f1dc186.webp"]',
@@ -212,7 +212,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 19,
                 'category_id' => 1,
-                'brand_id' => 4,
+                'vendor_id' => 4,
                 'name' => 'Nho đỏ Long Crimson Úc',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635f9abf06a9.webp", "products/6635f9ad041d2.webp", "products/6635f9adbc7c9.webp"]',
@@ -227,7 +227,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 20,
                 'category_id' => 2,
-                'brand_id' => 5,
+                'vendor_id' => 5,
                 'name' => 'Dưa lưới TL3',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fa4f10d65.webp"]',
@@ -242,7 +242,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 21,
                 'category_id' => 2,
-                'brand_id' => 6,
+                'vendor_id' => 6,
                 'name' => 'Ổi nữ hoàng',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fae80f329.webp"]',
@@ -257,7 +257,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 22,
                 'category_id' => 2,
-                'brand_id' => 6,
+                'vendor_id' => 6,
                 'name' => 'Xoài cát hòa lộc',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fb2755e81.webp"]',
@@ -272,7 +272,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 23,
                 'category_id' => 2,
-                'brand_id' => 6,
+                'vendor_id' => 6,
                 'name' => 'Bơ sáp',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fb78208e7.webp"]',
@@ -287,7 +287,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 24,
                 'category_id' => 1,
-                'brand_id' => 1,
+                'vendor_id' => 1,
                 'name' => 'Việt quất Mỹ',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fbd475224.webp", "products/6635fbd512f47.webp", "products/6635fbd5ec802.webp"]',
@@ -302,7 +302,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 25,
                 'category_id' => 2,
-                'brand_id' => 6,
+                'vendor_id' => 6,
                 'name' => 'Dưa hấu đỏ không hạt',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fc2e9a3fe.webp"]',
@@ -317,7 +317,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 26,
                 'category_id' => 2,
-                'brand_id' => 4,
+                'vendor_id' => 4,
                 'name' => 'Đu đủ',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fc6b710d2.webp"]',
@@ -332,7 +332,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 27,
                 'category_id' => 2,
-                'brand_id' => 4,
+                'vendor_id' => 4,
                 'name' => 'Mận đỏ An Phước',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fcb2f2fde.webp", "products/6635fcb386101.webp", "products/6635fcb3d0b80.webp"]',
@@ -347,7 +347,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 28,
                 'category_id' => 1,
-                'brand_id' => 1,
+                'vendor_id' => 1,
                 'name' => 'Măng cụt Thái Lan',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fd07baef9.webp", "products/6635fd0937f28.webp", "products/6635fd0a0b906.webp"]',
@@ -362,7 +362,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 29,
                 'category_id' => 2,
-                'brand_id' => 5,
+                'vendor_id' => 5,
                 'name' => 'Chuối Dole 3 trái',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fd41a4887.webp"]',
@@ -377,7 +377,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 30,
                 'category_id' => 1,
-                'brand_id' => 1,
+                'vendor_id' => 1,
                 'name' => 'Lựu đỏ Peru',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fda8d2cf7.webp", "products/6635fdaa22ecf.webp", "products/6635fdab0eb14.webp"]',
@@ -392,7 +392,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 31,
                 'category_id' => 2,
-                'brand_id' => 6,
+                'vendor_id' => 6,
                 'name' => 'Thanh long ruột đỏ',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fdf98c07f.webp"]',
@@ -407,7 +407,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 32,
                 'category_id' => 2,
-                'brand_id' => 4,
+                'vendor_id' => 4,
                 'name' => 'Bưởi đường lá cam Tân Triều',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635fe4f21b59.webp", "products/6635fe4f9078f.webp", "products/6635fe4fc0464.webp"]',
@@ -422,7 +422,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 33,
                 'category_id' => 2,
-                'brand_id' => 3,
+                'vendor_id' => 3,
                 'name' => 'Đu đủ ruột đỏ giống Đài Loan',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635feda90e24.webp"]',
@@ -437,7 +437,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 34,
                 'category_id' => 3,
-                'brand_id' => 5,
+                'vendor_id' => 5,
                 'name' => 'Giỏ Trái Cây Nhập Healthy Living',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635ff55d1307.webp", "products/6635ff5657cba.webp"]',
@@ -452,7 +452,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 35,
                 'category_id' => 3,
-                'brand_id' => 5,
+                'vendor_id' => 5,
                 'name' => 'Hộp Quà Trái Cây Nhập Màu Hồng Hoạ Tiết Vàng',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6635ffd29730b.webp"]',
@@ -467,7 +467,7 @@ class ProductsTableSeeder extends Seeder
             [
                 'id' => 36,
                 'category_id' => 3,
-                'brand_id' => 5,
+                'vendor_id' => 5,
                 'name' => 'Giỏ Trái Cây Nhập Lục Bình',
                 'description' => "Trái cây tươi ngon",
                 'images' => '["products/6636000aedafc.webp", "products/6636000b55512.webp"]',

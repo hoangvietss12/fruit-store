@@ -5,8 +5,8 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss',
-                'resources/js/app.js',
+                'https://fruit-store.up.railway.app/resources/sass/app.scss',
+                'https://fruit-store.up.railway.app/resources/js/app.js',
             ],
             refresh: true,
         }),
@@ -16,8 +16,8 @@ export default defineConfig({
         manifest: true,
         rollupOptions: {
             input: {
-                app: 'resources/js/app.js',
-                styles: 'resources/css/app.css'
+                app: 'https://fruit-store.up.railway.app/resources/js/app.js',
+                styles: 'https://fruit-store.up.railway.app/resources/css/app.css'
             },
         },
     },
