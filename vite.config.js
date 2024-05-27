@@ -21,4 +21,5 @@ export default defineConfig({
             },
         },
     },
+    base: process.env.APP_URL || 'https://fruit-store.up.railway.app/',
 });
