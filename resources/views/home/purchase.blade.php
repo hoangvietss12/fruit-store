@@ -35,7 +35,7 @@
     <!-- cart section -->
     <section class="shopping-cart spad">
         <div class="container">
-            @if(session('message') == "Bạn phải hủy đặt hàng trước đã!")
+            @if(session('message') == "Bạn phải hủy đặt hàng trước đã!" || session('message') == "Giao dịch đã bị hủy!")
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         {{ session('message') }}
 
@@ -187,7 +187,7 @@
                         <h6>Tổng đơn hàng</h6>
                         <ul>
                             <li>Tổng cộng <span>{{ number_format($total_price) }}đ</span></li>
-                            @if($check_order_type)
+                            @if($check_order_type === true)
                             <li class="">
                                 Phí vận chuyển
                                 <span>15,000đ</span>

@@ -22,6 +22,8 @@ class AccountController extends Controller
         try {
             $data = User::where('id', $id)->first();
 
+            $this->createUrlImage($data);
+
             return view('admin.accounts.view', compact('data'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
@@ -77,5 +79,18 @@ class AccountController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }
+    }
+
+    private function createUrlImage($account) {
+        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+
+            $imageReference = $bucket->object($account->profile_photo_path);
+
+            if ($imageReference->exists()) {
+                $expiresAt = new \DateTime('tomorrow');
+                $imageUrl = $imageReference->signedUrl($expiresAt);
+            }
+
+        $account->profile_photo_path = $imageUrl;
     }
 }

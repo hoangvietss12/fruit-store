@@ -100,12 +100,16 @@ class PaymentController extends Controller
 
     }
 
-    public function purchaseReturn() {
+    public function purchaseReturn(Request $request) {
         try {
+            $vnp_ResponseCode = $request->input('vnp_ResponseCode');
+
             $user_id = Auth::user()->id;
             $user_cart = Cart::where('user_id', $user_id)->first();
             $data = CartDetail::where('cart_id', $user_cart->id)->with('product')->get();
             $order_status = Order::where('user_id', $user_id)->where('status', 'Đang giao hàng')->first();
+
+            $message = "Giao dịch đã bị hủy!";
 
             $total_price = 0;
 
@@ -117,18 +121,23 @@ class PaymentController extends Controller
                 }
             }
 
-            $this->createOrder($data, $user_id, $total_price);
+            if($vnp_ResponseCode == "00") {
+                $pending_orders = Order::where('user_id', $user_id)->where('status', 'Chờ xác nhận')->get();
+
+                if ($pending_orders->count() == 2) {
+                    $second_order = $pending_orders->skip(1)->first();
+                    $second_order->delete();
+                }
+
+                $this->createOrder($data, $user_id, $total_price);
+                $message = "Đặt hàng thành công!";
+            }
+
             $this->createUrlImages($data);
             $check_order = $this->checkOrder();
             $check_order_type = $this->checkOrderType();
 
-            $pending_orders = Order::where('user_id', $user_id)->where('status', 'Chờ xác nhận')->get();
-
-            if ($pending_orders->count() == 2) {
-                $second_order = $pending_orders->skip(1)->first();
-                $second_order->delete();
-            }
-
+            session()->flash('message', $message);
             return view('home.purchase', compact('data', 'total_price', 'check_order', 'check_order_type', 'order_status'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');

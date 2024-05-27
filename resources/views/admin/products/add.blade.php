@@ -10,7 +10,7 @@
     @endif
 
     <div class="page-header">
-        <h3 class="page-title"> Danh sách sản phẩm </h3>
+        <h3 class="page-title"> Thêm sản phẩm </h3>
     </div>
 
     <div class="row">
