@@ -9,7 +9,7 @@ use App\Models\Session;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\GoodReceivednote;
+use App\Models\GoodReceivedNote;
 
 
 class AdminController extends Controller
@@ -121,7 +121,7 @@ class AdminController extends Controller
         $current_date = Carbon::now()->subDays(1)->endOfDay();
         $seven_days_ago = Carbon::now()->subDays(7)->startOfDay();
 
-        $goods_received_note_data = GoodReceivednote::select(
+        $goods_received_note_data = GoodReceivedNote::select(
                                         DB::raw('DATE(created_at) as date'),
                                         DB::raw('COUNT(*) as total')
                                     )
