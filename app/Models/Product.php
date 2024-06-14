@@ -41,7 +41,7 @@ class Product extends Model
     public function goodsReceivedNoteDetails(){
         return $this->hasMany(GoodReceivedNoteDetail::class);
     }
-    // Product.php
+
     public function orderDetails(){
         return $this->hasMany(OrderDetail::class);
     }

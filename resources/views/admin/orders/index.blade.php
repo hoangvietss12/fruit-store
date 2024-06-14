@@ -67,7 +67,19 @@
                                         <td>{{$index+1}}</td>
                                         <td>{{$item->user->name}}</td>
                                         <td>{{date("H:i:s d/m/Y", strtotime($item->created_at))}}</td>
-                                        <td>{{$item->status}}</td>
+                                        <td
+                                            class="{{
+                                                $item->status === "Chờ xác nhận"
+                                                    ? ''
+                                                    : ($item->status === "Đang giao hàng"
+                                                        ? 'text-warning'
+                                                        : ($item->status === "Đã xác nhận"
+                                                            ? 'text-success'
+                                                            : 'text-danger'))
+                                            }}"
+                                        >
+                                            {{$item->status}}
+                                        </td>
                                         <td>{{number_format($item->total)}}đ</td>
                                         <td>
                                             <div class="d-flex justify-center">
@@ -75,7 +87,7 @@
                                                     <span class="mdi mdi-eye-outline mr-1"></span>
                                                     Xem chi tiết
                                                 </a>
-                                                @if($item->status !== "Đã xác nhận")
+                                                @if($item->status !== "Đã xác nhận" && $item->status !== "Hủy đặt hàng")
                                                     <a class="btn btn-warning ml-2 d-flex" href="{{route('order.edit', ['id' => $item->id])}}" role="button">
                                                         <span class="mdi mdi-pencil mr-1"></span>
                                                         Sửa trạng thái
@@ -98,8 +110,8 @@
             </div>
         </div>
 
-        {{ $data->links() }}
+        {{ $data->links('vendor.pagination') }}
     @else
-        <p class="text-notfound">Không có đơn hàng nào</p>
+        <p class="text-notfound text-black">Không có đơn hàng nào</p>
     @endif
 @stop

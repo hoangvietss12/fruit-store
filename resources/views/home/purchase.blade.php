@@ -8,7 +8,6 @@
                 {{ session('error') }}
 
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                <i class="fa fa-times" aria-hidden="true"></i>
             </button>
         </div>
     @endif
@@ -40,7 +39,6 @@
                         {{ session('message') }}
 
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                        <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </div>
             @elseif(session('message'))
@@ -48,7 +46,6 @@
                         {{ session('message') }}
 
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                        <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </div>
             @endif
@@ -58,7 +55,6 @@
                     Đơn hàng đang được vận chuyển
 
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                        <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </div>
             @endif

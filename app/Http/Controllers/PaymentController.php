@@ -122,12 +122,12 @@ class PaymentController extends Controller
             }
 
             if($vnp_ResponseCode == "00") {
-                $pending_orders = Order::where('user_id', $user_id)->where('status', 'Chờ xác nhận')->get();
+                // $pending_orders = Order::where('user_id', $user_id)->where('status', 'Chờ xác nhận')->get();
 
-                if ($pending_orders->count() == 2) {
-                    $second_order = $pending_orders->skip(1)->first();
-                    $second_order->delete();
-                }
+                // if ($pending_orders->count() == 2) {
+                //     $second_order = $pending_orders->skip(1)->first();
+                //     $second_order->delete();
+                // }
 
                 $this->createOrder($data, $user_id, $total_price);
                 $message = "Đặt hàng thành công!";
@@ -154,11 +154,10 @@ class PaymentController extends Controller
             $new_order->save();
 
             // create order detail
-            $order_id = Order::where('user_id', $user_id)->first();
             foreach($data as $item) {
                 $new_order_detail = new OrderDetail();
 
-                $new_order_detail->order_id = $order_id->id;
+                $new_order_detail->order_id = $new_order->id;
                 $new_order_detail->product_id = $item->product->id;
                 $new_order_detail->quantity = $item->quantity;
                 if($item->product->discount > 0) {

@@ -50,7 +50,7 @@ class AdminController extends Controller
 
         $order_total = Order::get()->count();
         $order_active = Order::where('status', '=', 'Đã xác nhận')->get()->count();
-        $order_deactive = Order::where('status', '=', 'Chờ xác nhận')->get()->count();
+        $order_deactive = Order::where('status', '!=', 'Đã xác nhận')->get()->count();
 
         return  [
             'account_total' => $account_total,
@@ -73,6 +73,7 @@ class AdminController extends Controller
                                 DB::raw('DATE(created_at) as date'),
                                 DB::raw('SUM(total) as total_sale_price')
                             )
+                            ->where('status', 'Đã xác nhận')
                             ->whereBetween('created_at', [$seven_days_ago, $current_date])
                             ->groupBy('date')
                             ->orderBy('date')
@@ -109,6 +110,7 @@ class AdminController extends Controller
                             DB::raw('DATE(created_at) as order_date'),
                             DB::raw('COUNT(*) as total_orders')
                         )
+                        ->where('status', 'Đã xác nhận')
                         ->whereBetween('created_at', [$seven_days_ago, $current_date])
                         ->groupBy('order_date')
                         ->orderBy('order_date')

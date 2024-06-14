@@ -34,7 +34,7 @@
     <section class="shopping-cart spad">
         <div class="container">
 
-            @if( $orders->isEmpty() )
+            @if( !isset($group_orders) )
             <p style="font-size: 20px; text-align: center;">Không lịch sử mua hàng</p>
             <div class="continue__btn">
                 <a href="{{ route('store.index') }}">Mua sắm ngay!</a>
@@ -43,10 +43,20 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul>
-                        @foreach($orders as $order)
+                        @php
+                            $group_order_keys = array_keys($group_orders);
+                            $check_date = $group_order_keys[0];
+                        @endphp
+                        @foreach($group_orders as $date=>$order)
                             <li class="pt-3 border-bottom">
-                                <strong>Ngày đặt hàng:</strong> {{ date("d-m-Y", strtotime($order->created_at)) }}<br>
-                                <strong>Phương thức đặt hàng:</strong> {{ $order->order_type }}<br>
+                                @php
+                                    if($check_date !== substr($date, 0, 10)) {
+                                        $check_date = substr($date, 0, 10);
+                                        echo '<h4 class="text-center my-3 fw-bold">Ngày '.date("d-m-Y", strtotime(substr($date, 0, 10))).'</h4>';
+                                    }
+                                @endphp
+                                <strong>Thời gian đặt hàng:</strong> {{ date("H:i:s", strtotime($date)) }}<br>
+                                <strong>Phương thức đặt hàng:</strong> {{ $order['order_type'] }}<br>
                                 <strong>Chi tiết đơn hàng:</strong><br>
                                 <ul>
                                     <div class="shopping__cart__table">
@@ -60,32 +70,32 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($order->order_details as $item)
+                                                @foreach($order['order_details'] as $item)
                                                 <tr>
                                                     <td class="product__cart__item">
                                                             <div class="product__cart__item__pic">
-                                                                <a href="{{ route('store.product', ['id' => $item->product->id]) }}">
+                                                                <a href="{{ route('store.product', ['id' => $item['product_id']]) }}">
                                                                     <img style="width: 90px; height: 90px;"
-                                                                        src="{{ $item->product->images[0] }}" alt="{{ $item->product->name }}">
+                                                                        src="{{ $item['product_images'][0] }}" alt="{{ $item['product_name'] }}">
                                                                 </a>
                                                             </div>
                                                             <div class="product__cart__item__text">
-                                                                <a href="{{ route('store.product', ['id' => $item->product->id]) }}" class="d-inline">
-                                                                    <h6>{{ $item->product->name }}</h6>
+                                                                <a href="{{ route('store.product', ['id' => $item['product_id']]) }}" class="d-inline">
+                                                                    <h6>{{ $item['product_name'] }}</h6>
                                                                 </a>
                                                                 <div class="d-block">
-                                                                    <h5 class="text-danger">{{ number_format($item->price) }} <span>đ</span></h5>
+                                                                    <h5 class="text-danger">{{ number_format($item['order_detail_price']) }} <span>đ</span></h5>
                                                                 </div>
                                                             </div>
                                                     </td>
                                                     <td class="quantity__item">
                                                         <div class="quantity">
                                                             <div class="pro-qty-2 text-center">
-                                                                <span>{{ $item->quantity }}</span>
+                                                                <span>{{ $item['order_detail_quantity'] }}</span>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="cart__price">{{ number_format($item->quantity*$item->price) }} <span>đ</span></td>
+                                                    <td class="cart__price">{{ number_format($item['order_detail_total_price']) }} <span>đ</span></td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

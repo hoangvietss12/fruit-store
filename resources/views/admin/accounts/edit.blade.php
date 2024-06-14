@@ -8,7 +8,7 @@
             {{ session('error') }}
         </div>
     @endif
-    
+
     <div class="page-header">
         <h3 class="page-title"> Tài khoản #{{ $data->id }} </h3>
     </div>
@@ -24,12 +24,12 @@
                             <select class="js-example-basic-single" name="account_status" style="width:100%">
                                 @if($data->status == "active")
                                     <option value="" disable>Chọn trạng thái</option>
-                                    <option value="active" selected>Active</option>
-                                    <option value="deactive">Deactive</option>
+                                    <option value="active" selected>Hoạt động</option>
+                                    <option value="deactive">Bị khóa</option>
                                 @else
                                     <option value="" disable>Chọn trạng thái</option>
-                                    <option value="active">Active</option>
-                                    <option value="deactive" selected>Deactive</option>
+                                    <option value="active">Hoạt động</option>
+                                    <option value="deactive" selected>Bị khóa</option>
                                 @endif
                             </select>
                         </div>

@@ -24,8 +24,8 @@
 
                     <div class="card-body">
                         <p class="card-content mb-1">Tổng số tài khoản: {{ $data['account_total'] }}</p>
-                        <p class="card-content mb-1">Số tài khoản hoạt động: {{ $data['account_active'] }}</p>
-                        <p class="card-content">Số tài khoản bị khóa: {{ $data['account_deactive'] }}</p>
+                        <p class="card-content mb-1">Tài khoản hoạt động: {{ $data['account_active'] }}</p>
+                        <p class="card-content">Tài khoản bị khóa: {{ $data['account_deactive'] }}</p>
                     </div>
                 </div>
             </div>
@@ -43,8 +43,8 @@
 
                     <div class="card-body">
                         <p class="card-content mb-1">Tổng số sản phẩm: {{ $data['product_total'] }}</p>
-                        <p class="card-content mb-1">Số sản phẩm hiện bán: {{ $data['product_active'] }}</p>
-                        <p class="card-content">Số sản phẩm tạm hết hàng: {{ $data['product_deactive'] }}</p>
+                        <p class="card-content mb-1">Sản phẩm hiện bán: {{ $data['product_active'] }}</p>
+                        <p class="card-content">Sản phẩm tạm hết hàng: {{ $data['product_deactive'] }}</p>
                     </div>
                 </div>
             </div>
@@ -62,16 +62,16 @@
 
                     <div class="card-body">
                         <p class="card-content mb-1">Tổng số đơn hàng: {{ $data['order_total'] }}</p>
-                        <p class="card-content mb-1">Số đơn hàng đã xác nhận: {{ $data['order_active'] }}</p>
-                        <p class="card-content">Số đơn hàng chưa xác nhận: {{ $data['order_deactive'] }}</p>
+                        <p class="card-content mb-1">Đơn hàng đã xác nhận: {{ $data['order_active'] }}</p>
+                        <p class="card-content">Đơn hàng chưa xác nhận: {{ $data['order_deactive'] }}</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="revenue-chart" class="mt-5" style="width:100%; height:400px;"></div>
-        <div id="order-chart" class="mt-5" style="width:100%; height:400px;"></div>
-        <div id="goods-received-note-chart" class="mt-5" style="width:100%; height:400px;"></div>
+        <div id="revenue-chart" class="mt-5 border border-dark" style="width:100%; height:400px;"></div>
+        <div id="order-chart" class="mt-5 border border-dark" style="width:100%; height:400px;"></div>
+        <div id="goods-received-note-chart" class="mt-5 border border-dark" style="width:100%; height:400px;"></div>
     </div>
 
 @stop

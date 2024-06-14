@@ -97,8 +97,8 @@
             </div>
         </div>
 
-        {{ $data->links() }}
+        {{ $data->links('vendor.pagination') }}
     @else
-        <p class="text-notfound">Không có phiếu nhập hàng nào</p>
+        <p class="text-notfound text-black">Không có phiếu nhập hàng nào</p>
     @endif
 @stop

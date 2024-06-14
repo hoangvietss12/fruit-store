@@ -31,9 +31,9 @@ class OrderController extends Controller
 
             $order_detail_info = OrderDetail::where('order_id', $order_info->id)->with('product')->get();
 
-            if($order_info->order_type == 'Thanh toán VN Pay') {
-                $order_detail_info = OrderDetail::where('order_id', $order_info->id)->with('product')->take(floor($order_detail_info->count() / 2))->get();
-            }
+            // if($order_info->order_type == 'Thanh toán VN Pay') {
+            //     $order_detail_info = OrderDetail::where('order_id', $order_info->id)->with('product')->take(floor($order_detail_info->count() / 2))->get();
+            // }
 
             return view('admin.orders.view', compact('order_info', 'order_detail_info'));
         } catch (\Exception $e) {
@@ -102,7 +102,7 @@ class OrderController extends Controller
 
             return $pdf->stream('invoice'.$id.'_'.$today_date.'.pdf');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
+            return redirect()->back()->with('error', 'Có lối: '.$e->getMessage());
         }
     }
 
@@ -127,12 +127,15 @@ class OrderController extends Controller
             }
 
             if($user_name != null) {
-                $query-with('user')->where('name', 'like', $user_name);
+                $query->with('user')
+                    ->whereHas('user', function ($query) use ($user_name) {
+                        $query->where('name', 'like', $user_name);
+                    });
             }
 
             $data = $query->paginate(10);
 
-            return view('admin.imports.index', compact('data'));
+            return view('admin.orders.index', compact('data'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
         }

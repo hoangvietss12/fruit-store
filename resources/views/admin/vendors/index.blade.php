@@ -114,7 +114,7 @@
             </div>
         </div>
 
-        {{ $data->links() }}
+        {{ $data->links('vendor.pagination') }}
     @else
         <p class="text-notfound">Không có nhà cung cấp nào</p>
     @endif

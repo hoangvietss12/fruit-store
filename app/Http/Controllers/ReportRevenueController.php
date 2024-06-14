@@ -56,7 +56,9 @@ class ReportRevenueController extends Controller
 
     public function queryRevenue($date_start, $date_end) {
         $sale_totals = Order::select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(total) as total_sale_price'))
+                                ->where('status', '=', 'Đã xác nhận')
                                 ->groupBy(DB::raw('DATE(created_at)'));
+
         $import_totals = GoodReceivedNote::select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(total) as total_import_price'))
                                 ->groupBy(DB::raw('DATE(created_at)'));
 

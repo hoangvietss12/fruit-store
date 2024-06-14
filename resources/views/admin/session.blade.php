@@ -33,8 +33,8 @@
                                     @foreach($data as $index => $item)
                                     <tr>
                                         <td>{{$index+1}}</td>
-                                        <td>{{$item->user->name}}</td>
-                                        <td>{{$item->user->email}}</td>
+                                        <td>{{$item->user ? $item->user->name : "Khách vãng lai"}}</td>
+                                        <td>{{$item->user ? $item->user->email : "Trống"}}</td>
                                         <td>{{$item->user_agent}}</td>
                                         <td>{{$item->ip_address}}</td>
                                     </tr>

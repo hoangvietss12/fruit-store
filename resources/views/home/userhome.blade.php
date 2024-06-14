@@ -8,7 +8,6 @@
                 {{ session('error') }}
 
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                <i class="fa fa-times" aria-hidden="true"></i>
             </button>
         </div>
     @endif

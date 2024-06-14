@@ -102,7 +102,7 @@
                 </div>
             </div>
         @else
-            <p class="text-notfound">Không có báo cáo nào</p>
+            <p class="text-notfound text-black">Không có báo cáo nào</p>
         @endif
     </div>
 @stop

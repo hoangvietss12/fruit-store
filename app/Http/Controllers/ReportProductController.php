@@ -38,6 +38,7 @@ class ReportProductController extends Controller
             ];
 
             $data = $this->queryProducts($category, $vendor, $date_start, $date_end);
+            // dd($data);
 
             $categories = Category::all();
             $vendors = Vendor::all();
@@ -78,7 +79,10 @@ class ReportProductController extends Controller
             $data = $products->with(['vendor', 'category', 'goodsReceivedNoteDetails' => function($query) use ($start, $end) {
                                 $query->whereBetween('created_at', [$start, $end]);
                             }, 'orderDetails' => function($query) use ($start, $end) {
-                                $query->whereBetween('created_at', [$start, $end]);
+                                $query->whereBetween('created_at', [$start, $end])
+                                    ->whereHas('order', function($query) {
+                                        $query->where('status', '=', 'Đã xác nhận');
+                                    });
                             }])
                             ->get();
         }else if($date_start != 'all') {
@@ -87,7 +91,10 @@ class ReportProductController extends Controller
             $data = $products->with(['vendor', 'category', 'goodsReceivedNoteDetails' => function($query) use ($start) {
                         $query->where('created_at', '>=', $start);
                     }, 'orderDetails' => function($query) use ($start) {
-                        $query->where('created_at', '>=', $start);
+                        $query->where('created_at', '>=', $start)
+                            ->whereHas('order', function($query) {
+                                $query->where('status', '=', 'Đã xác nhận');
+                            });
                     }])
                     ->get();
         }else if($date_end != 'all') {
@@ -96,11 +103,19 @@ class ReportProductController extends Controller
             $data = $products->with(['vendor', 'category', 'goodsReceivedNoteDetails' => function($query) use ($end) {
                                 $query->where('created_at', '<=', $end);
                             }, 'orderDetails' => function($query) use ($end) {
-                                $query->where('created_at', '<=', $end);
+                                $query->where('created_at', '<=', $end)
+                                    ->whereHas('order', function($query) {
+                                        $query->where('status', '=', 'Đã xác nhận');
+                                    });
                             }])
                             ->get();
         }else {
-            $data = $products->with(['vendor', 'category', 'goodsReceivedNoteDetails', 'orderDetails'])->get();
+            $data = $products->with(['vendor', 'category', 'goodsReceivedNoteDetails', 'orderDetails' => function($query) {
+                $query->whereHas('order', function($query) {
+                    $query->where('status', '=', 'Đã xác nhận');
+                });
+            }])
+            ->get();
         }
 
         return $data;

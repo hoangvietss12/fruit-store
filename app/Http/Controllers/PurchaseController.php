@@ -163,7 +163,8 @@ class PurchaseController extends Controller
                                 ->first();
 
             if($user_order) {
-                $user_order->delete();
+                $user_order->status = "Hủy đặt hàng";
+                $user_order->save();
                 $message = 'Hủy đặt hàng thành công!';
             }else {
                 $message = 'Đơn hàng đã được giao đến!';
@@ -222,7 +223,10 @@ class PurchaseController extends Controller
 
     private function checkOrderType() {
         $user_id = Auth::user()->id;
-        $user_order = Order::where('user_id', $user_id)->where('order_type', "Ship tận nơi")->first();
+        $user_order = Order::where('user_id', $user_id)
+            ->where('order_type', "Ship tận nơi")
+            ->where('status', "Chờ xác nhận")
+            ->first();
 
         if($user_order){
             return true;

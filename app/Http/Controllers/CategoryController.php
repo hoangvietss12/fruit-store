@@ -18,7 +18,7 @@ class CategoryController extends Controller
     }
     public function index() {
         try {
-            $data = Category::all();
+            $data = Category::paginate(10);
 
             return view('admin.categories.index', compact('data'));
         } catch (\Exception $e) {
@@ -81,7 +81,7 @@ class CategoryController extends Controller
 
             $category = Category::find($id);
             $category->update(['name' => $request->category_name]);
-            
+
             return redirect('fruitya-admin/category')->with('message', 'Cập nhật thành công!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');

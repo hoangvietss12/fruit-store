@@ -36,8 +36,8 @@
                 <label for="account_name">Trạng thái:</label>
                 <select class="js-example-basic-single" name="account_status" style="width:100%">
                     <option value="" selected disable>Chọn trạng thái</option>
-                    <option value="active">Active</option>
-                    <option value="deactive">Deactive</option>
+                    <option value="active">Hoạt động</option>
+                    <option value="deactive">Bị khóa</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-search d-flex ml-2">
@@ -69,7 +69,11 @@
                                         <td>{{$index+1}}</td>
                                         <td>{{$item->name}}</td>
                                         <td>{{$item->email}}</td>
-                                        <td>{{$item->status}}</td>
+                                        <td
+                                            class="{{$item->status === 'active' ? '' : 'text-danger'}}"
+                                        >
+                                            {{$item->status === 'active' ? 'Hoạt động' : 'Bị khóa'}}
+                                        </td>
                                         <td>
                                             <div class="d-flex justify-center">
                                                 <a class="btn btn-primary ml-2 d-flex" href="{{route('account.view', ['id' => $item->id])}}" role="button">
@@ -93,8 +97,8 @@
             </div>
         </div>
 
-        {{ $data->links() }}
+        {{ $data->links('vendor.pagination') }}
     @else
-        <p class="text-notfound">Không có tài khoản nào</p>
+        <p class="text-notfound text-black">Không có tài khoản nào</p>
     @endif
 @stop

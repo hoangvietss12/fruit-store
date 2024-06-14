@@ -104,7 +104,7 @@
                 </div>
             </div>
         @else
-            <p class="text-notfound">Không có sản phẩm nào</p>
+            <p class="text-notfound text-black">Không có sản phẩm nào</p>
         @endif
     </div>
 @stop
