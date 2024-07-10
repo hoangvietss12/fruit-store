@@ -351,8 +351,8 @@ class GoodsReceivedNoteDetailSeeder extends Seeder
                 'price' => 333000,
                 'total_price' => 366300.00,
                 'note' => NULL,
-                'created_at' => '2024-05-17 06:56:48',
-                'updated_at' => '2024-05-16 23:56:48',
+                'created_at' => '2024-07-05 06:56:48',
+                'updated_at' => '2024-07-05 23:56:48',
             ],
             [
                 'goods_received_note_id' => 15,
@@ -361,8 +361,8 @@ class GoodsReceivedNoteDetailSeeder extends Seeder
                 'price' => 333000,
                 'total_price' => 333000.00,
                 'note' => NULL,
-                'created_at' => '2024-05-17 06:59:52',
-                'updated_at' => '2024-05-16 23:59:52',
+                'created_at' => '2024-07-06 06:58:40',
+                'updated_at' => '2024-07-06 06:58:40',
             ],
             [
                 'goods_received_note_id' => 15,
@@ -371,8 +371,8 @@ class GoodsReceivedNoteDetailSeeder extends Seeder
                 'price' => 25000,
                 'total_price' => 25000.00,
                 'note' => NULL,
-                'created_at' => '2024-05-17 06:59:52',
-                'updated_at' => '2024-05-16 23:59:52',
+                'created_at' => '2024-07-06 06:58:40',
+                'updated_at' => '2024-07-06 06:58:40',
             ],
             [
                 'goods_received_note_id' => 16,
@@ -381,8 +381,8 @@ class GoodsReceivedNoteDetailSeeder extends Seeder
                 'price' => 300000,
                 'total_price' => 300000.00,
                 'note' => 'Xin nhẹ tay',
-                'created_at' => '2024-05-18 06:58:40',
-                'updated_at' => '2024-05-17 23:58:40',
+                'created_at' => '2024-07-06 06:58:40',
+                'updated_at' => '2024-07-06 23:58:40',
             ],
             [
                 'goods_received_note_id' => 23,
@@ -391,8 +391,8 @@ class GoodsReceivedNoteDetailSeeder extends Seeder
                 'price' => 100000,
                 'total_price' => 100000.00,
                 'note' => NULL,
-                'created_at' => '2024-05-19 08:32:48',
-                'updated_at' => '2024-05-19 01:32:48',
+                'created_at' => '2024-07-08 08:32:48',
+                'updated_at' => '2024-07-08 01:32:48',
             ],
             [
                 'goods_received_note_id' => 24,
@@ -401,8 +401,8 @@ class GoodsReceivedNoteDetailSeeder extends Seeder
                 'price' => 300000,
                 'total_price' => 300000.00,
                 'note' => NULL,
-                'created_at' => '2024-05-19 08:33:27',
-                'updated_at' => '2024-05-19 01:33:27',
+                'created_at' => '2024-07-11 08:33:27',
+                'updated_at' => '2024-07-11 01:33:27',
             ],
             [
                 'goods_received_note_id' => 25,
@@ -411,8 +411,8 @@ class GoodsReceivedNoteDetailSeeder extends Seeder
                 'price' => 300000,
                 'total_price' => 300000.00,
                 'note' => NULL,
-                'created_at' => '2024-05-19 08:34:07',
-                'updated_at' => '2024-05-19 01:34:07',
+                'created_at' => '2024-07-12 03:13:36',
+                'updated_at' => '2024-07-12 03:13:36',
             ],
             [
                 'goods_received_note_id' => 26,
@@ -421,8 +421,8 @@ class GoodsReceivedNoteDetailSeeder extends Seeder
                 'price' => 60000,
                 'total_price' => 120000.00,
                 'note' => NULL,
-                'created_at' => '2024-05-20 03:13:36',
-                'updated_at' => '2024-05-19 20:13:36',
+                'created_at' => '2024-07-12 03:13:36',
+                'updated_at' => '2024-07-12 03:13:36',
             ]
         ];
 
