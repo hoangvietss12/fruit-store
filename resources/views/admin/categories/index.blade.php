@@ -96,6 +96,6 @@
         </div>
         {{ $data->links('vendor.pagination') }}
     @else
-        <p class="text-notfound c">Không có danh mục sản phẩm nào</p>
+        <p class="text-notfound text-black">Không có danh mục sản phẩm nào</p>
     @endif
 @stop
