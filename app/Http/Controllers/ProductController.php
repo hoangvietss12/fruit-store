@@ -151,7 +151,7 @@ class ProductController extends Controller
             $vendor = $request->input('product_vendor');
 
             if($request->hasFile('product_images')) {
-                $this->deleteImageFromFirebase($data->images);
+                // $this->deleteImageFromFirebase($data->images);
 
                 $imageUrls = $this->uploadImagesToFirebase($request);
 
@@ -250,7 +250,7 @@ class ProductController extends Controller
     }
 
     public function createUrlImagesForProducts($data) {
-        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+        $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
         foreach ($data as $product) {
             $imageUrls = [];
             $images = json_decode($product->images, true);
@@ -269,7 +269,7 @@ class ProductController extends Controller
     }
 
     public function createUrlImagesForProduct($product) {
-        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+        $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
         $imageUrls = [];
         $images = json_decode($product->images, true);
 
@@ -297,7 +297,7 @@ class ProductController extends Controller
             foreach ($images as $image) {
                 // Tạo đường dẫn lưu trữ trên Firebase Storage cho mỗi file ảnh
                 $firebaseStorage = app('firebase.storage');
-                $bucket = $firebaseStorage->getBucket('fruit-ya-store-6573c.appspot.com');
+                $bucket = $firebaseStorage->getBucket('fruit-ya.appspot.com');
                 $imageUrl = 'products/' . uniqid() . '.' . $image->getClientOriginalExtension();
 
                 // Upload file ảnh lên Firebase Storage
@@ -315,7 +315,7 @@ class ProductController extends Controller
 
     private function deleteImageFromFirebase($imagePaths) {
         $firebaseStorage = app('firebase.storage');
-        $bucket = $firebaseStorage->getBucket('fruit-ya-store-6573c.appspot.com');
+        $bucket = $firebaseStorage->getBucket('fruit-ya.appspot.com');
 
         $imagePaths = json_decode($imagePaths, true);
         foreach ($imagePaths as $imageUrl) {

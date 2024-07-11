@@ -41,7 +41,7 @@
                             @if($product->discount > 0)
                                 <span class="sale-label">Sale {{ $product->discount*100 }}%</span>
                             @endif
-                            <img src="{{$product->images[0]}}" alt="{{$product->name}}">
+                            <img src="{{$product->images}}" alt="{{$product->name}}">
 
                             @if($product->status === "Còn hàng")
                                 <div class="product-overlay">
@@ -176,7 +176,7 @@
                         <div class="box">
                             <div class="img-box">
                                 ${product.discount > 0 ? '<span class="sale-label">Sale '+ (product.discount*100) +' %</span>' : ''}
-                                <img src="${product.images[0]}" alt="${product.name}">
+                                <img src="${product.images}" alt="${product.name}">
                                 ${product.status === "Còn hàng" ?
                                     `
                                     <div class="product-overlay">

@@ -128,7 +128,7 @@ class CartController extends Controller
     }
 
     private function createUrlImages($data) {
-        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+        $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
         foreach ($data as $product) {
             $imageUrls = [];
             $images = json_decode($product->product->images, true);

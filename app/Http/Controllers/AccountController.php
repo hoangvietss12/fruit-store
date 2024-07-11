@@ -82,7 +82,7 @@ class AccountController extends Controller
     }
 
     private function createUrlImage($account) {
-        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+        $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
 
             $imageReference = $bucket->object($account->profile_photo_path);
 

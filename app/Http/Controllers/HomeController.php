@@ -115,18 +115,17 @@ class HomeController extends Controller
 
     private function createUrlImages($data) {
         try {
-            $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+            $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
             foreach ($data as $product) {
-                $imageUrls = [];
                 $images = json_decode($product->images, true);
                 $imageReference = $bucket->object($images[0]);
 
                 if ($imageReference->exists()) {
                     $expiresAt = new \DateTime('tomorrow');
-                    $imageUrls[] = $imageReference->signedUrl($expiresAt);
+                    $imageUrl = $imageReference->signedUrl($expiresAt);
                 }
 
-                $product->images = $imageUrls;
+                $product->images = $imageUrl;
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: Vui lòng thử lại sau!');
@@ -135,7 +134,7 @@ class HomeController extends Controller
 
     private function createUrlImage($data) {
         try {
-            $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+            $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
                 $imageUrls = [];
                 $images = json_decode($data, true);
                 $imageReference = $bucket->object($images[0]);

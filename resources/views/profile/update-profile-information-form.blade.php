@@ -28,7 +28,7 @@
 
                 <!-- Current Profile Photo -->
                 @php
-                    $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+                    $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
 
                     $object = $bucket->object($this->user->profile_photo_url);
 

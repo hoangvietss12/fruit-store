@@ -13,11 +13,15 @@
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                             @php
                                 if(Auth::user()->profile_photo_url) {
-                                    $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+                                    $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
 
                                     $object = $bucket->object(Auth::user()->profile_photo_url);
 
                                     $imageUrl = $object->signedUrl(new \DateTime('tomorrow'));
+
+                                    if(strpos($imageUrl, 'https%3A//fruit-ya.up.railway.app/storage/') !== false) {
+                                        $imageUrl = str_replace('https%3A//fruit-ya.up.railway.app/storage/', '', $imageUrl);
+                                    }
                                 }
                             @endphp
                                 <div class="inline-flex items-center">

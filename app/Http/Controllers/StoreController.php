@@ -102,7 +102,7 @@ class StoreController extends Controller
 
     private function createUrlImages($data) {
         try {
-            $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+            $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
             foreach ($data as $product) {
                 $imageUrls = [];
                 $images = json_decode($product->images, true);
@@ -121,7 +121,7 @@ class StoreController extends Controller
     }
 
     private function createUrlImagesForProduct($product) {
-        $bucket = app('firebase.storage')->getBucket('fruit-ya-store-6573c.appspot.com');
+        $bucket = app('firebase.storage')->getBucket('fruit-ya.appspot.com');
         $imageUrls = [];
         $images = json_decode($product->images, true);
 
