@@ -93,13 +93,17 @@ class OrderController extends Controller
             $order_info = Order::where('id', $id)->with('user')->first();
 
             $order_detail_info = OrderDetail::where('order_id', $order_info->id)->with('product')->get();
-            if($order_info->order_type == 'Thanh toán VN Pay') {
-                $order_detail_info = OrderDetail::where('order_id', $order_info->id)->with('product')->take(floor($order_detail_info->count() / 2))->get();
-            }
 
+            // Tạo đối tượng mPDF với thư mục tạm thời tùy chỉnh
+            $mpdf = new \Mpdf\Mpdf(['tempDir' => storage_path('temp')]);
+
+            // Sử dụng đối tượng mPDF tùy chỉnh để tạo PDF
             $pdf = PDF::loadView('admin.orders.view', compact('order_info', 'order_detail_info'));
+
+            // Định dạng ngày hiện tại
             $today_date = Carbon::now()->format('d/m/Y');
 
+            // Trả về file PDF stream
             return $pdf->stream('invoice'.$id.'_'.$today_date.'.pdf');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lối: '.$e->getMessage());
